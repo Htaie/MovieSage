@@ -1,21 +1,32 @@
 import { useState } from 'react';
 import Modal from 'react-modal';
 
-const customStyles = {
-  content: {
-    backgroundColor: 'black',
-    width: '500px',
-    height: '420px',
-    margin: 'auto',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    borderRadius: '15px',
-    border: '2px solid gray',
-  },
-};
-
 const Login = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const customStyles = {
+    overlay: {
+      backgroundColor: modalIsOpen ? 'rgba(0, 0, 0, 0.7)' : 'rgba(0, 0, 0, 0)',
+      zIndex: 999,
+    },
+    content: {
+      backgroundColor: '#141517',
+      width: '500px',
+      height: '430px',
+      margin: 'auto',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      borderRadius: '15px',
+      border: '2px solid #2b2c2e',
+    },
+    input: {
+      backgroundColor: 'black',
+      border: '2px solid #2b2c2e',
+      borderRadius: '5px',
+      color: 'white',
+    },
+  };
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -23,6 +34,10 @@ const Login = () => {
 
   const closeModal = () => {
     setModalIsOpen(false);
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -48,12 +63,25 @@ const Login = () => {
               <path d="M6.84267 29.1987L6.86134 29.18H6.828L6.84267 29.1987Z" fill="black" />
             </svg>
             <h1 className="text-3xl">MovieSage</h1>
+            <button className="w-20 h-12 bg-black border border-[#2b2c2e] rounded-lg ml-52" onClick={closeModal}>
+              Close
+            </button>
           </div>
           <p className="text-xs text-gray-400 mb-4">Login to your account</p>
           <h1 className="mb-2">Email</h1>
-          <input className="w-full h-12 bg-black border rounded-lg mb-3 p-2" type="text" placeholder="Email" />
+          <input
+            className="w-full h-12 bg-black border rounded-lg mb-3 p-2"
+            style={customStyles.input}
+            type="text"
+            placeholder="Email"
+          />
           <h1 className="mb-2">Password</h1>
-          <input className="w-full h-12 bg-black border rounded-lg mb-4 p-2" type="text" placeholder="Password" />
+          <input
+            className="w-full h-12 bg-black border rounded-lg mb-4 p-2"
+            style={customStyles.input}
+            type="password"
+            placeholder="Password"
+          />
           <div className="flex justify-center ">
             <button className="mb-4" onClick={closeModal}>
               Forgot Password

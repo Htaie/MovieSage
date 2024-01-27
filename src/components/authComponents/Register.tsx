@@ -1,21 +1,34 @@
 import { useState } from 'react';
 import Modal from 'react-modal';
-
-const customStyles = {
-  content: {
-    backgroundColor: 'black',
-    width: '500px',
-    height: '650px',
-    margin: 'auto',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    borderRadius: '15px',
-    border: '2px solid gray',
-  },
-};
+import { Link } from 'react-router-dom';
 
 const Register = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
+  const [continueButtonColor, setContinueButtonColor] = useState('white');
+
+  const customStyles = {
+    overlay: {
+      backgroundColor: modalIsOpen ? 'rgba(0, 0, 0, 0.7)' : 'rgba(0, 0, 0, 0)',
+      zIndex: 999,
+    },
+    content: {
+      backgroundColor: '#141517',
+      width: '500px',
+      height: '650px',
+      margin: 'auto',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      borderRadius: '15px',
+      border: '2px solid #2b2c2e',
+    },
+    input: {
+      backgroundColor: 'black',
+      border: '2px solid #2b2c2e',
+      borderRadius: '5px',
+      color: 'white',
+    },
+  };
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -25,13 +38,18 @@ const Register = () => {
     setModalIsOpen(false);
   };
 
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+    setContinueButtonColor(isChecked ? 'white' : 'green');
+  };
+
   return (
     <div>
       <button onClick={openModal}>Register</button>
 
       <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles} contentLabel="Register">
         <div className="text-white">
-          <div className="flex mb-1">
+          <div className="flex">
             <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M2.39997 5.27259C2.39997 2.60499 4.15685 0.799988 6.75692 0.799988H25.243C27.8419 0.799988 29.6 2.60372 29.6 5.27259V31.2L27.3683 28.5387V5.27259C27.3683 4.69576 27.1449 4.14251 26.7472 3.73428C26.3494 3.32604 25.8098 3.09619 25.2467 3.09519H6.76063C6.19771 3.09653 5.65827 3.32648 5.26057 3.73464C4.86287 4.1428 4.63936 4.69587 4.63903 5.27259V24.0661C4.63903 24.6429 4.86244 25.1962 5.26021 25.6044C5.65798 26.0127 6.19761 26.2425 6.76063 26.2435H22.2683L24.4839 28.521L6.75692 28.5387C4.15808 28.5387 2.39997 26.735 2.39997 24.0661V5.27259Z"
@@ -48,22 +66,61 @@ const Register = () => {
               <path d="M6.84267 29.1987L6.86134 29.18H6.828L6.84267 29.1987Z" fill="black" />
             </svg>
             <h1 className="text-3xl">MovieSage</h1>
+            <button className="w-20 h-12 bg-black border border-[#2b2c2e] rounded-lg ml-52" onClick={closeModal}>
+              Close
+            </button>
           </div>
           <p className="text-xs text-gray-400 mb-4">Login to your account</p>
           <h1 className="mb-2">Username</h1>
-          <input className="w-full h-12 bg-black border rounded-lg mb-3 p-2" type="text" placeholder="Username" />
+          <input
+            className="w-full h-12 bg-black border rounded-lg mb-3 p-2"
+            style={customStyles.input}
+            type="text"
+            placeholder="Username"
+          />
           <h1 className="mb-2">Email</h1>
-          <input className="w-full h-12 bg-black border rounded-lg mb-3 p-2" type="text" placeholder="Email" />
-          <h1 className="mb-2">Password</h1>
-          <input className="w-full h-12 bg-black border rounded-lg mb-3 p-2" type="text" placeholder="Password" />
+          <input
+            className="w-full h-12 bg-black border rounded-lg mb-3 p-2"
+            style={customStyles.input}
+            type="text"
+            placeholder="Email"
+          />
           <h1 className="mb-2">Password</h1>
           <input
             className="w-full h-12 bg-black border rounded-lg mb-3 p-2"
-            type="text"
+            style={customStyles.input}
+            type="password"
+            placeholder="Password"
+          />
+          <h1 className="mb-2">Password</h1>
+          <input
+            className="w-full h-12 bg-black border rounded-lg mb-3 p-2"
+            style={customStyles.input}
+            type="password"
             placeholder="Confirm Password"
           />
           <div className="flex justify-center mb-4">
-            <input className="mr-1 rounded-full" type="checkbox" />
+            <div
+              className={`mr-1 rounded-full cursor-pointer ${isChecked ? 'bg-green-500' : 'bg-black'}`}
+              onClick={handleCheckboxChange}
+              style={{
+                width: '25px',
+                height: '25px',
+                border: '2px solid gray',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              {isChecked && (
+                <svg width="10" height="8" viewBox="0 0 10 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M8.78571 0L3.57143 5.14286L1.21429 2.85714L0 4L3.57143 8L10 1.14286L8.78571 0Z"
+                    fill="white"
+                  />
+                </svg>
+              )}
+            </div>
             <p className="text-gray-400 mr-1">I agree to our</p>
             <button className=" mr-1" onClick={closeModal}>
               Privacy Policy
@@ -71,9 +128,16 @@ const Register = () => {
             <p className="text-gray-400 mr-1">and</p>
             <button>Term & Conditions</button>
           </div>
-          <button className="w-full h-12 text-gray-800 bg-white rounded-lg mb-4" onClick={closeModal}>
+          <Link
+            to="/login"
+            className={`w-full h-12 rounded-lg mb-4 inline-flex items-center justify-center ${
+              isChecked ? 'bg-green-500 text-white' : 'bg-white text-gray-800'
+            }`}
+            onClick={closeModal}
+            style={{ textDecoration: 'none' }}
+          >
             Continue
-          </button>
+          </Link>
           <div className="flex justify-center">
             <p className="text-xs text-gray-400 mr-2">Already have an account?</p>
             <button className="text-xs" onClick={closeModal}>
