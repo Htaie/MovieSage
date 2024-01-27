@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import Modal from 'react-modal';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const Login = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -76,12 +78,17 @@ const Login = () => {
             placeholder="Email"
           />
           <h1 className="mb-2">Password</h1>
-          <input
-            className="w-full h-12 bg-black border rounded-lg mb-4 p-2"
-            style={customStyles.input}
-            type="password"
-            placeholder="Password"
-          />
+          <div className="relative">
+            <input
+              className="w-full h-12 bg-black border rounded-lg mb-4 p-2"
+              style={customStyles.input}
+              type={showPassword ? 'text' : 'password'}
+              placeholder="Password"
+            />
+            <div className="absolute top-0 right-0 m-3 cursor-pointer" onClick={togglePasswordVisibility}>
+              {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+            </div>
+          </div>
           <div className="flex justify-center ">
             <button className="mb-4" onClick={closeModal}>
               Forgot Password

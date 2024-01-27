@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import Modal from 'react-modal';
 import { Link } from 'react-router-dom';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const Register = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [continueButtonColor, setContinueButtonColor] = useState('white');
+  const [showPassword, setShowPassword] = useState(false);
 
   const customStyles = {
     overlay: {
@@ -41,6 +44,10 @@ const Register = () => {
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
     setContinueButtonColor(isChecked ? 'white' : 'green');
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -86,19 +93,29 @@ const Register = () => {
             placeholder="Email"
           />
           <h1 className="mb-2">Password</h1>
-          <input
-            className="w-full h-12 bg-black border rounded-lg mb-3 p-2"
-            style={customStyles.input}
-            type="password"
-            placeholder="Password"
-          />
+          <div className="relative">
+            <input
+              className="w-full h-12 bg-black border rounded-lg mb-4 p-2"
+              style={customStyles.input}
+              type={showPassword ? 'text' : 'password'}
+              placeholder="Password"
+            />
+            <div className="absolute top-0 right-0 m-3 cursor-pointer" onClick={togglePasswordVisibility}>
+              {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+            </div>
+          </div>
           <h1 className="mb-2">Password</h1>
-          <input
-            className="w-full h-12 bg-black border rounded-lg mb-3 p-2"
-            style={customStyles.input}
-            type="password"
-            placeholder="Confirm Password"
-          />
+          <div className="relative">
+            <input
+              className="w-full h-12 bg-black border rounded-lg mb-4 p-2"
+              style={customStyles.input}
+              type={showPassword ? 'text' : 'password'}
+              placeholder="Password"
+            />
+            <div className="absolute top-0 right-0 m-3 cursor-pointer" onClick={togglePasswordVisibility}>
+              {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+            </div>
+          </div>
           <div className="flex justify-center mb-4">
             <div
               className={`mr-1 rounded-full cursor-pointer ${isChecked ? 'bg-green-500' : 'bg-black'}`}
