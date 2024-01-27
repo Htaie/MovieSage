@@ -6,6 +6,7 @@ import 'swiper/css/pagination';
 import 'swiper/css';
 import GenresCards from '../cards/GenresCards';
 import { Link } from 'react-router-dom';
+import { apiKey, apiUrl } from '../../constants';
 
 const MainSlider = () => {
   const [data, setData] = useState([]);
@@ -25,11 +26,8 @@ const MainSlider = () => {
   }
   useEffect(() => {
     const fetchData = async () => {
-      const apiUrl = 'https://api.kinopoisk.dev/v1.4/movie?page=1&limit=10';
-      const apiKey = 'Q00GF5P-1R1M7CP-KRYAHQG-D0V9FWM';
-
       try {
-        const response = await fetch(apiUrl, {
+        const response = await fetch(apiUrl + 'movie?page=1&limit=20', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
