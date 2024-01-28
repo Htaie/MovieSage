@@ -1,7 +1,5 @@
 import { useEffect } from 'react';
 import NavBar from './navigation/NavBar';
-import Register from './authComponents/Register';
-import Login from './authComponents/Login';
 import MainSlider from './sliders/MainSlider';
 
 export const SecondPage = () => {
@@ -23,8 +21,6 @@ export const SecondPage = () => {
   return (
     <div>
       <NavBar />
-      <Login />
-      <Register />
       <MainSlider />
       <h1 className="text-3xl">Component</h1>
       {/* <div className="kinobox_player" style={{ width: '700px' }}></div> */}
