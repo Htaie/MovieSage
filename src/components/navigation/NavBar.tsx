@@ -36,7 +36,7 @@ const NavBar = () => {
           <Link to={''}>About</Link>
           <Link to={''}>Contact</Link>
           <Link to={''}>Contact</Link>
-          <Link to={''}>Contact</Link>
+          <Link to={'/test'}>SearchFilmTest</Link>
         </div>
         <div className="flex space-x-3 items-center">
           <SearchIcon className="hover:cursor-pointer" onClick={() => setOpen(!open)} />
