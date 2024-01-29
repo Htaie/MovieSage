@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import NavBar from './navigation/NavBar';
 import MainSlider from './sliders/MainSlider';
+import GenresLinkCards from './cards/GenresLinkCards';
 
 export const SecondPage = () => {
   // useEffect(() => {
@@ -19,12 +20,13 @@ export const SecondPage = () => {
   //   };
   // }, []);
   return (
-    <div>
+    <div className="h-full bg-black">
       <NavBar />
       <MainSlider />
       <h1 className="text-3xl">Component</h1>
       {/* <div className="kinobox_player" style={{ width: '700px' }}></div> */}
       <p>sadsadadasdsa</p>
+      <GenresLinkCards></GenresLinkCards>
     </div>
   );
 };

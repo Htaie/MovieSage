@@ -55,7 +55,6 @@ const MainSlider = () => {
       fetchData();
     }
   }, []);
-  console.log(data);
   return (
     <Swiper
       style={{
