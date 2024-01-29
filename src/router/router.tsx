@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { Component } from '../component';
 import { SecondPage } from '../components/SecondPage';
-import SearchFilms from '../components/SearchFilmComponents/SearchFilms';
+import SearchFilms from '../pages/MoivesPage';
 
 export const router = createBrowserRouter([
   {
