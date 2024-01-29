@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { Component } from '../component';
 import { SecondPage } from '../components/SecondPage';
+import SearchFilms from '../pages/MoivesPage';
 
 export const router = createBrowserRouter([
   {
@@ -10,5 +11,9 @@ export const router = createBrowserRouter([
   {
     path: '/2',
     element: <Component />,
+  },
+  {
+    path: '/test',
+    element: <SearchFilms />,
   },
 ]);
