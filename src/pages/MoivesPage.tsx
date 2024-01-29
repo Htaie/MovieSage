@@ -7,6 +7,17 @@ const Data = [
     name: 'Лучший фильм',
     rating: 8.5,
     image: 'https://pbs.twimg.com/media/ER2GYFAWoAAOyE6.jpg',
+    year: 2024,
+    country: 'США',
+    genre: 'Драма',
+    director: 'Имя режиссера',
+    screenplay: 'Имя сценариста',
+    producer: 'Имя продюсера',
+    composer: 'Имя композитора',
+    artist: 'Имя художника',
+    premiereInRussia: '01.01.2021',
+    age: 16,
+    duration: 2,
   },
 ];
 

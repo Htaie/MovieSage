@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-interface FilmData {
+interface CardFilmData {
   id: number;
   name: string;
   rating: number;
@@ -9,7 +9,7 @@ interface FilmData {
 }
 
 interface SearchCardProps {
-  data: FilmData[];
+  data: CardFilmData[];
 }
 
 const SearchCard: React.FC<SearchCardProps> = ({ data }) => {
@@ -22,7 +22,7 @@ const SearchCard: React.FC<SearchCardProps> = ({ data }) => {
   return (
     <>
       <Link
-        to={'/'}
+        to={'/film/${film.id}'}
         className="relative w-[300px] h-[400px] rounded-lg overflow-hidden transition-transform transform hover:scale-105 mb-4"
       >
         <img src={film.image} alt="movies image" className="w-full h-full" />
