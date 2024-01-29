@@ -10,7 +10,7 @@ export const SecondPage = () => {
   //   kinoboxScript.async = true;
 
   //   kinoboxScript.onload = () => {
-  //     new window.Kinobox('.kinobox_player', { search: { kinopoisk: '535341' } }).init();
+  //     new window.Kinobox('.kinobox_player', { search: { kinopoisk: '4647040' } }).init();
   //   };
 
   //   document.body.appendChild(kinoboxScript);

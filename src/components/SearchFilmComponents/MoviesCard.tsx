@@ -1,38 +1,44 @@
-import React from 'react';
+import { CircularProgress } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { RatingScore } from '../../hooks/RatingScore';
 
-interface FilmData {
-  id: number;
-  name: string;
-  rating: number;
-  image: string;
-}
-
-interface SearchCardProps {
-  data: FilmData[];
-}
-
-const SearchCard: React.FC<SearchCardProps> = ({ data }) => {
-  if (!data || data.length === 0) {
-    return <div>No data available</div>;
+const MovieCard = ({ data }: any) => {
+  console.log(RatingScore(1));
+  if (data.length === 0 || !data) {
+    return (
+      <div className="w-full h-full flex justify-center items-center bg-black">
+        <CircularProgress sx={{ color: 'white' }} />
+      </div>
+    );
   }
-
-  const film = data[0];
+  const boxShadowStyle = {
+    WebkitBoxShadow: '0px -82px 65px -15px rgba(6, 6, 6, 0.33) inset',
+    MozBoxShadow: '0px -82px 65px -15px rgba(6, 6, 6, 0.33) inset',
+    boxShadow: '0px -82px 65px -15px rgba(6, 6, 6, 0.33) inset',
+  };
 
   return (
     <>
-      <Link
-        to={'/'}
-        className="relative w-[300px] h-[400px] rounded-lg overflow-hidden transition-transform transform hover:scale-105 mb-4"
-      >
-        <img src={film.image} alt="movies image" className="w-full h-full" />
-        <div className="absolute top-0 left-0 w-full h-full flex flex-col justify-between p-4">
-          <h1 className="text-xl font-bold">{film.rating}</h1>
-          <h1 className="text-lg">{film.name}</h1>
-        </div>
-      </Link>
+      {data.map((item: any) => (
+        <Link
+          to={'/'}
+          className="relative w-[266px] h-[400px] rounded-lg overflow-hidden transition-transform  transform hover:scale-105 mb-4 text-white"
+          key={item.id}
+        >
+          <img src={item.poster.url} alt="movies image" className="w-full h-full" />
+          <div className="absolute top-0 left-0 w-full h-full flex flex-col justify-between p-4" style={boxShadowStyle}>
+            <h1
+              className=" w-14 text-xl text-center  backdrop-blur-sm  px-3  py-2  rounded-2xl"
+              style={{ backgroundColor: RatingScore(item.rating.imdb) }}
+            >
+              {item.rating.imdb}
+            </h1>
+            <h1 className="text-xl font-bold">{item.name}</h1>
+          </div>
+        </Link>
+      ))}
     </>
   );
 };
 
-export default SearchCard;
+export default MovieCard;
