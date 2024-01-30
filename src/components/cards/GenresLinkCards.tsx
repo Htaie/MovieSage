@@ -6,8 +6,7 @@ import { Navigation } from 'swiper/modules';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css';
-import { getEmojiForGenre } from '../../hooks/GengresSmile';
-import { FormatingName } from '../../hooks/FormatingName';
+import { FormatingName, getEmojiForGenre } from '../../textUtils';
 
 const GenresLinkCards = () => {
   const [data, setData] = useState<GenresType[] | undefined>(undefined);

@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
-import { getEmojiForGenre } from '../../hooks/GengresSmile';
-import { FormatingName } from '../../hooks/FormatingName';
+import { FormatingName, getEmojiForGenre } from '../../textUtils';
 
 const GenresCards = (data: any) => {
   return (

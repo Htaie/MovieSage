@@ -4,7 +4,7 @@ import { apiKey, apiUrl } from '../constants';
 import { useEffect, useState } from 'react';
 import MovieCards from '../components/SearchFilmComponents/MoviesCards';
 import Footer from '../components/footer/Footer';
-import { FormatingName } from '../hooks/FormatingName';
+import { FormatingName } from '../textUtils';
 
 const SearchFilms = () => {
   const [data, setData] = useState([]);
