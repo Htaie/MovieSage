@@ -25,7 +25,7 @@ const MovieCard = ({ data }: any) => {
           className="relative w-[266px] h-[400px] rounded-lg overflow-hidden transition-transform  transform hover:scale-105 mb-4 text-white"
           key={item.id}
         >
-          <img src={item.poster.url} alt="movies image" className="w-full h-full" />
+          <img src={item.poster.url || 'https://placehold.co/244x400'} alt="movies image" className="w-full h-full" />
           <div className="absolute top-0 left-0 w-full h-full flex flex-col justify-between p-4" style={boxShadowStyle}>
             <h1
               className=" w-14 text-xl text-center  backdrop-blur-sm  px-3  py-2  rounded-2xl"
