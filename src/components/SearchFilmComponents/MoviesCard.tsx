@@ -22,7 +22,7 @@ const SearchCard: React.FC<SearchCardProps> = ({ data }) => {
   return (
     <>
       <Link
-        to={'/film/${film.id}'}
+        to={'/film/'}
         className="relative w-[300px] h-[400px] rounded-lg overflow-hidden transition-transform transform hover:scale-105 mb-4"
       >
         <img src={film.image} alt="movies image" className="w-full h-full" />
