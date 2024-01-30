@@ -2,8 +2,7 @@ import { CircularProgress } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { RatingScore } from '../../hooks/RatingScore';
 
-const MovieCard = ({ data }: any) => {
-  console.log(RatingScore(1));
+const MovieCards = ({ data }: any) => {
   if (data.length === 0 || !data) {
     return (
       <div className="w-full h-full flex justify-center items-center bg-black">
@@ -41,4 +40,4 @@ const MovieCard = ({ data }: any) => {
   );
 };
 
-export default MovieCard;
+export default MovieCards;

@@ -1,8 +1,8 @@
 import { useParams } from 'react-router-dom';
-import SearchCard from '../components/SearchFilmComponents/MoviesCard';
 import NavBar from '../components/navigation/NavBar';
 import { apiKey, apiUrl } from '../constants';
 import { useEffect, useState } from 'react';
+import MovieCards from '../components/SearchFilmComponents/MoviesCards';
 
 const SearchFilms = () => {
   const [data, setData] = useState([]);
@@ -42,7 +42,7 @@ const SearchFilms = () => {
           Поиск жанру : {name && name.charAt(0).toUpperCase() + name.slice(1)}
         </h1>
         <div className=" container mx-auto my-0 flex flex-wrap justify-between">
-          <SearchCard data={data} />
+          <MovieCards data={data} />
         </div>
       </div>
     </>
