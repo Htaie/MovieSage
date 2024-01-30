@@ -7,6 +7,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css';
 import { getEmojiForGenre } from '../../hooks/GengresSmile';
+import { FormatingName } from '../../hooks/FormatingName';
 
 const GenresLinkCards = () => {
   const [data, setData] = useState<GenresType[] | undefined>(undefined);
@@ -72,12 +73,12 @@ const GenresLinkCards = () => {
         {data ? (
           data.map((genre: GenresType) => (
             <SwiperSlide
-              key={genre.name}
+              key={genre.slug}
               className="backdrop-blur-lg bg-white/10 hover:backdrop-blur-xl hover:bg-white/30  py-16  px-10  rounded-2xl text-xl mx-2 my-16"
             >
               <Link to={`/genre/${genre.name}`} className=" text-center text-xl">
                 <p className="text-[79px] mb-10">{getEmojiForGenre(genre.name)}</p>
-                <h3>{genre.name.charAt(0).toUpperCase() + genre.name.slice(1)}</h3>
+                <h3>{FormatingName(genre.name)}</h3>
               </Link>
             </SwiperSlide>
           ))
