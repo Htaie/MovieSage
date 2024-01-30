@@ -1,27 +1,48 @@
-import SearchCard from '../components/SearchFilmComponents/MoviesCard';
+import { useParams } from 'react-router-dom';
 import NavBar from '../components/navigation/NavBar';
-
-const Data = [
-  {
-    id: 1,
-    name: 'Лучший фильм',
-    rating: 8.5,
-    image: 'https://pbs.twimg.com/media/ER2GYFAWoAAOyE6.jpg',
-  },
-];
+import { apiKey, apiUrl } from '../constants';
+import { useEffect, useState } from 'react';
+import MovieCards from '../components/SearchFilmComponents/MoviesCards';
 
 const SearchFilms = () => {
-  const repeatedData = Array.from({ length: 15 }, (_, index) => ({ ...Data[0], id: index + 1 }));
+  const [data, setData] = useState([]);
+  const { name } = useParams();
 
+  console.log(name);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const url = `${apiUrl}movie?page=1&limit=100&genres.name=${name}`;
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'X-API-KEY': apiKey,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const responseData = await response.json();
+        setData(responseData.docs);
+      } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <>
       <NavBar />
-      <div className="bg-black h-full ">
-        <h1 className="text-white text-3xl mb-10 pt-36 ml-20 ">Поиск фильмов и сериалов</h1>
+      <div className="bg-black h-full min-h-screen ">
+        <h1 className="text-white text-3xl mb-10 pt-36 ml-20 ">
+          Поиск жанру : {name && name.charAt(0).toUpperCase() + name.slice(1)}
+        </h1>
         <div className=" container mx-auto my-0 flex flex-wrap justify-between">
-          {repeatedData.map((film) => (
-            <SearchCard key={film.id} data={[film]} />
-          ))}
+          <MovieCards data={data} />
         </div>
       </div>
     </>

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { apiKey } from '../../constants';
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper/modules';
+import { Navigation } from 'swiper/modules';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css';
@@ -75,7 +75,7 @@ const GenresLinkCards = () => {
               key={genre.name}
               className="backdrop-blur-lg bg-white/10 hover:backdrop-blur-xl hover:bg-white/30  py-16  px-10  rounded-2xl text-xl mx-2 my-16"
             >
-              <Link to={`/genre/`} className=" text-center text-xl">
+              <Link to={`/genre/${genre.name}`} className=" text-center text-xl">
                 <p className="text-[79px] mb-10">{getEmojiForGenre(genre.name)}</p>
                 <h3>{genre.name.charAt(0).toUpperCase() + genre.name.slice(1)}</h3>
               </Link>
