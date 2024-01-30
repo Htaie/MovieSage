@@ -2,16 +2,36 @@ import { Link } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const NavBar = () => {
   const [open, setOpen] = useState(false);
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
+  const [visible, setVisible] = useState(true);
+
+  const handleScroll = () => {
+    const currentScrollPos = window.scrollY;
+
+    setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
+    setPrevScrollPos(currentScrollPos);
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [prevScrollPos, visible]);
   const gradientBackground = {
     background:
       'linear-gradient(180deg, rgba(0,0,0,.6), rgba(0,0,0,.595) 6.67%, rgba(0,0,0,.579) 13.33%, rgba(0,0,0,.551) 20%, rgba(0,0,0,.512) 26.67%, rgba(0,0,0,.461) 33.33%, rgba(0,0,0,.401) 40%, rgba(0,0,0,.334) 46.67%, rgba(0,0,0,.266) 53.33%, rgba(0,0,0,.199) 60%, rgba(0,0,0,.139) 66.67%, rgba(0,0,0,.088) 73.33%, rgba(0,0,0,.049) 80%, rgba(0,0,0,.021) 86.67%, rgba(0,0,0,.005) 93.33%, transparent)',
   };
   return (
-    <div className="w-screen h-60 fixed z-30" style={gradientBackground}>
+    <div
+      className={`w-screen fixed z-30 transition-all duration-300 ${visible ? 'top-0' : '-top-20'}`}
+      style={gradientBackground}
+    >
       <div className="container mx-auto my-0 flex h-32 items-center justify-between text-white">
         <Link to={'/'} className="flex space-x-3 items-center">
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">

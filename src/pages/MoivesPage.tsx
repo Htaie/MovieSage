@@ -3,6 +3,8 @@ import NavBar from '../components/navigation/NavBar';
 import { apiKey, apiUrl } from '../constants';
 import { useEffect, useState } from 'react';
 import MovieCards from '../components/SearchFilmComponents/MoviesCards';
+import Footer from '../components/footer/Footer';
+import { FormatingName } from '../hooks/FormatingName';
 
 const SearchFilms = () => {
   const [data, setData] = useState([]);
@@ -38,13 +40,12 @@ const SearchFilms = () => {
     <>
       <NavBar />
       <div className="bg-black h-full min-h-screen ">
-        <h1 className="text-white text-3xl mb-10 pt-36 ml-20 ">
-          Поиск жанру : {name && name.charAt(0).toUpperCase() + name.slice(1)}
-        </h1>
+        <h1 className="text-white text-3xl mb-10 pt-36 ml-20 ">Поиск жанру : {FormatingName(name)}</h1>
         <div className=" container mx-auto my-0 flex flex-wrap justify-between">
           <MovieCards data={data} />
         </div>
       </div>
+      <Footer />
     </>
   );
 };

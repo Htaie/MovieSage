@@ -75,7 +75,7 @@ const MainSlider = () => {
       modules={[Pagination, Navigation, Autoplay]}
     >
       {data.map((movie: MovieType) => (
-        <SwiperSlide>
+        <SwiperSlide key={movie.id}>
           <div className="absolute bottom-0 ml-40 font-bold h-[400px] text-white">
             <div className="flex items-center space-x-2">
               <Link
