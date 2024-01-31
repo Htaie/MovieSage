@@ -12,55 +12,97 @@ const FilmInfo = ({ data }) => {
     );
   }
   return (
-    <div className="flex">
-      <div className="mt-3">
+    <div className="mt-3">
+      <div className="grid grid-cols-1 md:grid-cols-[1fr,2fr]">
         <p>Год производства</p>
-        <p>Страна</p>
-        <p>Жанр</p>
-        <p>Режиссер</p>
-        <p>Сценарий</p>
-        <p>Продюсер</p>
-        <p>Оператор</p>
-        <p>Композитор</p>
-        <p>Художник</p>
-        <p>Монтаж</p>
-        <p>Бюджет</p>
-        <p>Сборы в США</p>
-        <p>Сборы в мире</p>
-        <p>Сборы: Зрители</p>
-        <p>Сборы в России</p>
-        <p>Премьера в России</p>
-        <p>Премьера в мире</p>
-        <p>Релиз на DVD</p>
-        <p>Релиз на Blu-ray</p>
-        <p>Возраст</p>
-        <p>Рейтинг MPAA</p>
-        <p>Время</p>
-      </div>
-      <div className="mt-3 ml-10">
         <p>{data.year}</p>
-        {data.countries.map((item, index) => (
-          <p key={index}>{item.name}</p>
-        ))}
-        <GenresCards data={data.genres} />
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-[1fr,2fr]">
+        <p>Страна</p>
+        <div className="flex">
+          {data.countries.map((item, index) => (
+            <p key={index} className="mr-2">
+              {item.name}
+            </p>
+          ))}
+        </div>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-[1fr,2fr]">
+        <p>Жанр</p>
+        <div className="flex">
+          <GenresCards data={data.genres} />
+        </div>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-[1fr,2fr]">
+        <p>Режиссер</p>
         <p>Оливье Накаш, Эрик Толедано</p>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-[1fr,2fr]">
+        <p>Сценарий</p>
         <p>Оливье Накаш, Эрик Толедано, Филипп Поццо ди Борго</p>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-[1fr,2fr]">
+        <p>Продюсер</p>
         <p>Арно Бертран, Доминик Бутонна, Юбер Кайлар, ...</p>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-[1fr,2fr]">
+        <p>Оператор</p>
         <p>Матьё Вадпьед</p>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-[1fr,2fr]">
+        <p>Композитор</p>
         <p>Людовико Эйнауди</p>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-[1fr,2fr]">
+        <p>Художник</p>
         <p>Франсуа Эммануэлли, Матьё Вадпьед, Изабель Паннетье, ...</p>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-[1fr,2fr]">
+        <p>Монтаж</p>
         <p>Дориан Ригаль-Ансу</p>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-[1fr,2fr]">
+        <p>Бюджет</p>
         <p>$ {data.budget.value}</p>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-[1fr,2fr]">
+        <p>Сборы в США</p>
         <p>$ {data.fees.usa.value}</p>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-[1fr,2fr]">
+        <p>Сборы в мире</p>
         <p>$ {data.fees.world.value}</p>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-[1fr,2fr]">
+        <p>Сборы в России</p>
         <p>$1 725 813</p>
-
-        <p>{data.premiere.world}</p>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-[1fr,2fr]">
+        <p>Премьера в России</p>
         <p>{data.premiere.russia}</p>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-[1fr,2fr]">
+        <p>Премьера в мире</p>
+        <p>{data.premiere.world}</p>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-[1fr,2fr]">
+        <p>Релиз на DVD</p>
         <p>{data.premiere.dvd}</p>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-[1fr,2fr]">
+        <p>Релиз на Blu-ray</p>
         <p>{data.premiere.digital}</p>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-[1fr,2fr]">
+        <p>Возраст</p>
         <p>{data.ageRating}</p>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-[1fr,2fr]">
+        <p>Рейтинг MPAA</p>
         <p>R</p>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-[1fr,2fr]">
+        <p>Время</p>
         <p>{data.movieLength} мин</p>
       </div>
     </div>
