@@ -31,7 +31,7 @@ export const getEmojiForGenre = (genre: string) => {
       return '❤️😄';
 
     case 'музыка':
-    case 'musical':
+    case 'music':
       return '🎵';
 
     case 'мюзикл':
@@ -112,7 +112,7 @@ export const getEmojiForGenre = (genre: string) => {
     case 'mystery':
       return '🔮';
     case 'концерт':
-    case 'концерт':
+    case 'concert':
       return '🎤';
     case 'фильм-нуар':
     case 'film-nouar':
