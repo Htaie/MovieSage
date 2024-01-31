@@ -1,7 +1,16 @@
+import { CircularProgress } from '@mui/material';
 import GenresCards from '../cards/GenresCards';
 
-const FilmInfo = () => {
-  const data = [{ name: 'комедия' }, { name: 'драма' }, { name: 'сулит' }];
+const FilmInfo = ({ data }) => {
+  // const data = [{ name: 'комедия' }, { name: 'драма' }, { name: 'сулит' }];
+  // console.log(data, 'assss');
+  if (data.length === 0 || !data) {
+    return (
+      <div className="w-full h-full flex justify-center items-center bg-black">
+        <CircularProgress sx={{ color: 'white' }} />
+      </div>
+    );
+  }
   return (
     <div className="flex">
       <div className="mt-3">
@@ -29,9 +38,11 @@ const FilmInfo = () => {
         <p>Время</p>
       </div>
       <div className="mt-3 ml-10">
-        <p>2011</p>
-        <p>Франция</p>
-        <GenresCards data={data} />
+        <p>{data.year}</p>
+        {data.countries.map((item, index) => (
+          <p key={index}>{item.name}</p>
+        ))}
+        <GenresCards data={data.genres} />
         <p>Оливье Накаш, Эрик Толедано</p>
         <p>Оливье Накаш, Эрик Толедано, Филипп Поццо ди Борго</p>
         <p>Арно Бертран, Доминик Бутонна, Юбер Кайлар, ...</p>
@@ -39,18 +50,18 @@ const FilmInfo = () => {
         <p>Людовико Эйнауди</p>
         <p>Франсуа Эммануэлли, Матьё Вадпьед, Изабель Паннетье, ...</p>
         <p>Дориан Ригаль-Ансу</p>
-        <p>€9 500 000</p>
-        <p>+ $10 198 820</p>
-        <p>+ $416 389 690 = $426 588 510</p>
-        <p>Франция 19.4 млн, Германия 9.1 млн, Испания 2.6 млн, ...</p>
+        <p>$ {data.budget.value}</p>
+        <p>$ {data.fees.usa.value}</p>
+        <p>$ {data.fees.world.value}</p>
         <p>$1 725 813</p>
-        <p>26 апреля 2012, «Каскад фильм»</p>
-        <p>23 сентября 2011, ...</p>
-        <p>28 мая 2012, «Новый Диск»</p>
-        <p>25 июня 2012, «Новый Диск»</p>
-        <p>18+</p>
+
+        <p>{data.premiere.world}</p>
+        <p>{data.premiere.russia}</p>
+        <p>{data.premiere.dvd}</p>
+        <p>{data.premiere.digital}</p>
+        <p>{data.ageRating}</p>
         <p>R</p>
-        <p>112 мин. / 01:52</p>
+        <p>{data.movieLength} мин</p>
       </div>
     </div>
   );

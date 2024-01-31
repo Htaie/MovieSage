@@ -20,7 +20,7 @@ const MovieCards = ({ data }: any) => {
     <>
       {data.map((item: any) => (
         <Link
-          to={'/'}
+          to={`/movie/${item.id}`}
           className="relative w-[266px] h-[400px] rounded-lg overflow-hidden transition-transform  transform hover:scale-105 mb-4 text-white"
           key={item.id}
         >

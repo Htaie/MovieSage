@@ -1,29 +1,61 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { MainBtn } from '../components/UI/buttons/MainBtn.tsx';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import FilmInfo from '../components/MovieDetails/FilmInfo.tsx';
 import DubbingActorsInfo from '../components/MovieDetails/DubbingActorsInfo.tsx';
 import ActorsInfo from '../components/MovieDetails/ActorsInfo.tsx';
+import { useEffect, useState } from 'react';
+import { apiKey, apiUrl } from '../constants.ts';
+import { CircularProgress } from '@mui/material';
 
 const AboutMoviePage = () => {
+  const [data, setData] = useState([]);
+  const { id } = useParams();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const url = `${apiUrl}movie/${id}`;
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'X-API-KEY': apiKey,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const responseData = await response.json();
+        setData(responseData);
+        console.log(responseData);
+      } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  if (data.length === 0 || !data) {
+    return (
+      <div className="w-full h-full flex justify-center items-center bg-black">
+        <CircularProgress sx={{ color: 'white' }} />
+      </div>
+    );
+  }
+
+  console.log(id);
   return (
     <div className="bg-black">
       <div className="container mx-auto text-white">
         <div className=" flex">
           <div>
-            <img
-              src="https://upload.wikimedia.org/wikipedia/ru/b/b9/Intouchables.jpg"
-              alt="film image"
-              className="w-[300px] h-[400px] mt-4 mb-4"
-            ></img>
-            <img
-              src="https://img05.rl0.ru/afisha/375x210q85i/s2.afisha.ru/mediastorage/4b/c9/1cecdc4a0a0d464faec4995bc94b.jpg"
-              alt="film trailer"
-              className="w-[300px] h-[175px]"
-            ></img>
+            <img src={data.poster.url} alt="film image" className="w-[300px] h-[400px] mt-4 mb-4"></img>
           </div>
+          <video src={data.videos.trailers[0]}></video>
           <div className="flex flex-col ml-[50px]">
-            <h1 className="text-4xl font-bold mt-4 mb-[40px]">1+1(2011)</h1>
+            <h1 className="text-4xl font-bold mt-4 mb-[40px]">{data.name}</h1>
             <div className="mb-6">
               <MainBtn
                 text="Посмотреть трейлер"
@@ -41,10 +73,10 @@ const AboutMoviePage = () => {
               ></MainBtn>
             </div>
             <h1 className="text-4xl font-bold">О фильме</h1>
-            <FilmInfo />
+            <FilmInfo data={data} />
           </div>
           <div className="mt-4 ml-[40px]">
-            <p className="font-bold text-2xl">8.8</p>
+            <p className="font-bold text-2xl">{data.rating.kp}</p>
             <p className="mb-2">Количество оценок</p>
             <MainBtn
               text={'Оценить фильм'}
@@ -76,10 +108,7 @@ const AboutMoviePage = () => {
           </div>
         </div>
         <p className=" mt-20" style={{ maxWidth: '800px' }}>
-          Пострадав в результате несчастного случая, богатый аристократ Филипп нанимает в помощники человека, который
-          менее всего подходит для этой работы, – молодого жителя предместья Дрисса, только что освободившегося из
-          тюрьмы. Несмотря на то, что Филипп прикован к инвалидному креслу, Дриссу удается привнести в размеренную жизнь
-          аристократа дух приключений.
+          {data.description}
         </p>
       </div>
     </div>
