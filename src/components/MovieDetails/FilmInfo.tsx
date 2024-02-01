@@ -14,26 +14,6 @@ const FilmInfo = ({ data }) => {
   return (
     <div className="mt-3">
       <div className="grid grid-cols-1 md:grid-cols-[1fr,2fr]">
-        <p>Год производства</p>
-        <p>{data.year}</p>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-[1fr,2fr]">
-        <p>Страна</p>
-        <div className="flex">
-          {data.countries.map((item, index) => (
-            <p key={index} className="mr-2">
-              {item.name}
-            </p>
-          ))}
-        </div>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-[1fr,2fr]">
-        <p>Жанр</p>
-        <div className="flex">
-          <GenresCards data={data.genres} />
-        </div>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-[1fr,2fr]">
         <p>Режиссер</p>
         <p>Оливье Накаш, Эрик Толедано</p>
       </div>
@@ -100,10 +80,6 @@ const FilmInfo = ({ data }) => {
       <div className="grid grid-cols-1 md:grid-cols-[1fr,2fr]">
         <p>Рейтинг MPAA</p>
         <p>R</p>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-[1fr,2fr]">
-        <p>Время</p>
-        <p>{data.movieLength} мин</p>
       </div>
     </div>
   );
