@@ -11,6 +11,7 @@ import { CircularProgress } from '@mui/material';
 const AboutMoviePage = () => {
   const [data, setData] = useState([]);
   const { id } = useParams();
+  console.log(id);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -52,14 +53,21 @@ const AboutMoviePage = () => {
         <div className=" flex">
           <div>
             <img src={data.poster.url} alt="film image" className="w-[300px] h-[400px] mt-4 mb-4"></img>
+            <iframe width="420" height="315" src={data.videos.trailers[0].url}></iframe>
           </div>
-          <video src={data.videos.trailers[0]}></video>
           <div className="flex flex-col ml-[50px]">
             <h1 className="text-4xl font-bold mt-4 mb-[40px]">{data.name}</h1>
             <div className="mb-6">
               <MainBtn
                 text="Посмотреть трейлер"
                 to={''}
+                onClick={() => {
+                  console.log('Click');
+                }}
+              ></MainBtn>
+              <MainBtn
+                text="Посмотреть фильма"
+                to={`/watch/${data.id}`}
                 onClick={() => {
                   console.log('Click');
                 }}
