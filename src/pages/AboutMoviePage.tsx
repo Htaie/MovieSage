@@ -1,13 +1,13 @@
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { MainBtn } from '../components/UI/buttons/MainBtn.tsx';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import FilmInfo from '../components/MovieDetails/FilmInfo.tsx';
-import DubbingActorsInfo from '../components/MovieDetails/DubbingActorsInfo.tsx';
 import ActorsInfo from '../components/MovieDetails/ActorsInfo.tsx';
 import { useEffect, useState } from 'react';
 import { apiKey, apiUrl } from '../constants.ts';
 import { CircularProgress } from '@mui/material';
 import GenresCards from '../components/cards/GenresCards.tsx';
+import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
 
 const AboutMoviePage = () => {
   const [data, setData] = useState([]);
@@ -48,6 +48,11 @@ const AboutMoviePage = () => {
   }
 
   console.log(id);
+
+  const stars = Array.from({ length: 10 }, (_, index) => (
+    <StarOutlinedIcon key={index} style={{ fontSize: '3em', color: '#a0a0a0' }} />
+  ));
+
   return (
     <div className="bg-black">
       <div className="container mx-auto text-white">
@@ -56,7 +61,7 @@ const AboutMoviePage = () => {
             <img
               src={data.poster.url || 'https://placehold.co/300x430'}
               alt="film image"
-              className="w-[300px] h-[430px] mt-4 mb-4"
+              className="w-[300px] h-[430px] rounded-lg mt-4 mb-4"
             ></img>
             {/* <iframe width="300" height="170" src={data.videos.trailers[0].url}></iframe> */}
           </div>
@@ -103,39 +108,40 @@ const AboutMoviePage = () => {
               ></MainBtn>
             </div>
           </div>
-          <div className="mt-4 ml-[40px]">
-            <p className="font-bold text-2xl">{data.rating.kp}</p>
-            <p className="mb-2">Количество оценок</p>
-            <MainBtn
-              text={'Оценить фильм'}
-              onClick={() => {
-                console.log('Liked');
-              }}
-              style={{ marginBottom: '20px' }}
-            />
-            <div className="mb-[200px]">
-              <Link to={''} className="transition-colors hover:text-red-500">
-                Количество рецензий
-              </Link>
+        </div>
+        <div className="mt-[60px] mb-[180px]">
+          <p className="font-bold text-4xl mb-[70px]">Рейтинг фильма:</p>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-row items-center">
+              {stars.map((_, index) => {
+                const rating = index + 1;
+                const starColor = rating <= data.rating.kp ? '#ffffff' : '#a0a0a0';
+
+                return (
+                  <div key={index} className="flex flex-col items-center">
+                    <StarOutlinedIcon style={{ fontSize: '3em', color: starColor }} />
+                    <span>{rating}</span>
+                  </div>
+                );
+              })}
             </div>
-            <p className="font-bold">В главных ролях</p>
-            <ActorsInfo />
-            <Link to={''} className="text-red-500">
-              Количество актеров
-            </Link>
-            <p className="font-bold mt-[30px]">Роли дублировали</p>
-            <DubbingActorsInfo />
-            <Link to={''} className="text-red-500">
-              Количество актеров дубляжа
-            </Link>
-            <img
-              src="https://m.the-flow.ru/uploads/images/origin/15/81/73/83/93/abc2e62.png"
-              alt="nominations"
-              className="w-[120px] h-[100px]"
-            ></img>
-            <FilmInfo data={data} />
+            <div className="flex flex-col items-end">
+              <p className="font-bold text-3xl">{data.rating.kp}</p>
+              <MainBtn
+                text={'Оценить фильм'}
+                onClick={() => {
+                  console.log('Liked');
+                }}
+                style={{ marginBottom: '20px' }}
+              />
+            </div>
           </div>
         </div>
+        <div className="mb-[80px]">
+          <p className="font-bold text-3xl mb-[60px]">Актеры:</p>
+          <ActorsInfo data={data} />
+        </div>
+        <FilmInfo data={data} />
       </div>
     </div>
   );
