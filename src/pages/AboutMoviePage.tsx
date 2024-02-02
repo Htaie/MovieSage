@@ -58,11 +58,11 @@ const AboutMoviePage = () => {
               alt="film image"
               className="w-[300px] h-[430px] mt-4 mb-4"
             ></img>
-            <iframe width="300" height="170" src={data.videos.trailers[0].url}></iframe>
+            {/* <iframe width="300" height="170" src={data.videos.trailers[0].url}></iframe> */}
           </div>
           <div className="flex flex-col ml-[50px]">
             <div className="flex mb-8">
-              <GenresCards data={data.genres} />
+              <GenresCards data={data.genres} width={30} />
             </div>
             <h1 className="text-4xl font-bold mt-4 mb-[40px]">{data.name}</h1>
             <div className="flex mb-4">

@@ -13,7 +13,7 @@ export const MainBtn: React.FC<MainBtnProps> = ({ text, to, ...props }) => {
       {...props}
       className="py-3 px-4 text-xl font-bold rounded-3xl backdrop-blur-lg bg-white/10 hover:backdrop-blur-xl hover:bg-white/30 mr-4"
     >
-      {text}
+      <span>{text}</span>
     </Link>
   );
 };
