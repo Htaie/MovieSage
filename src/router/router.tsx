@@ -4,6 +4,7 @@ import { SecondPage } from '../components/SecondPage';
 import SearchFilms from '../pages/MoivesPage';
 import AboutMoviePage from '../pages/AboutMoviePage';
 import MoviePlaeer from '../components/MoviePlaeer';
+import ActorsPage from '../pages/ActorsPage';
 
 export const router = createBrowserRouter([
   {
@@ -25,5 +26,9 @@ export const router = createBrowserRouter([
   {
     path: '/watch/:id',
     element: <MoviePlaeer />,
+      },
+  {
+    path: '/actor/:id',
+    element: <ActorsPage />,
   },
 ]);
