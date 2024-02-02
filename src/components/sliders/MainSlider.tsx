@@ -41,19 +41,18 @@ const MainSlider = () => {
 
         const responseData = await response.json();
         setData(responseData.docs);
-
-        localStorage.setItem('movieData', JSON.stringify(responseData.docs));
+        console.log(responseData.docs);
       } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
       }
     };
 
-    const storedData = localStorage.getItem('movieData');
-    if (storedData) {
-      setData(JSON.parse(storedData));
-    } else {
-      fetchData();
-    }
+    // const storedData = localStorage.getItem('movieData');
+    // if (storedData) {
+    //   setData(JSON.parse(storedData));
+    // } else {
+    fetchData();
+    // }
   }, []);
   return (
     <Swiper
@@ -87,7 +86,7 @@ const MainSlider = () => {
               <p>{movie.rating.imdb} IMDB</p>
               <p>{movie.rating.kp} KINOPOISK</p>
             </div>
-            <h1 className="mb-4 w-2/3 text-wrap text-4xl mx-2 mt-3">{movie.name}</h1>
+            <img className=" h-10" src={movie.logo.url} alt=""></img>
             <div className="flex">
               <GenresCards data={movie.genres} />
             </div>
