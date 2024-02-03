@@ -7,12 +7,11 @@ import { useEffect, useState } from 'react';
 import { apiKey, apiUrl } from '../constants.ts';
 import { CircularProgress } from '@mui/material';
 import GenresCards from '../components/cards/GenresCards.tsx';
-import { RaitingInfo } from '../components/MovieDetails/RaitingInfo.tsx';
+import { RaitingInfo } from '../components/MovieDetails/RatingStar.tsx';
 
 const AboutMoviePage = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<MovieData[]>([]);
   const { id } = useParams();
-  console.log(id);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -31,7 +30,6 @@ const AboutMoviePage = () => {
 
         const responseData = await response.json();
         setData(responseData);
-        console.log(responseData);
       } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
       }
@@ -46,8 +44,6 @@ const AboutMoviePage = () => {
       </div>
     );
   }
-
-  console.log(id);
 
   return (
     <div className="bg-black">
@@ -65,7 +61,11 @@ const AboutMoviePage = () => {
             <div className="flex mb-8">
               <GenresCards data={data.genres} width={30} />
             </div>
-            <h1 className="text-4xl font-bold mt-4 mb-[40px]">{data.name}</h1>
+            {data.logo.url ? (
+              <img src={data.logo.url} alt="film logo" className="w-[300px] mb-3" />
+            ) : (
+              <h1 className="text-4xl font-bold mt-4 mb-[40px]">{data.name}</h1>
+            )}
             <div className="flex mb-4">
               <p>{data.year}</p>
               <div className="flex">

@@ -46,13 +46,7 @@ const MainSlider = () => {
         console.error('There was a problem with the fetch operation:', error);
       }
     };
-
-    // const storedData = localStorage.getItem('movieData');
-    // if (storedData) {
-    //   setData(JSON.parse(storedData));
-    // } else {
     fetchData();
-    // }
   }, []);
   return (
     <Swiper

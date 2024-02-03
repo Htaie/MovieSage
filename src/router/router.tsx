@@ -1,10 +1,10 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { Component } from '../component';
-import { SecondPage } from '../components/SecondPage';
+import { SecondPage } from '../pages/MainPage';
 import SearchFilms from '../pages/MoivesPage';
 import AboutMoviePage from '../pages/AboutMoviePage';
-import MoviePlaeer from '../components/MoviePlaeer';
-import ActorsPage from '../pages/ActorsPage';
+import MoviePlaeer from '../components/UI/MoviePlayer';
+import { AboutActorPage } from '../pages/AboutActorPage';
 
 export const router = createBrowserRouter([
   {
@@ -26,9 +26,9 @@ export const router = createBrowserRouter([
   {
     path: '/watch/:id',
     element: <MoviePlaeer />,
-      },
+  },
   {
     path: '/actor/:id',
-    element: <ActorsPage />,
+    element: <AboutActorPage />,
   },
 ]);

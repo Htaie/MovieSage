@@ -1,8 +1,6 @@
 import { CircularProgress } from '@mui/material';
 
 const FilmInfo = ({ data }) => {
-  // const data = [{ name: 'комедия' }, { name: 'драма' }, { name: 'сулит' }];
-  // console.log(data, 'assss');
   if (data.length === 0 || !data) {
     return (
       <div className="w-full h-full flex justify-center items-center bg-black">

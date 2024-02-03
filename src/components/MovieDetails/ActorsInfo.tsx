@@ -5,7 +5,8 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css';
 
-const ActorsInfo = ({ data }) => {
+const ActorsInfo = ({ data }: any) => {
+  console.log(data);
   return (
     <>
       <Swiper
@@ -21,10 +22,10 @@ const ActorsInfo = ({ data }) => {
         navigation={true}
         modules={[Navigation]}
       >
-        {data.persons.map((item, index) => (
+        {data.persons.map((item: any, index: number) => (
           <SwiperSlide key={index} className="flex">
             <Link key={index} to={`/actor/${item.id}`}>
-              <img src={item.photo} alt="actor image" className="w-[190px] h-[200px] rounded-lg"></img>
+              <img src={item.photo} alt="actor image" className="w-[200px] h-[200px] rounded-lg object-cover"></img>
             </Link>
           </SwiperSlide>
         ))}

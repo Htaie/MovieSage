@@ -1,7 +1,12 @@
-const ActorsPage = () => {
+import { useParams } from 'react-router-dom';
+
+export const AboutActorPage = () => {
+  const { id } = useParams();
+  console.log(id);
+
   return (
     <div className="bg-black text-white w-full h-full">
-      <div className="grid grid-cols-1 lg:grid-cols-[2fr,2fr] md:grid-cols-[2fr,1fr] sm:grid-cols-[2fr,1fr]">
+      <div className="grid grid-cols-1 lg:grid-cols-[2fr,2fr] container mx-auto md:grid-cols-[2fr,1fr] sm:grid-cols-[2fr,1fr] pt-40 pb-40">
         <div>
           <img src="https://placehold.co/400x550" alt="actor image" className="rounded-lg ml-12"></img>
         </div>
@@ -10,7 +15,7 @@ const ActorsPage = () => {
             <p className="text-3xl">Имя Фамилия</p>
             <p className="text-xl">First Name Last Name</p>
           </div>
-          <div className="flex grid grid-cols-1 gap-y-2 md:grid-cols-[1fr,2fr]">
+          <div className="grid grid-cols-1 gap-y-2 md:grid-cols-[1fr,2fr]">
             <div className="flex flex-col">
               <p className="text-gray-400 text-xl">Карьера:</p>
               <p className="text-xl">Актер, продюсер, сценарист</p>
@@ -37,5 +42,3 @@ const ActorsPage = () => {
     </div>
   );
 };
-
-export default ActorsPage;
