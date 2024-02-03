@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { apiKey, apiUrl } from '../constants.ts';
 import { CircularProgress } from '@mui/material';
 import GenresCards from '../components/cards/GenresCards.tsx';
-import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
+import { RaitingInfo } from '../components/MovieDetails/RaitingInfo.tsx';
 
 const AboutMoviePage = () => {
   const [data, setData] = useState([]);
@@ -48,10 +48,6 @@ const AboutMoviePage = () => {
   }
 
   console.log(id);
-
-  const stars = Array.from({ length: 10 }, (_, index) => (
-    <StarOutlinedIcon key={index} style={{ fontSize: '3em', color: '#a0a0a0' }} />
-  ));
 
   return (
     <div className="bg-black">
@@ -109,34 +105,7 @@ const AboutMoviePage = () => {
             </div>
           </div>
         </div>
-        <div className="mt-[60px] mb-[180px]">
-          <p className="font-bold text-4xl mb-[70px]">Рейтинг фильма:</p>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="flex flex-row items-center">
-              {stars.map((_, index) => {
-                const rating = index + 1;
-                const starColor = rating <= data.rating.kp ? '#ffffff' : '#a0a0a0';
-
-                return (
-                  <div key={index} className="flex flex-col items-center">
-                    <StarOutlinedIcon style={{ fontSize: '3em', color: starColor }} />
-                    <span>{rating}</span>
-                  </div>
-                );
-              })}
-            </div>
-            <div className="flex flex-col items-end">
-              <p className="font-bold text-3xl">{data.rating.kp}</p>
-              <MainBtn
-                text={'Оценить фильм'}
-                onClick={() => {
-                  console.log('Liked');
-                }}
-                style={{ marginBottom: '20px' }}
-              />
-            </div>
-          </div>
-        </div>
+        <RaitingInfo data={data} />
         <div className="mb-[80px]">
           <p className="font-bold text-3xl mb-[60px]">Актеры:</p>
           <ActorsInfo data={data} />
