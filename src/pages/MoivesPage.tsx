@@ -5,20 +5,20 @@ import { useEffect, useState } from 'react';
 import MovieCards from '../components/SearchFilmComponents/MoviesCards';
 import Footer from '../components/footer/Footer';
 import { FormatingName } from '../textUtils';
-import { CircularProgress } from '@mui/material';
-
-// ... (import statements)
 
 const SearchFilms = () => {
   const [data, setData] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
-  const [maxPages, setMaxPages] = useState(1); // Add state for maximum pages
+  const [maxPages, setMaxPages] = useState(1);
   const { name } = useParams();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const url = `${apiUrl}movie?page=${pageNumber}&limit=195&genres.name=${name}&notNullFields=poster.url`;
+        setLoading(true);
+
+        const url = `${apiUrl}movie?page=${pageNumber}&limit=50&genres.name=${name}&notNullFields=poster.url`;
         const response = await fetch(url, {
           method: 'GET',
           headers: {
@@ -32,51 +32,42 @@ const SearchFilms = () => {
         }
 
         const responseData = await response.json();
-        setData(responseData.docs);
+        setData((prevData) => [...prevData, ...responseData.docs]);
         setMaxPages(responseData.pages);
-        console.log(responseData);
       } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchData();
   }, [pageNumber, name]);
+  useEffect(() => {
+    const handleScroll = () => {
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      const scrollTop =
+        window.scrollY || window.scrollY || document.body.scrollTop + (document.documentElement.scrollTop || 0);
 
-  const handleNextPage = () => {
-    if (pageNumber < maxPages) {
-      setPageNumber(pageNumber + 1);
-      console.log(pageNumber);
-    }
-  };
+      if (!loading && windowHeight + scrollTop >= documentHeight - 400 && pageNumber < maxPages) {
+        setPageNumber((prevPageNumber) => prevPageNumber + 1);
+      }
+    };
 
-  const handlePrevPage = () => {
-    if (pageNumber > 1) {
-      setPageNumber(pageNumber - 1);
-    }
-  };
-  const handleLastPage = () => {
-    if (pageNumber < maxPages) {
-      setPageNumber(maxPages);
-    }
-  };
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [pageNumber, name, maxPages, loading]);
 
   return (
     <>
       <NavBar />
       <div className="bg-black h-full min-h-screen ">
         <h1 className="text-white text-3xl mb-10 pt-36 ml-20 ">Поиск жанру : {FormatingName(name)}</h1>
-        <div className="absolute right-0">
-          <button className="text-white" onClick={handleNextPage}>
-            +1
-          </button>
-          <button className="text-white" onClick={handlePrevPage}>
-            -1
-          </button>
-          <button className="text-white" onClick={handleLastPage}>
-            {maxPages}
-          </button>
-        </div>
+        <div className="absolute right-0"></div>
         <div className="container mx-auto my-0 flex flex-wrap justify-between">
           <MovieCards data={data} />
         </div>

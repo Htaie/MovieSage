@@ -18,14 +18,13 @@ export const router = createBrowserRouter([
     element: <Component />,
   },
   {
-
     path: '/login',
     element: <LoginPage />,
   },
   {
     path: '/register',
     element: <RegisterPage />,
-    },
+  },
   {
     path: '/genre/:name',
     element: <SearchFilms />,
