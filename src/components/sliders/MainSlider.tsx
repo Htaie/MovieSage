@@ -41,21 +41,13 @@ const MainSlider = () => {
 
         const responseData = await response.json();
         setData(responseData.docs);
-
-        localStorage.setItem('movieData', JSON.stringify(responseData.docs));
+        console.log(responseData.docs);
       } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
       }
     };
-
-    const storedData = localStorage.getItem('movieData');
-    if (storedData) {
-      setData(JSON.parse(storedData));
-    } else {
-      fetchData();
-    }
+    fetchData();
   }, []);
-  console.log(data);
   return (
     <Swiper
       style={{
@@ -76,11 +68,11 @@ const MainSlider = () => {
       modules={[Pagination, Navigation, Autoplay]}
     >
       {data.map((movie: MovieType) => (
-        <SwiperSlide>
+        <SwiperSlide key={movie.id}>
           <div className="absolute bottom-0 ml-40 font-bold h-[400px] text-white">
             <div className="flex items-center space-x-2">
               <Link
-                to={`/movie/`}
+                to={`/genres/}`}
                 className="backdrop-blur-lg  bg-white/10 hover:backdrop-blur-3xl hover:bg-white/30  px-3 py-2  rounded-3xl text-xl mx-2"
               >
                 {movie.type.charAt(0).toUpperCase() + movie.type.slice(1)}
@@ -88,12 +80,12 @@ const MainSlider = () => {
               <p>{movie.rating.imdb} IMDB</p>
               <p>{movie.rating.kp} KINOPOISK</p>
             </div>
-            <h1 className="mb-4 w-2/3 text-wrap text-4xl mx-2 mt-3">{movie.name}</h1>
+            <img className=" h-10" src={movie.logo.url} alt=""></img>
             <div className="flex">
               <GenresCards data={movie.genres} />
             </div>
             <h1 className=" w-[460px] text-wrap text-xl mx-2 mt-3 mb-10">{movie.shortDescription}</h1>
-            <Link to={`/movie/`} className=" py-4  px-7 border rounded-3xl">
+            <Link to={`/movie/${movie.id}`} className=" py-4  px-7 border rounded-3xl">
               Перейти к фильму
             </Link>
           </div>

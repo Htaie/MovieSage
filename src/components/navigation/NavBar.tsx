@@ -2,18 +2,38 @@ import { Link } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const NavBar = () => {
   const [open, setOpen] = useState(false);
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
+  const [visible, setVisible] = useState(true);
+
+  const handleScroll = () => {
+    const currentScrollPos = window.scrollY;
+
+    setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
+    setPrevScrollPos(currentScrollPos);
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [prevScrollPos, visible]);
   const gradientBackground = {
     background:
       'linear-gradient(180deg, rgba(0,0,0,.6), rgba(0,0,0,.595) 6.67%, rgba(0,0,0,.579) 13.33%, rgba(0,0,0,.551) 20%, rgba(0,0,0,.512) 26.67%, rgba(0,0,0,.461) 33.33%, rgba(0,0,0,.401) 40%, rgba(0,0,0,.334) 46.67%, rgba(0,0,0,.266) 53.33%, rgba(0,0,0,.199) 60%, rgba(0,0,0,.139) 66.67%, rgba(0,0,0,.088) 73.33%, rgba(0,0,0,.049) 80%, rgba(0,0,0,.021) 86.67%, rgba(0,0,0,.005) 93.33%, transparent)',
   };
   return (
-    <div className="w-screen h-60 absolute z-30" style={gradientBackground}>
+    <div
+      className={`w-screen fixed z-30 transition-all duration-300 ${visible ? 'top-0' : '-top-20'}`}
+      style={gradientBackground}
+    >
       <div className="container mx-auto my-0 flex h-32 items-center justify-between text-white">
-        <div className="flex space-x-3 items-center">
+        <Link to={'/'} className="flex space-x-3 items-center">
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M2.39997 5.27259C2.39997 2.60499 4.15685 0.799988 6.75692 0.799988H25.243C27.8419 0.799988 29.6 2.60372 29.6 5.27259V31.2L27.3683 28.5387V5.27259C27.3683 4.69576 27.1449 4.14251 26.7472 3.73428C26.3494 3.32604 25.8098 3.09619 25.2467 3.09519H6.76063C6.19771 3.09653 5.65827 3.32648 5.26057 3.73464C4.86287 4.1428 4.63936 4.69587 4.63903 5.27259V24.0661C4.63903 24.6429 4.86244 25.1962 5.26021 25.6044C5.65798 26.0127 6.19761 26.2425 6.76063 26.2435H22.2683L24.4839 28.521L6.75692 28.5387C4.15808 28.5387 2.39997 26.735 2.39997 24.0661V5.27259Z"
@@ -30,13 +50,13 @@ const NavBar = () => {
             <path d="M6.84267 29.1987L6.86134 29.18H6.828L6.84267 29.1987Z" fill="black" />
           </svg>
           <h1>MovieSage</h1>
-        </div>
+        </Link>
         <div className="flex space-x-5">
-          <Link to={''}>Home</Link>
-          <Link to={''}>About</Link>
-          <Link to={''}>Contact</Link>
-          <Link to={''}>Contact</Link>
-          <Link to={''}>Contact</Link>
+          <Link to={'/'}>Home</Link>
+          <Link to={'/'}>About</Link>
+          <Link to={'/'}>Contact</Link>
+          <Link to={'/'}>Contact</Link>
+          <Link to={'/'}>SearchFilmTest</Link>
         </div>
         <div className="flex space-x-3 items-center">
           <SearchIcon className="hover:cursor-pointer" onClick={() => setOpen(!open)} />
