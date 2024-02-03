@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom';
 import { FormatingName, getEmojiForGenre } from '../../textUtils';
 
-const GenresCards = (data: any, width) => {
-  console.log(width);
+const GenresCards = (data: any) => {
   return (
     <>
       {data.data.map((item: any, index: number) => (
