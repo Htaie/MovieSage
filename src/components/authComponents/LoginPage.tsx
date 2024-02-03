@@ -1,39 +1,27 @@
-import { Link } from 'react-router-dom';
-import SearchIcon from '@mui/icons-material/Search';
-import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
-const NavBar = () => {
-  const [open, setOpen] = useState(false);
-  const [prevScrollPos, setPrevScrollPos] = useState(0);
-  const [visible, setVisible] = useState(true);
+const LoginPage = () => {
+  const [showPassword, setShowPassword] = useState(false);
 
-  const handleScroll = () => {
-    const currentScrollPos = window.scrollY;
-
-    setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
-    setPrevScrollPos(currentScrollPos);
+  const customStyles = {
+    input: {
+      backgroundColor: 'black',
+      border: '2px solid #2b2c2e',
+      borderRadius: '5px',
+      color: 'white',
+    },
   };
 
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [prevScrollPos, visible]);
-  const gradientBackground = {
-    background:
-      'linear-gradient(180deg, rgba(0,0,0,.6), rgba(0,0,0,.595) 6.67%, rgba(0,0,0,.579) 13.33%, rgba(0,0,0,.551) 20%, rgba(0,0,0,.512) 26.67%, rgba(0,0,0,.461) 33.33%, rgba(0,0,0,.401) 40%, rgba(0,0,0,.334) 46.67%, rgba(0,0,0,.266) 53.33%, rgba(0,0,0,.199) 60%, rgba(0,0,0,.139) 66.67%, rgba(0,0,0,.088) 73.33%, rgba(0,0,0,.049) 80%, rgba(0,0,0,.021) 86.67%, rgba(0,0,0,.005) 93.33%, transparent)',
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
+
   return (
-    <div
-      className={`w-screen fixed z-30 transition-all duration-300 ${visible ? 'top-0' : '-top-20'}`}
-      style={gradientBackground}
-    >
-      <div className="container mx-auto my-0 flex h-32 items-center justify-between text-white">
-        <Link to={'/'} className="flex space-x-3 items-center">
+    <div className="flex items-center justify-center h-screen bg-black">
+      <div className="text-white bg-black w-[500px] h-[420px] border border-[#2b2c2e] rounded-lg">
+        <div className="flex pt-4 ml-[28px] mb-1">
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M2.39997 5.27259C2.39997 2.60499 4.15685 0.799988 6.75692 0.799988H25.243C27.8419 0.799988 29.6 2.60372 29.6 5.27259V31.2L27.3683 28.5387V5.27259C27.3683 4.69576 27.1449 4.14251 26.7472 3.73428C26.3494 3.32604 25.8098 3.09619 25.2467 3.09519H6.76063C6.19771 3.09653 5.65827 3.32648 5.26057 3.73464C4.86287 4.1428 4.63936 4.69587 4.63903 5.27259V24.0661C4.63903 24.6429 4.86244 25.1962 5.26021 25.6044C5.65798 26.0127 6.19761 26.2425 6.76063 26.2435H22.2683L24.4839 28.521L6.75692 28.5387C4.15808 28.5387 2.39997 26.735 2.39997 24.0661V5.27259Z"
@@ -49,41 +37,44 @@ const NavBar = () => {
             />
             <path d="M6.84267 29.1987L6.86134 29.18H6.828L6.84267 29.1987Z" fill="black" />
           </svg>
-          <h1>MovieSage</h1>
-        </Link>
-        <div className="flex space-x-5">
-          <Link to={'/'}>Home</Link>
-          <Link to={'/'}>About</Link>
-          <Link to={'/'}>Contact</Link>
-          <Link to={'/'}>Contact</Link>
-          <Link to={'/'}>SearchFilmTest</Link>
+          <h1 className="text-3xl">MovieSage</h1>
+          <button className="w-20 h-12 bg-black border border-[#2b2c2e] rounded-lg ml-[182px]">Close</button>
         </div>
-        <div className="flex space-x-3 items-center">
-          <SearchIcon className="hover:cursor-pointer" onClick={() => setOpen(!open)} />
-          {open ? (
-            <>
-              <NotificationsNoneIcon />
-              <img
-                className="w-10 h-10 rounded-full"
-                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-                alt="Profile Img"
-              />
-              <KeyboardArrowDownIcon />
-            </>
-          ) : (
-            <>
-              <Link className="border px-3 py-1 rounded-md" to={'/register'}>
-                Sign Up
-              </Link>
-              <Link className="border border-green-700 bg-green-700 px-3 py-1 rounded-md" to={'/login'}>
-                Login
-              </Link>
-            </>
-          )}
+        <p className="text-xs text-gray-400 ml-[28px] mb-4">Login to your account</p>
+        <h1 className="ml-[28px] mb-2">Email</h1>
+        <div className="flex justify-center">
+          <input
+            className="w-[440px] h-12 bg-black border rounded-lg mb-3 p-2"
+            style={customStyles.input}
+            type="text"
+            placeholder="Email"
+          />
+        </div>
+        <h1 className="ml-[28px] mb-2">Password</h1>
+        <div className="relative flex justify-center">
+          <input
+            className="w-[440px] h-12 bg-black border rounded-lg mb-4 p-2"
+            style={customStyles.input}
+            type={showPassword ? 'text' : 'password'}
+            placeholder="Password"
+          />
+          <div className="absolute top-0 right-8 m-3 cursor-pointer" onClick={togglePasswordVisibility}>
+            {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+          </div>
+        </div>
+        <div className="flex justify-center ">
+          <button className="mb-4">Forgot Password</button>
+        </div>
+        <div className="flex justify-center ">
+          <button className="w-[440px] h-12 text-gray-800 bg-white rounded-lg mb-2">Login</button>
+        </div>
+        <div className="flex justify-center">
+          <p className="text-xs text-gray-400 mr-2">Don't have an account?</p>
+          <button className="text-xs">Sign up</button>
         </div>
       </div>
     </div>
   );
 };
 
-export default NavBar;
+export default LoginPage;

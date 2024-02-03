@@ -1,5 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { Component } from '../component';
+import LoginPage from '../components/authComponents/LoginPage';
+import RegisterPage from '../components/authComponents/RegisterPage';
 import { SecondPage } from '../pages/MainPage';
 import SearchFilms from '../pages/MoivesPage';
 import AboutMoviePage from '../pages/AboutMoviePage';
@@ -15,6 +17,15 @@ export const router = createBrowserRouter([
     path: '/2',
     element: <Component />,
   },
+  {
+
+    path: '/login',
+    element: <LoginPage />,
+  },
+  {
+    path: '/register',
+    element: <RegisterPage />,
+    },
   {
     path: '/genre/:name',
     element: <SearchFilms />,
