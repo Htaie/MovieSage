@@ -1,30 +1,24 @@
 import { useEffect, useState } from 'react';
-import { apiKey } from '../../constants';
+import { apiKey, apiUrl } from '../../constants';
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css';
-import { FormatingName, getEmojiForGenre } from '../../textUtils';
 
-const GenresLinkCards = () => {
-  const [data, setData] = useState<GenresType[] | undefined>(undefined);
-
-  interface GenresType {
-    name: string;
-    slug: string;
-  }
+export const FilmByGenreSlider = ({ genre }: any) => {
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-    const storedData = localStorage.getItem('genresData');
+    const storedfilmByGenresData = localStorage.getItem(`filmByGenresData_${genre}`);
 
-    if (storedData) {
-      setData(JSON.parse(storedData));
+    if (storedfilmByGenresData) {
+      setData(JSON.parse(storedfilmByGenresData).docs);
     } else {
       const fetchData = async () => {
         try {
-          const url = 'https://api.kinopoisk.dev/v1/movie/possible-values-by-field?field=genres.name';
+          const url = `${apiUrl}movie?page=1&limit=15&selectFields=id&selectFields=backdrop&notNullFields=backdrop.url&sortField=&sortType=1&type=${genre}`;
           const response = await fetch(url, {
             method: 'GET',
             headers: {
@@ -32,15 +26,16 @@ const GenresLinkCards = () => {
               'X-API-KEY': apiKey,
             },
           });
+          console.log('Response received:', response);
 
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }
 
           const responseData = await response.json();
-          setData(responseData);
+          setData(responseData.docs);
 
-          localStorage.setItem('genresData', JSON.stringify(responseData));
+          localStorage.setItem(`filmByGenresData_${genre}`, JSON.stringify(responseData));
         } catch (error) {
           console.error('There was a problem with the fetch operation:', error);
         }
@@ -52,32 +47,29 @@ const GenresLinkCards = () => {
 
   return (
     <>
-      <h1 className="text-3xl text-white ml-12">Жанры</h1>
+      <h1 className="text-3xl text-white ml-12">{genre}</h1>
 
       <Swiper
         style={{
           '--swiper-navigation-color': '#fff',
           '--swiper-pagination-color': '#fff',
         }}
-        slidesPerView={5}
-        spaceBetween={30}
-        loop={true}
+        slidesPerView={7}
         pagination={{
           clickable: true,
         }}
         navigation={true}
         modules={[Navigation]}
-        className="text-white"
       >
         {Array.isArray(data) ? (
-          data.map((genre: GenresType) => (
-            <SwiperSlide
-              key={genre.slug}
-              className="backdrop-blur-lg bg-white/10 hover:backdrop-blur-xl hover:bg-white/30  py-16  px-10  rounded-2xl text-xl mx-2 my-16"
-            >
-              <Link to={`/genre/${genre.name}`} className=" text-center text-xl">
-                <p className="text-[79px] mb-10">{getEmojiForGenre(genre.name)}</p>
-                <h3>{FormatingName(genre.name)}</h3>
+          data.map((item: any, index: number) => (
+            <SwiperSlide key={index} className="flex">
+              <Link to={`/movie/${item.id}`}>
+                <img
+                  src={item.backdrop.url}
+                  alt="film image"
+                  className="w-[200px] h-[200px] rounded-lg object-cover"
+                ></img>
               </Link>
             </SwiperSlide>
           ))
@@ -88,5 +80,3 @@ const GenresLinkCards = () => {
     </>
   );
 };
-
-export default GenresLinkCards;

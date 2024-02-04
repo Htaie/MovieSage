@@ -2,6 +2,7 @@ import MainSlider from '../components/sliders/MainSlider';
 import GenresLinkCards from '../components/cards/GenresLinkCards';
 import Footer from '../components/footer/Footer';
 import NavBar from '../components/navigation/NavBar';
+import { FilmByGenreSlider } from '../components/sliders/FilmsByGenreSlider';
 
 export const SecondPage = () => {
   return (
@@ -9,6 +10,8 @@ export const SecondPage = () => {
       <NavBar />
       <MainSlider />
       <GenresLinkCards></GenresLinkCards>
+      <FilmByGenreSlider genre={'anime'} />
+      <FilmByGenreSlider genre={'movie'} />
       <Footer />
     </div>
   );
