@@ -58,7 +58,7 @@ const AboutMoviePage = () => {
     <div className="bg-black">
       {openModal && (
         <div className="w-full h-full absolute overflow-hidden ">
-          <div className=" bg-black opacity-75 absolute z-40  w-full h-full">
+          <div className=" bg-black opacity-75 absolute z-40  w-full h-full" onClick={() => setOpenModal(false)}>
             <CloseIcon
               onClick={() => setOpenModal(false)}
               className="text-white absolute right-3 top-3 cursor-pointer"
