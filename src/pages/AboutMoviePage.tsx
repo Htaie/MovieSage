@@ -8,9 +8,12 @@ import { apiKey, apiUrl } from '../constants.ts';
 import { CircularProgress } from '@mui/material';
 import GenresCards from '../components/cards/GenresCards.tsx';
 import { RaitingInfo } from '../components/MovieDetails/RatingStar.tsx';
+import TrailerModal from '../components/MovieDetails/TrailerModal.tsx';
+import CloseIcon from '@mui/icons-material/Close';
 
 const AboutMoviePage = () => {
   const [data, setData] = useState<MovieData[]>([]);
+  const [openModal, setOpenModal] = useState(false);
   const { id } = useParams();
   useEffect(() => {
     const fetchData = async () => {
@@ -44,9 +47,29 @@ const AboutMoviePage = () => {
       </div>
     );
   }
+  if (openModal) {
+    document.body.style.overflow = 'hidden';
+    scrollTo(0, 0);
+  } else {
+    document.body.style.overflow = 'auto';
+  }
 
   return (
     <div className="bg-black">
+      {openModal && (
+        <div className="w-full h-full absolute overflow-hidden ">
+          <div className=" bg-black opacity-75 absolute z-40  w-full h-full">
+            <CloseIcon
+              onClick={() => setOpenModal(false)}
+              className="text-white absolute right-3 top-3 cursor-pointer"
+              style={{ fontSize: '50px' }}
+            />
+          </div>
+          <div className="absolute top-1/2 left-1/2  z-50 transform -translate-x-1/2 -translate-y-1/2">
+            <TrailerModal trailer={data.videos.trailers[0].url} />
+          </div>
+        </div>
+      )}
       <div className="container mx-auto text-white">
         <div className=" flex">
           <div>
@@ -55,7 +78,6 @@ const AboutMoviePage = () => {
               alt="film image"
               className="w-[300px] h-[430px] rounded-lg mt-4 mb-4"
             ></img>
-            {/* <iframe width="300" height="170" src={data.videos.trailers[0].url}></iframe> */}
           </div>
           <div className="flex flex-col ml-[50px]">
             <div className="flex mb-8">
@@ -83,9 +105,8 @@ const AboutMoviePage = () => {
             <div className="mb-6">
               <MainBtn
                 text="Посмотреть трейлер"
-                to={''}
                 onClick={() => {
-                  console.log('Click');
+                  setOpenModal(true);
                 }}
               ></MainBtn>
               <MainBtn
