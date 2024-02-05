@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import MovieCards from '../components/SearchFilmComponents/MoviesCards';
 import Footer from '../components/footer/Footer';
 import { FormatingName } from '../textUtils';
+import { CircularProgress } from '@mui/material';
 
 const SearchFilms = () => {
   const [data, setData] = useState([]);
@@ -66,10 +67,17 @@ const SearchFilms = () => {
     <>
       <NavBar />
       <div className="bg-black h-full min-h-screen ">
-        <h1 className="text-white text-3xl mb-10 pt-36 ml-20 ">Поиск жанру : {FormatingName(name)}</h1>
+        <h1 className="text-white text-3xl mb-10 pt-36 ml-20 ">{FormatingName(name)}</h1>
         <div className="absolute right-0"></div>
         <div className="container mx-auto my-0 flex flex-wrap justify-between">
           <MovieCards data={data} />
+        </div>
+        <div className="flex justify-center">
+          {loading ? (
+            <div className="w-full h-full flex justify-center items-center bg-black">
+              <CircularProgress sx={{ color: 'white' }} />
+            </div>
+          ) : null}
         </div>
       </div>
       <Footer />
