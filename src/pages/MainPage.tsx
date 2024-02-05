@@ -12,6 +12,7 @@ export const SecondPage = () => {
       <GenresLinkCards></GenresLinkCards>
       <FilmByGenreSlider genre={'anime'} />
       <FilmByGenreSlider genre={'movie'} />
+      <FilmByGenreSlider genre={'фэнтези'} />
       <Footer />
     </div>
   );

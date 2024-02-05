@@ -9,40 +9,44 @@ import 'swiper/css';
 
 export const FilmByGenreSlider = ({ genre }: any) => {
   const [data, setData] = useState([]);
+  let url = '';
 
+  if (
+    genre === 'movie' ||
+    genre === 'tv-series' ||
+    genre === 'anime' ||
+    genre === 'cartoon' ||
+    genre === 'animated-series'
+  ) {
+    url = `${apiUrl}movie?page=1&limit=15&selectFields=id&selectFields=backdrop&notNullFields=backdrop.url&sortField=&sortType=1&type=${genre}`;
+  } else {
+    url = `${apiUrl}movie?page=1&limit=15&selectFields=id&selectFields=backdrop&notNullFields=backdrop.url&sortField=&sortType=1&genres.name=${genre}`;
+  }
+
+  console.log(genre);
   useEffect(() => {
-    const storedfilmByGenresData = localStorage.getItem(`filmByGenresData_${genre}`);
+    const fetchData = async () => {
+      try {
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'X-API-KEY': apiKey,
+          },
+        });
 
-    if (storedfilmByGenresData) {
-      setData(JSON.parse(storedfilmByGenresData).docs);
-    } else {
-      const fetchData = async () => {
-        try {
-          const url = `${apiUrl}movie?page=1&limit=15&selectFields=id&selectFields=backdrop&notNullFields=backdrop.url&sortField=&sortType=1&type=${genre}`;
-          const response = await fetch(url, {
-            method: 'GET',
-            headers: {
-              Accept: 'application/json',
-              'X-API-KEY': apiKey,
-            },
-          });
-          console.log('Response received:', response);
-
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-
-          const responseData = await response.json();
-          setData(responseData.docs);
-
-          localStorage.setItem(`filmByGenresData_${genre}`, JSON.stringify(responseData));
-        } catch (error) {
-          console.error('There was a problem with the fetch operation:', error);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
         }
-      };
 
-      fetchData();
-    }
+        const responseData = await response.json();
+        setData(responseData.docs);
+        console.log(responseData);
+      } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+      }
+    };
+    fetchData();
   }, []);
 
   return (
@@ -55,6 +59,7 @@ export const FilmByGenreSlider = ({ genre }: any) => {
           '--swiper-pagination-color': '#fff',
         }}
         slidesPerView={7}
+        slidesPerGroup={7}
         pagination={{
           clickable: true,
         }}

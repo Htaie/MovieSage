@@ -7,6 +7,7 @@ import 'swiper/css';
 import GenresCards from '../cards/GenresCards';
 import { Link } from 'react-router-dom';
 import { apiKey, apiUrl } from '../../constants';
+import { RatingRounding } from '../../textUtils';
 
 const MainSlider = () => {
   const [data, setData] = useState([]);
@@ -78,7 +79,7 @@ const MainSlider = () => {
                 {movie.type.charAt(0).toUpperCase() + movie.type.slice(1)}
               </Link>
               <p>{movie.rating.imdb} IMDB</p>
-              <p>{movie.rating.kp} KINOPOISK</p>
+              <p>{RatingRounding(movie.rating.kp)} KINOPOISK</p>
             </div>
             <img className=" h-10" src={movie.logo.url} alt=""></img>
             <div className="flex">
