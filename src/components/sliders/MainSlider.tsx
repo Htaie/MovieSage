@@ -71,6 +71,18 @@ const MainSlider = () => {
       {data.map((movie: MovieType) => (
         <SwiperSlide key={movie.id}>
           <div className="absolute bottom-0 ml-40 font-bold h-[400px] text-white">
+            {movie.logo.url ? (
+              <img
+                className="h-[120px] w-[50%] ml-2"
+                src={movie.logo.url}
+                alt={movie.name}
+                style={{
+                  boxShadow: '0px 66px 70px -47px rgba(0, 0, 0, 0.90)',
+                }}
+              />
+            ) : (
+              <p className="text-3xl text-bold ml-4">{movie.name}</p>
+            )}
             <div className="flex items-center space-x-2">
               <Link
                 to={`/genres/}`}
@@ -81,7 +93,6 @@ const MainSlider = () => {
               <p>{movie.rating.imdb} IMDB</p>
               <p>{RatingRounding(movie.rating.kp)} KINOPOISK</p>
             </div>
-            <img className=" h-10" src={movie.logo.url} alt=""></img>
             <div className="flex">
               <GenresCards data={movie.genres} />
             </div>

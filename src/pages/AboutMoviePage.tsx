@@ -8,6 +8,8 @@ import { apiKey, apiUrl } from '../constants.ts';
 import { CircularProgress } from '@mui/material';
 import GenresCards from '../components/cards/GenresCards.tsx';
 import { RaitingInfo } from '../components/MovieDetails/RatingStar.tsx';
+import Navbar from '../components/navigation/NavBar.tsx';
+import Footer from '../components/footer/Footer.tsx';
 
 const AboutMoviePage = () => {
   const [data, setData] = useState<MovieData[]>([]);
@@ -47,7 +49,8 @@ const AboutMoviePage = () => {
 
   return (
     <div className="bg-black">
-      <div className="container mx-auto text-white">
+      <Navbar />
+      <div className="container mx-auto text-white pt-[100px] pb-[100px]">
         <div className=" flex">
           <div>
             <img
@@ -57,15 +60,15 @@ const AboutMoviePage = () => {
             ></img>
             {/* <iframe width="300" height="170" src={data.videos.trailers[0].url}></iframe> */}
           </div>
-          <div className="flex flex-col ml-[50px]">
-            <div className="flex mb-8">
-              <GenresCards data={data.genres} width={30} />
-            </div>
+          <div className="flex flex-col ml-[50px] mt-4">
             {data.logo.url ? (
-              <img src={data.logo.url} alt="film logo" className="w-[300px] mb-3" />
+              <img src={data.logo.url} alt="film logo" className="h-10 w-[300px] mb-3" />
             ) : (
               <h1 className="text-4xl font-bold mt-4 mb-[40px]">{data.name}</h1>
             )}
+            <div className="flex mb-8">
+              <GenresCards data={data.genres} width={30} />
+            </div>
             <div className="flex mb-4">
               <p>{data.year}</p>
               <div className="flex">
@@ -112,6 +115,7 @@ const AboutMoviePage = () => {
         </div>
         <FilmInfo data={data} />
       </div>
+      <Footer />
     </div>
   );
 };
