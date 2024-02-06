@@ -18,9 +18,9 @@ export const FilmByGenreSlider = ({ genre }: any) => {
     genre === 'cartoon' ||
     genre === 'animated-series'
   ) {
-    url = `${apiUrl}movie?page=1&limit=15&selectFields=id&selectFields=backdrop&notNullFields=backdrop.url&sortField=&sortType=1&type=${genre}`;
+    url = `${apiUrl}movie?page=1&limit=15&selectFields=id&selectFields=name&selectFields=backdrop&notNullFields=backdrop.url&sortField=rating.kp&sortField=&sortType=1&type=${genre}`;
   } else {
-    url = `${apiUrl}movie?page=1&limit=15&selectFields=id&selectFields=backdrop&notNullFields=backdrop.url&sortField=&sortType=1&genres.name=${genre}`;
+    url = `${apiUrl}movie?page=1&limit=15&selectFields=id&selectFields=name&selectFields=backdrop&notNullFields=backdrop.url&sortField=rating.kp&sortField=&sortType=1&genres.name=${genre}`;
   }
 
   console.log(genre);
@@ -55,11 +55,13 @@ export const FilmByGenreSlider = ({ genre }: any) => {
 
       <Swiper
         style={{
+          width: '100%',
+          height: '300px',
           '--swiper-navigation-color': '#fff',
           '--swiper-pagination-color': '#fff',
         }}
-        slidesPerView={7}
-        slidesPerGroup={7}
+        slidesPerView={5}
+        slidesPerGroup={5}
         pagination={{
           clickable: true,
         }}
@@ -68,13 +70,13 @@ export const FilmByGenreSlider = ({ genre }: any) => {
       >
         {Array.isArray(data) ? (
           data.map((item: any, index: number) => (
-            <SwiperSlide key={index} className="flex">
-              <Link to={`/movie/${item.id}`}>
-                <img
-                  src={item.backdrop.url}
-                  alt="film image"
-                  className="w-[200px] h-[200px] rounded-lg object-cover"
-                ></img>
+            <SwiperSlide key={index} className="flex items-center">
+              <Link to={`/movie/${item.id}`} className="transition-transform  transform hover:scale-105">
+                <div className="relative">
+                  <img src={item.backdrop.url} alt="film image" className="w-[370px] h-[200px] rounded-lg "></img>
+                  <div className="absolute inset-0 bg-black opacity-30"></div>
+                  <p className="absolute bottom-2 ml-2 text-white text-2xl">{item.name}</p>
+                </div>
               </Link>
             </SwiperSlide>
           ))

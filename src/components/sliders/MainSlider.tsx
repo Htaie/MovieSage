@@ -11,9 +11,9 @@ import { RatingRounding } from '../../textUtils';
 
 const MainSlider = () => {
   const divStyle = {
-    WebkitBoxShadow: '100px 100px 52px 100px rgba(0, 0, 0, 0.87) inset',
-    MozBoxShadow: '100px 100px 52px 100px rgba(0, 0, 0, 0.87) inset',
-    boxShadow: '100px 100px 52px 100px rgba(0, 0, 0, 0.87) inset',
+    WebkitBoxShadow: '0px -300px 200px 100px rgba(0, 0, 0, 0.87) inset',
+    MozBoxShadow: '0px -300px 200px 100px rgba(0, 0, 0, 0.87) inset',
+    boxShadow: '0px -300px 200px 100px rgba(0, 0, 0, 0.87) inset',
   };
 
   const [data, setData] = useState([]);
@@ -78,9 +78,9 @@ const MainSlider = () => {
         <SwiperSlide key={movie.id} style={divStyle}>
           <div className=" absolute w-full h-full " style={divStyle}></div>
 
-          <div className="absolute bottom-0 ml-40 font-bold h-[400px] text-white">
+          <div className="absolute bottom-0 ml-40 font-bold h-[500px] text-white">
             {movie.logo.url ? (
-              <img className="h-[120px] w-[50%] ml-2 main-slider" src={movie.logo.url} alt={movie.name} />
+              <img className="h-[120px] w-[50%] ml-2 main-slider mb-10" src={movie.logo.url} alt={movie.name} />
             ) : (
               <p className="text-3xl text-bold ml-4">{movie.name}</p>
             )}
