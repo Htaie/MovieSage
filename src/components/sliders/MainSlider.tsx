@@ -10,6 +10,12 @@ import { apiKey, apiUrl } from '../../constants';
 import { RatingRounding } from '../../textUtils';
 
 const MainSlider = () => {
+  const divStyle = {
+    WebkitBoxShadow: '100px 100px 52px 100px rgba(0, 0, 0, 0.87) inset',
+    MozBoxShadow: '100px 100px 52px 100px rgba(0, 0, 0, 0.87) inset',
+    boxShadow: '100px 100px 52px 100px rgba(0, 0, 0, 0.87) inset',
+  };
+
   const [data, setData] = useState([]);
   interface MovieType {
     type: string;
@@ -58,10 +64,10 @@ const MainSlider = () => {
       slidesPerView={1}
       spaceBetween={30}
       loop={true}
-      autoplay={{
-        delay: 2500,
-        disableOnInteraction: false,
-      }}
+      // autoplay={{
+      //   delay: 2500,
+      //   disableOnInteraction: false,
+      // }}
       pagination={{
         clickable: true,
       }}
@@ -69,17 +75,12 @@ const MainSlider = () => {
       modules={[Pagination, Navigation, Autoplay]}
     >
       {data.map((movie: MovieType) => (
-        <SwiperSlide key={movie.id}>
+        <SwiperSlide key={movie.id} style={divStyle}>
+          <div className=" absolute w-full h-full " style={divStyle}></div>
+
           <div className="absolute bottom-0 ml-40 font-bold h-[400px] text-white">
             {movie.logo.url ? (
-              <img
-                className="h-[120px] w-[50%] ml-2"
-                src={movie.logo.url}
-                alt={movie.name}
-                style={{
-                  boxShadow: '0px 66px 70px -47px rgba(0, 0, 0, 0.90)',
-                }}
-              />
+              <img className="h-[120px] w-[50%] ml-2 main-slider" src={movie.logo.url} alt={movie.name} />
             ) : (
               <p className="text-3xl text-bold ml-4">{movie.name}</p>
             )}
@@ -101,7 +102,7 @@ const MainSlider = () => {
               Перейти к фильму
             </Link>
           </div>
-          <img className="w h-full w-full object-cover" src={movie.backdrop.url} alt="" />
+          <img className="w h-full w-full object-cover" src={movie.backdrop.url} alt="backdropMovie" />
         </SwiperSlide>
       ))}
     </Swiper>

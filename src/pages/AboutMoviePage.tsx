@@ -62,7 +62,7 @@ const AboutMoviePage = () => {
           </div>
           <div className="flex flex-col ml-[50px] mt-4">
             {data.logo.url ? (
-              <img src={data.logo.url} alt="film logo" className="h-10 w-[300px] mb-3" />
+              <img src={data.logo.url} alt="film logo" className="h-10 w-[300px] mb-3 " />
             ) : (
               <h1 className="text-4xl font-bold mt-4 mb-[40px]">{data.name}</h1>
             )}
