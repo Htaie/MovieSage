@@ -7,51 +7,60 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css';
 
-export const FilmByGenreSlider = ({ genre }: any) => {
+export const FilmByGenreSlider = ({ genre, type }: any) => {
   const [data, setData] = useState([]);
-  let url = '';
 
-  if (
-    genre === 'movie' ||
-    genre === 'tv-series' ||
-    genre === 'anime' ||
-    genre === 'cartoon' ||
-    genre === 'animated-series'
-  ) {
-    url = `${apiUrl}movie?page=1&limit=15&selectFields=id&selectFields=name&selectFields=backdrop&notNullFields=backdrop.url&sortField=rating.kp&sortField=&sortType=1&type=${genre}`;
-  } else {
-    url = `${apiUrl}movie?page=1&limit=15&selectFields=id&selectFields=name&selectFields=backdrop&notNullFields=backdrop.url&sortField=rating.kp&sortField=&sortType=1&genres.name=${genre}`;
-  }
-
-  console.log(genre);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(url, {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-            'X-API-KEY': apiKey,
-          },
-        });
+        let localStorageKey = '';
 
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
+        if (type) {
+          localStorageKey = `movieByTypeData_${type}`;
+        } else {
+          localStorageKey = `movieByGenresData_${genre}`;
         }
 
-        const responseData = await response.json();
-        setData(responseData.docs);
-        console.log(responseData);
+        const movieStoredData = localStorage.getItem(localStorageKey);
+
+        if (movieStoredData) {
+          setData(JSON.parse(movieStoredData));
+        } else {
+          let url = '';
+
+          if (type) {
+            url = `${apiUrl}movie?page=1&limit=15&selectFields=id&selectFields=name&selectFields=backdrop&notNullFields=backdrop.url&sortField=&sortType=1&type=${type}`;
+          } else {
+            url = `${apiUrl}movie?page=1&limit=15&selectFields=id&selectFields=name&selectFields=backdrop&notNullFields=backdrop.url&sortField=&sortType=1&genres.name=${genre}`;
+          }
+
+          const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+              Accept: 'application/json',
+              'X-API-KEY': apiKey,
+            },
+          });
+
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+
+          const responseData = await response.json();
+          setData(responseData.docs);
+          localStorage.setItem(localStorageKey, JSON.stringify(responseData.docs));
+          console.log(responseData);
+        }
       } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
       }
     };
     fetchData();
-  }, []);
+  }, [genre, type]);
 
   return (
     <>
-      <h1 className="text-3xl text-white ml-12">{genre}</h1>
+      <h1 className="text-3xl text-white ml-12">{genre || type}</h1>
 
       <Swiper
         style={{

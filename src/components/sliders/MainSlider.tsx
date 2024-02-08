@@ -11,9 +11,9 @@ import { RatingRounding } from '../../textUtils';
 
 const MainSlider = () => {
   const divStyle = {
-    WebkitBoxShadow: '0px -300px 200px 100px rgba(0, 0, 0, 0.87) inset',
-    MozBoxShadow: '0px -300px 200px 100px rgba(0, 0, 0, 0.87) inset',
-    boxShadow: '0px -300px 200px 100px rgba(0, 0, 0, 0.87) inset',
+    WebkitBoxShadow: '200px -300px 100px -100px rgba(0, 0, 0, 0.7) inset',
+    MozBoxShadow: '200px -300px 100px -100px rgba(0, 0, 0, 0.7) inset',
+    boxShadow: '200px -300px 100px -100px rgba(0, 0, 0, 0.7) inset',
   };
 
   const [data, setData] = useState([]);
@@ -74,37 +74,42 @@ const MainSlider = () => {
       navigation={true}
       modules={[Pagination, Navigation, Autoplay]}
     >
-      {data.map((movie: MovieType) => (
-        <SwiperSlide key={movie.id} style={divStyle}>
-          <div className=" absolute w-full h-full " style={divStyle}></div>
+      {data.map(
+        (movie: MovieType) =>
+          movie.logo.url && (
+            <SwiperSlide key={movie.id}>
+              <div className="relative">
+                {/* Задний фон */}
+                <img className="w h-full w-full object-cover" src={movie.backdrop.url} alt="backdropMovie" />
 
-          <div className="absolute bottom-0 ml-40 font-bold h-[500px] text-white">
-            {movie.logo.url ? (
-              <img className="h-[120px] w-[50%] ml-2 main-slider mb-10" src={movie.logo.url} alt={movie.name} />
-            ) : (
-              <p className="text-3xl text-bold ml-4">{movie.name}</p>
-            )}
-            <div className="flex items-center space-x-2">
-              <Link
-                to={`/genres/}`}
-                className="backdrop-blur-lg  bg-white/10 hover:backdrop-blur-3xl hover:bg-white/30  px-3 py-2  rounded-3xl text-xl mx-2"
-              >
-                {movie.type.charAt(0).toUpperCase() + movie.type.slice(1)}
-              </Link>
-              <p>{movie.rating.imdb} IMDB</p>
-              <p>{RatingRounding(movie.rating.kp)} KINOPOISK</p>
-            </div>
-            <div className="flex">
-              <GenresCards data={movie.genres} />
-            </div>
-            <h1 className=" w-[460px] text-wrap text-xl mx-2 mt-3 mb-10">{movie.shortDescription}</h1>
-            <Link to={`/movie/${movie.id}`} className=" py-4  px-7 border rounded-3xl">
-              Перейти к фильму
-            </Link>
-          </div>
-          <img className="w h-full w-full object-cover" src={movie.backdrop.url} alt="backdropMovie" />
-        </SwiperSlide>
-      ))}
+                {/* Информация */}
+                <div className="absolute bottom-0 left-0 ml-40 font-bold h-[500px] text-white z-10">
+                  <img className="h-[120px] w-[50%] ml-2 main-slider mb-10" src={movie.logo.url} alt={movie.name} />
+                  <div className="flex items-center space-x-2">
+                    <Link
+                      to={`/genres/}`}
+                      className="backdrop-blur-lg bg-white/10 hover:backdrop-blur-3xl hover:bg-white/30 px-3 py-2 rounded-3xl text-xl mx-2"
+                    >
+                      {movie.type.charAt(0).toUpperCase() + movie.type.slice(1)}
+                    </Link>
+                    <p>{movie.rating.imdb} IMDB</p>
+                    <p>{RatingRounding(movie.rating.kp)} KINOPOISK</p>
+                  </div>
+                  <div className="flex">
+                    <GenresCards data={movie.genres} />
+                  </div>
+                  <h1 className="w-[460px] text-wrap text-xl mx-2 mt-3 mb-10">{movie.shortDescription}</h1>
+                  <Link to={`/movie/${movie.id}`} className="py-4 px-7 border rounded-3xl">
+                    Перейти к фильму
+                  </Link>
+                </div>
+
+                {/* Затемнение */}
+                <div className="absolute w-[700px] h-[350px] bottom-0" style={divStyle}></div>
+              </div>
+            </SwiperSlide>
+          )
+      )}
     </Swiper>
   );
 };
