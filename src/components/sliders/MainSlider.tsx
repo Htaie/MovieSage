@@ -66,6 +66,7 @@ const MainSlider = () => {
       }}
       navigation={true}
       modules={[Pagination, Navigation, Autoplay]}
+      className="h-[400px] bg-black"
     >
       {data.map((movie: MovieType) => (
         <SwiperSlide key={movie.id}>
