@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { apiKey } from '../../constants';
+import { TOKEN } from '../../constants';
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
@@ -29,7 +29,7 @@ const GenresLinkCards = () => {
             method: 'GET',
             headers: {
               Accept: 'application/json',
-              'X-API-KEY': apiKey,
+              'X-API-KEY': TOKEN,
             },
           });
 

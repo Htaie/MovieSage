@@ -4,7 +4,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import FilmInfo from '../components/MovieDetails/FilmInfo.tsx';
 import ActorsInfo from '../components/MovieDetails/ActorsInfo.tsx';
 import { useEffect, useState } from 'react';
-import { apiKey, apiUrl } from '../constants.ts';
+import { TOKEN, apiUrl } from '../constants.ts';
 import { CircularProgress } from '@mui/material';
 import GenresCards from '../components/cards/GenresCards.tsx';
 import { RaitingInfo } from '../components/MovieDetails/RatingStar.tsx';
@@ -23,7 +23,7 @@ const AboutMoviePage = () => {
           method: 'GET',
           headers: {
             Accept: 'application/json',
-            'X-API-KEY': apiKey,
+            'X-API-KEY': TOKEN,
           },
         });
 

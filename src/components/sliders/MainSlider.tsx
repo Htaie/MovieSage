@@ -6,7 +6,7 @@ import 'swiper/css/pagination';
 import 'swiper/css';
 import GenresCards from '../cards/GenresCards';
 import { Link } from 'react-router-dom';
-import { apiKey, apiUrl } from '../../constants';
+import { TOKEN, apiUrl } from '../../constants';
 
 const MainSlider = () => {
   const [data, setData] = useState([]);
@@ -31,7 +31,7 @@ const MainSlider = () => {
           method: 'GET',
           headers: {
             Accept: 'application/json',
-            'X-API-KEY': apiKey,
+            'X-API-KEY': TOKEN,
           },
         });
 

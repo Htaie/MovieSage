@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import NavBar from '../components/navigation/NavBar';
-import { apiKey, apiUrl } from '../constants';
+import { TOKEN, apiUrl } from '../constants';
 import { useEffect, useState } from 'react';
 import MovieCards from '../components/SearchFilmComponents/MoviesCards';
 import Footer from '../components/footer/Footer';
@@ -23,7 +23,7 @@ const SearchFilms = () => {
           method: 'GET',
           headers: {
             Accept: 'application/json',
-            'X-API-KEY': apiKey,
+            'X-API-KEY': TOKEN,
           },
         });
 
