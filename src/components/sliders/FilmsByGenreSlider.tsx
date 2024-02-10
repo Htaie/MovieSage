@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { apiKey, apiUrl } from '../../constants';
+import { TOKEN, apiUrl } from '../../constants';
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
@@ -38,7 +38,7 @@ export const FilmByGenreSlider = ({ genre, type }: any) => {
             method: 'GET',
             headers: {
               Accept: 'application/json',
-              'X-API-KEY': apiKey,
+              'X-API-KEY': TOKEN,
             },
           });
 
