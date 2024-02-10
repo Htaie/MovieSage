@@ -7,6 +7,7 @@ import SearchFilms from '../pages/MoivesPage';
 import AboutMoviePage from '../pages/AboutMoviePage';
 import MoviePlaeer from '../components/UI/MoviePlayer';
 import { AboutActorPage } from '../pages/AboutActorPage';
+import PagesTests from '../components/sliders/PagesTests';
 
 export const router = createBrowserRouter([
   {
@@ -40,5 +41,9 @@ export const router = createBrowserRouter([
   {
     path: '/actor/:id',
     element: <AboutActorPage />,
+  },
+  {
+    path: '/test',
+    element: <PagesTests />,
   },
 ]);
