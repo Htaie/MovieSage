@@ -8,6 +8,8 @@ import { TOKEN, apiUrl } from '../constants.ts';
 import { CircularProgress } from '@mui/material';
 import GenresCards from '../components/cards/GenresCards.tsx';
 import { RaitingInfo } from '../components/MovieDetails/RatingStar.tsx';
+import Navbar from '../components/navigation/NavBar.tsx';
+import Footer from '../components/footer/Footer.tsx';
 import TrailerModal from '../components/MovieDetails/TrailerModal.tsx';
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -56,6 +58,8 @@ const AboutMoviePage = () => {
 
   return (
     <div className="bg-black">
+      <Navbar />
+      <div className="container mx-auto text-white pt-[100px] pb-[100px]">
       {openModal && (
         <div className="w-full h-full absolute overflow-hidden ">
           <div className=" bg-black opacity-75 absolute z-40  w-full h-full" onClick={() => setOpenModal(false)}>
@@ -79,15 +83,15 @@ const AboutMoviePage = () => {
               className="w-[300px] h-[430px] rounded-lg mt-4 mb-4"
             ></img>
           </div>
-          <div className="flex flex-col ml-[50px]">
-            <div className="flex mb-8">
-              <GenresCards data={data.genres} width={30} />
-            </div>
+          <div className="flex flex-col ml-[50px] mt-4">
             {data.logo.url ? (
-              <img src={data.logo.url} alt="film logo" className="w-[300px] mb-3" />
+              <img src={data.logo.url} alt="film logo" className="h-10 w-[300px] mb-3 " />
             ) : (
               <h1 className="text-4xl font-bold mt-4 mb-[40px]">{data.name}</h1>
             )}
+            <div className="flex mb-8">
+              <GenresCards data={data.genres} width={30} />
+            </div>
             <div className="flex mb-4">
               <p>{data.year}</p>
               <div className="flex">
@@ -133,6 +137,7 @@ const AboutMoviePage = () => {
         </div>
         <FilmInfo data={data} />
       </div>
+      <Footer />
     </div>
   );
 };

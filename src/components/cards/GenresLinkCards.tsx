@@ -69,7 +69,7 @@ const GenresLinkCards = () => {
         modules={[Navigation]}
         className="text-white"
       >
-        {data ? (
+        {Array.isArray(data) ? (
           data.map((genre: GenresType) => (
             <SwiperSlide
               key={genre.slug}
