@@ -146,3 +146,8 @@ export const RatingScore = (rating: number) => {
     return 'red';
   }
 };
+
+export const RatingRounding = (rating: number, precision: number = 1): number => {
+  const roundedRating = parseFloat(rating.toFixed(precision));
+  return roundedRating;
+};

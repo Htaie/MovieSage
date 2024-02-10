@@ -1,18 +1,22 @@
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { MainBtn } from '../components/UI/buttons/MainBtn.tsx';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import FilmInfo from '../components/MovieDetails/FilmInfo.tsx';
-import DubbingActorsInfo from '../components/MovieDetails/DubbingActorsInfo.tsx';
 import ActorsInfo from '../components/MovieDetails/ActorsInfo.tsx';
 import { useEffect, useState } from 'react';
-import { apiKey, apiUrl } from '../constants.ts';
+import { TOKEN, apiUrl } from '../constants.ts';
 import { CircularProgress } from '@mui/material';
 import GenresCards from '../components/cards/GenresCards.tsx';
+import { RaitingInfo } from '../components/MovieDetails/RatingStar.tsx';
+import Navbar from '../components/navigation/NavBar.tsx';
+import Footer from '../components/footer/Footer.tsx';
+import TrailerModal from '../components/MovieDetails/TrailerModal.tsx';
+import CloseIcon from '@mui/icons-material/Close';
 
 const AboutMoviePage = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<MovieData[]>([]);
+  const [openModal, setOpenModal] = useState(false);
   const { id } = useParams();
-  console.log(id);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -21,7 +25,7 @@ const AboutMoviePage = () => {
           method: 'GET',
           headers: {
             Accept: 'application/json',
-            'X-API-KEY': apiKey,
+            'X-API-KEY': TOKEN,
           },
         });
 
@@ -31,7 +35,6 @@ const AboutMoviePage = () => {
 
         const responseData = await response.json();
         setData(responseData);
-        console.log(responseData);
       } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
       }
@@ -46,25 +49,49 @@ const AboutMoviePage = () => {
       </div>
     );
   }
+  if (openModal) {
+    document.body.style.overflow = 'hidden';
+    scrollTo(0, 0);
+  } else {
+    document.body.style.overflow = 'auto';
+  }
 
-  console.log(id);
   return (
     <div className="bg-black">
+      <Navbar />
+      <div className="container mx-auto text-white pt-[100px] pb-[100px]">
+      {openModal && (
+        <div className="w-full h-full absolute overflow-hidden ">
+          <div className=" bg-black opacity-75 absolute z-40  w-full h-full" onClick={() => setOpenModal(false)}>
+            <CloseIcon
+              onClick={() => setOpenModal(false)}
+              className="text-white absolute right-3 top-3 cursor-pointer"
+              style={{ fontSize: '50px' }}
+            />
+          </div>
+          <div className="absolute top-1/2 left-1/2  z-50 transform -translate-x-1/2 -translate-y-1/2">
+            <TrailerModal trailer={data.videos.trailers[0].url} />
+          </div>
+        </div>
+      )}
       <div className="container mx-auto text-white">
         <div className=" flex">
           <div>
             <img
               src={data.poster.url || 'https://placehold.co/300x430'}
               alt="film image"
-              className="w-[300px] h-[430px] mt-4 mb-4"
+              className="w-[300px] h-[430px] rounded-lg mt-4 mb-4"
             ></img>
-            {/* <iframe width="300" height="170" src={data.videos.trailers[0].url}></iframe> */}
           </div>
-          <div className="flex flex-col ml-[50px]">
+          <div className="flex flex-col ml-[50px] mt-4">
+            {data.logo.url ? (
+              <img src={data.logo.url} alt="film logo" className="h-10 w-[300px] mb-3 " />
+            ) : (
+              <h1 className="text-4xl font-bold mt-4 mb-[40px]">{data.name}</h1>
+            )}
             <div className="flex mb-8">
               <GenresCards data={data.genres} width={30} />
             </div>
-            <h1 className="text-4xl font-bold mt-4 mb-[40px]">{data.name}</h1>
             <div className="flex mb-4">
               <p>{data.year}</p>
               <div className="flex">
@@ -82,9 +109,8 @@ const AboutMoviePage = () => {
             <div className="mb-6">
               <MainBtn
                 text="Посмотреть трейлер"
-                to={''}
                 onClick={() => {
-                  console.log('Click');
+                  setOpenModal(true);
                 }}
               ></MainBtn>
               <MainBtn
@@ -103,40 +129,15 @@ const AboutMoviePage = () => {
               ></MainBtn>
             </div>
           </div>
-          <div className="mt-4 ml-[40px]">
-            <p className="font-bold text-2xl">{data.rating.kp}</p>
-            <p className="mb-2">Количество оценок</p>
-            <MainBtn
-              text={'Оценить фильм'}
-              onClick={() => {
-                console.log('Liked');
-              }}
-              style={{ marginBottom: '20px' }}
-            />
-            <div className="mb-[200px]">
-              <Link to={''} className="transition-colors hover:text-red-500">
-                Количество рецензий
-              </Link>
-            </div>
-            <p className="font-bold">В главных ролях</p>
-            <ActorsInfo />
-            <Link to={''} className="text-red-500">
-              Количество актеров
-            </Link>
-            <p className="font-bold mt-[30px]">Роли дублировали</p>
-            <DubbingActorsInfo />
-            <Link to={''} className="text-red-500">
-              Количество актеров дубляжа
-            </Link>
-            <img
-              src="https://m.the-flow.ru/uploads/images/origin/15/81/73/83/93/abc2e62.png"
-              alt="nominations"
-              className="w-[120px] h-[100px]"
-            ></img>
-            <FilmInfo data={data} />
-          </div>
         </div>
+        <RaitingInfo data={data} />
+        <div className="mb-[80px]">
+          <p className="font-bold text-3xl mb-[60px]">Актеры:</p>
+          <ActorsInfo data={data} />
+        </div>
+        <FilmInfo data={data} />
       </div>
+      <Footer />
     </div>
   );
 };
