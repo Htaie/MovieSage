@@ -1,7 +1,6 @@
 import { CircularProgress } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { RatingScore } from '../../textUtils';
-import { useState } from 'react';
+import { RatingScore } from '../../../textUtils';
 
 const MovieCards = ({ data }: any) => {
   if (data.length === 0 || !data) {

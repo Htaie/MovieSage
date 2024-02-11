@@ -55,10 +55,6 @@ const GenresLinkCards = () => {
       <h1 className="text-3xl text-white ml-12">Жанры</h1>
 
       <Swiper
-        style={{
-          '--swiper-navigation-color': '#fff',
-          '--swiper-pagination-color': '#fff',
-        }}
         slidesPerView={5}
         spaceBetween={30}
         loop={true}
@@ -67,7 +63,7 @@ const GenresLinkCards = () => {
         }}
         navigation={true}
         modules={[Navigation]}
-        className="text-white"
+        className="text-white swiper-navigation-color"
       >
         {Array.isArray(data) ? (
           data.map((genre: GenresType) => (

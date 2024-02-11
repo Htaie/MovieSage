@@ -1,8 +1,8 @@
-import MainSlider from '../components/sliders/MainSlider';
-import GenresLinkCards from '../components/cards/GenresLinkCards';
-import Footer from '../components/footer/Footer';
-import NavBar from '../components/navigation/NavBar';
-import { FilmByGenreSlider } from '../components/sliders/FilmsByGenreSlider';
+import MainSlider from '../components/MoviesToDisplay/SlidersForMovie/MainSlider';
+import GenresLinkCards from '../GenresToDisplay/GenresCards/GenresLinkCards';
+import Footer from '../components/Navigation/Footer/Footer';
+import NavBar from '../components/Navigation/Header/NavBar';
+import { FilmByGenreSlider } from '../GenresToDisplay/SlidersForGenres/FilmsByGenreSlider';
 
 export const SecondPage = () => {
   return (

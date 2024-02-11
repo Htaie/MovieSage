@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  .swiper-navigation-color {
+    --swiper-navigation-color: #fff;
+  }
+
+  .swiper-pagination-color {
+    --swiper-pagination-color: #fff;
+  }
+}

@@ -1,8 +1,16 @@
 import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
 import { MainBtn } from '../UI/buttons/MainBtn';
 import { RatingRounding } from '../../textUtils';
+interface MovieData {
+  rating: {
+    kp: number;
+  };
+}
+interface RaitingInfoProps {
+  data: MovieData;
+}
 
-export const RaitingInfo = ({ data }) => {
+export const RaitingInfo: React.FC<RaitingInfoProps> = ({ data }) => {
   const stars = Array.from({ length: 10 }, (_, index) => (
     <StarOutlinedIcon key={index} style={{ fontSize: '3em', color: '#a0a0a0' }} />
   ));

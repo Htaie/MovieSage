@@ -1,22 +1,39 @@
 import { useParams } from 'react-router-dom';
-import { MainBtn } from '../components/UI/buttons/MainBtn.tsx';
+import { MainBtn } from '../../components/UI/buttons/MainBtn.tsx';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import FilmInfo from '../components/MovieDetails/FilmInfo.tsx';
-import ActorsInfo from '../components/MovieDetails/ActorsInfo.tsx';
+import FilmInfo from '../../components/MovieDetails/FilmInfo.tsx';
+import ActorsInfo from '../../components/MovieDetails/ActorsInfo.tsx';
 import { useEffect, useState } from 'react';
-import { TOKEN, apiUrl } from '../constants.ts';
+import { TOKEN, apiUrl } from '../../constants.ts';
 import { CircularProgress } from '@mui/material';
-import GenresCards from '../components/cards/GenresCards.tsx';
-import { RaitingInfo } from '../components/MovieDetails/RatingStar.tsx';
-import Navbar from '../components/navigation/NavBar.tsx';
-import Footer from '../components/footer/Footer.tsx';
-import TrailerModal from '../components/MovieDetails/TrailerModal.tsx';
+import GenresCards from '../../GenresToDisplay/GenresCards/GenresCards.tsx';
+import { RaitingInfo } from '../../components/MovieDetails/RatingStar.tsx';
+import Navbar from '../../components/Navigation/Header/NavBar.tsx';
+import Footer from '../../components/Navigation/Footer/Footer.tsx';
+import TrailerModal from '../../components/MovieDetails/TrailerModal.tsx';
 import CloseIcon from '@mui/icons-material/Close';
+interface MovieType {
+  logo: { url: string };
+  id: number;
+  type: string;
+  name: string;
+  rating: { imdb: number; kp: number };
+  genres: { name: string }[];
+  countries: { name: string }[];
+  year: number;
+  shortDescription: string;
+  backdrop: { url: string };
+  poster: { url: string };
+  movieLength: number;
+  description: string;
+  videos: { trailers: { url: string }[] };
+}
 
 const AboutMoviePage = () => {
-  const [data, setData] = useState<MovieData[]>([]);
+  const [data, setData] = useState<MovieType | null>(null);
   const [openModal, setOpenModal] = useState(false);
   const { id } = useParams();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -42,7 +59,7 @@ const AboutMoviePage = () => {
 
     fetchData();
   }, []);
-  if (data.length === 0 || !data) {
+  if (!data) {
     return (
       <div className="w-full h-full flex justify-center items-center bg-black">
         <CircularProgress sx={{ color: 'white' }} />
