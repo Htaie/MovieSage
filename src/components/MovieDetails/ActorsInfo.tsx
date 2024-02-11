@@ -10,10 +10,6 @@ const ActorsInfo = ({ data }: any) => {
   return (
     <>
       <Swiper
-        style={{
-          '--swiper-navigation-color': '#fff',
-          '--swiper-pagination-color': '#fff',
-        }}
         slidesPerView={6}
         loop={true}
         pagination={{
@@ -21,6 +17,7 @@ const ActorsInfo = ({ data }: any) => {
         }}
         navigation={true}
         modules={[Navigation]}
+        className="swiper-navigation-color"
       >
         {data.persons.map((item: any, index: number) => (
           <SwiperSlide key={index} className="flex">

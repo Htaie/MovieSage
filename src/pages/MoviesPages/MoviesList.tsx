@@ -1,13 +1,13 @@
 import { useParams } from 'react-router-dom';
-import NavBar from '../components/navigation/NavBar';
-import { TOKEN, apiUrl } from '../constants';
+import NavBar from '../../components/Navigation/Header/NavBar';
+import { TOKEN, apiUrl } from '../../constants';
 import { useEffect, useState } from 'react';
-import MovieCards from '../components/SearchFilmComponents/MoviesCards';
-import Footer from '../components/footer/Footer';
-import { FormatingName } from '../textUtils';
+import MovieCards from '../../components/MoviesToDisplay/MoviesCards/MoviesCards';
+import Footer from '../../components/Navigation/Footer/Footer';
+import { FormatingName } from '../../textUtils';
 import { CircularProgress } from '@mui/material';
 
-const SearchFilms = () => {
+const MoviesList = () => {
   const [data, setData] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
   const [maxPages, setMaxPages] = useState(1);
@@ -33,7 +33,7 @@ const SearchFilms = () => {
         }
 
         const responseData = await response.json();
-        setData((prevData) => [...prevData, ...responseData.docs]);
+        setData((prevData): any => [...prevData, ...responseData.docs]);
         setMaxPages(responseData.pages);
       } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
@@ -85,4 +85,4 @@ const SearchFilms = () => {
   );
 };
 
-export default SearchFilms;
+export default MoviesList;

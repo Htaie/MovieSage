@@ -63,18 +63,19 @@ export const FilmByGenreSlider = ({ genre, type }: any) => {
       <h1 className="text-3xl text-white ml-12">{genre || type}</h1>
 
       <Swiper
-        style={{
-          width: '100%',
-          height: '300px',
-          '--swiper-navigation-color': '#fff',
-          '--swiper-pagination-color': '#fff',
-        }}
+        style={
+          {
+            width: '100%',
+            height: '300px',
+          } as any
+        }
         slidesPerView={5}
         slidesPerGroup={5}
         pagination={{
           clickable: true,
         }}
         navigation={true}
+        className="swiper-navigation-color"
         modules={[Navigation]}
       >
         {Array.isArray(data) ? (

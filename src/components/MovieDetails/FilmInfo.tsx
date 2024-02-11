@@ -1,7 +1,7 @@
 import { CircularProgress } from '@mui/material';
 
-const FilmInfo = ({ data }) => {
-  if (data.length === 0 || !data) {
+const FilmInfo = ({ data }: any) => {
+  if (!data) {
     return (
       <div className="w-full h-full flex justify-center items-center bg-black">
         <CircularProgress sx={{ color: 'white' }} />

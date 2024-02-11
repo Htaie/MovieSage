@@ -4,10 +4,10 @@ import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css';
-import GenresCards from '../cards/GenresCards';
+import GenresCards from '../../../GenresToDisplay/GenresCards/GenresCards';
 import { Link } from 'react-router-dom';
-import { RatingRounding } from '../../textUtils';
-import { TOKEN, apiUrl } from '../../constants';
+import { RatingRounding } from '../../../textUtils';
+import { TOKEN, apiUrl } from '../../../constants';
 
 const MainSlider = () => {
   const divStyle = {
@@ -18,10 +18,15 @@ const MainSlider = () => {
 
   const [data, setData] = useState([]);
   interface MovieType {
+    logo: {
+      url: string;
+    };
+    id: number;
     type: string;
     name: string;
     rating: {
       imdb: number;
+      kp: number;
     };
     genres: { name: string }[];
     countries: { name: string }[];
@@ -57,10 +62,6 @@ const MainSlider = () => {
   }, []);
   return (
     <Swiper
-      style={{
-        '--swiper-navigation-color': '#fff',
-        '--swiper-pagination-color': '#fff',
-      }}
       slidesPerView={1}
       spaceBetween={30}
       loop={true}
@@ -73,7 +74,7 @@ const MainSlider = () => {
       }}
       navigation={true}
       modules={[Pagination, Navigation, Autoplay]}
-      className="h-[400px] bg-black"
+      className="h-[400px] bg-black swiper-navigation-color"
     >
       {data.map(
         (movie: MovieType) =>

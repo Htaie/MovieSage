@@ -4,7 +4,7 @@ import { FormatingName, getEmojiForGenre } from '../../textUtils';
 const GenresCards = (data: any) => {
   return (
     <>
-      {data.data.map((item: any, index: number) => (
+      {data.data.map((item: any) => (
         <Link
           key={item.name}
           className={` backdrop-blur-lg bg-white/10 hover:backdrop-blur-xl hover:bg-white/30  px-3 py-2  rounded-3xl text-xl mx-2`}

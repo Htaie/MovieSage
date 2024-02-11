@@ -130,7 +130,10 @@ export const getEmojiForGenre = (genre: string) => {
   }
 };
 
-export function FormatingName(name: string) {
+export function FormatingName(name: string | undefined) {
+  if (!name) {
+    return '';
+  }
   const capitalizedName = name.charAt(0).toUpperCase() + name.slice(1);
   return capitalizedName;
 }
