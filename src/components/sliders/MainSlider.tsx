@@ -96,7 +96,7 @@ const MainSlider = () => {
                     <p>{movie.rating.imdb} IMDB</p>
                     <p>{RatingRounding(movie.rating.kp)} KINOPOISK</p>
                   </div>
-                  <div className="flex">
+                  <div className="flex-wrap">
                     <GenresCards data={movie.genres} />
                   </div>
                   <h1 className="w-[460px] text-wrap text-xl mx-2 mt-3 mb-10">{movie.shortDescription}</h1>
