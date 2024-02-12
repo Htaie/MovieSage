@@ -47,7 +47,16 @@
     "vite": "^5.0.8"
   },
   "lint-staged": {
-    "*.{ts,tsx,js}": "pnpm lint",
-    ".": "pnpm format"
+    "*.{js,jsx,tsx}": [
+      "eslint  src/"
+    ],
+    "*.{js,jsx,tsx, css,scss}": [
+      "prettier --write src/"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }
