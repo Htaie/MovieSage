@@ -1,6 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.swiper-pagination-bullet-active {
+  width: 11px;
+  height: 11px;
+}
 
 @layer utilities {
   .swiper-navigation-color {

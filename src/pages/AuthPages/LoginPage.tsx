@@ -1,11 +1,11 @@
-import { AuthComponent } from '../../components/authComponents/AuthComponent';
+import { AuthComponent } from '../../components/authComponents/AuthComponent'
 
 const LoginPage = () => {
   return (
     <div>
-      <AuthComponent formType="login" />
+      <AuthComponent formType='login' />
     </div>
-  );
-};
+  )
+}
 
-export default LoginPage;
+export default LoginPage

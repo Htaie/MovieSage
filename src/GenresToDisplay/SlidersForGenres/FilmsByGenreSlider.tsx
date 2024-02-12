@@ -1,62 +1,62 @@
-import { useEffect, useState } from 'react';
-import { TOKEN, apiUrl } from '../../constants';
-import { Link } from 'react-router-dom';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css';
+import { useEffect, useState } from 'react'
+import { TOKEN, apiUrl } from '../../constants'
+import { Link } from 'react-router-dom'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation } from 'swiper/modules'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+import 'swiper/css'
 
 export const FilmByGenreSlider = ({ genre, type }: any) => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState([])
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let localStorageKey = '';
+        let localStorageKey = ''
 
         if (type) {
-          localStorageKey = `movieByTypeData_${type}`;
+          localStorageKey = `movieByTypeData_${type}`
         } else {
-          localStorageKey = `movieByGenresData_${genre}`;
+          localStorageKey = `movieByGenresData_${genre}`
         }
 
-        const movieStoredData = localStorage.getItem(localStorageKey);
+        const movieStoredData = localStorage.getItem(localStorageKey)
 
         if (movieStoredData) {
-          setData(JSON.parse(movieStoredData));
+          setData(JSON.parse(movieStoredData))
         } else {
-          let url = '';
+          let url = ''
 
           if (type) {
-            url = `${apiUrl}movie?page=1&limit=15&selectFields=id&selectFields=name&selectFields=backdrop&notNullFields=backdrop.url&sortField=&sortType=1&type=${type}`;
+            url = `${apiUrl}movie?page=1&limit=15&selectFields=id&selectFields=name&selectFields=backdrop&notNullFields=backdrop.url&sortField=&sortType=1&type=${type}`
           } else {
-            url = `${apiUrl}movie?page=1&limit=15&selectFields=id&selectFields=name&selectFields=backdrop&notNullFields=backdrop.url&sortField=&sortType=1&genres.name=${genre}`;
+            url = `${apiUrl}movie?page=1&limit=15&selectFields=id&selectFields=name&selectFields=backdrop&notNullFields=backdrop.url&sortField=&sortType=1&genres.name=${genre}`
           }
 
           const response = await fetch(url, {
             method: 'GET',
             headers: {
               Accept: 'application/json',
-              'X-API-KEY': TOKEN,
-            },
-          });
+              'X-API-KEY': TOKEN
+            }
+          })
 
           if (!response.ok) {
-            throw new Error('Network response was not ok');
+            throw new Error('Network response was not ok')
           }
 
-          const responseData = await response.json();
-          setData(responseData.docs);
-          localStorage.setItem(localStorageKey, JSON.stringify(responseData.docs));
-          console.log(responseData);
+          const responseData = await response.json()
+          setData(responseData.docs)
+          localStorage.setItem(localStorageKey, JSON.stringify(responseData.docs))
+          console.log(responseData)
         }
       } catch (error) {
-        console.error('There was a problem with the fetch operation:', error);
+        console.error('There was a problem with the fetch operation:', error)
       }
-    };
-    fetchData();
-  }, [genre, type]);
+    }
+    fetchData()
+  }, [genre, type])
 
   return (
     <>
@@ -66,20 +66,21 @@ export const FilmByGenreSlider = ({ genre, type }: any) => {
         style={
           {
             width: '100%',
-            height: '300px',
+            height: '300px'
           } as any
         }
         slidesPerView={5}
         slidesPerGroup={5}
         pagination={{
-          clickable: true,
+          clickable: true
         }}
         navigation={true}
         className="swiper-navigation-color"
         modules={[Navigation]}
       >
-        {Array.isArray(data) ? (
-          data.map((item: any, index: number) => (
+        {Array.isArray(data)
+          ? (
+              data.map((item: any, index: number) => (
             <SwiperSlide key={index} className="flex items-center">
               <Link to={`/movie/${item.id}`} className="mr-[20px] transition-transform  transform hover:scale-105">
                 <div className="relative">
@@ -89,11 +90,12 @@ export const FilmByGenreSlider = ({ genre, type }: any) => {
                 </div>
               </Link>
             </SwiperSlide>
-          ))
-        ) : (
+              ))
+            )
+          : (
           <p>Loading...</p>
-        )}
+            )}
       </Swiper>
     </>
-  );
-};
+  )
+}

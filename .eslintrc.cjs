@@ -2,33 +2,24 @@ module.exports = {
   env: {
     browser: true,
     es2021: true,
-    node: true,
   },
-  extends: ['standard', 'plugin:react/recommended', 'prettier'],
-  parser: '@typescript-eslint/parser',
+  extends: ['standard-with-typescript', 'plugin:react/recommended'],
   overrides: [
     {
-      files: ['.eslintrc.{js,cjs}'],
       env: {
         node: true,
       },
+      files: ['.eslintrc.{js,cjs}'],
       parserOptions: {
         sourceType: 'script',
       },
     },
-    {
-      files: ['*.tsx'],
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
-        },
-        ecmaVersion: 'latest',
-        sourceType: 'module',
-        jsx: 'react-jsx',
-      },
-    },
   ],
-  plugins: ['react', 'prettier', '@typescript-eslint'],
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+  },
+  ignorePatterns: ['.eslintrc.cjs', 'tailwind.config.js', 'postcss.config.js', 'vite.config.ts', 'tsconfig.node.json'],
   settings: {
     react: {
       createClass: 'createReactClass',
@@ -57,5 +48,6 @@ module.exports = {
     'react/jsx-uses-vars': 'error',
     'react/react-in-jsx-scope': 'off',
     'react/react-in-tsx-scope': 'off',
+    '@typescript-eslint/prefer-nullish-coalescing': 'off',
   },
 };
