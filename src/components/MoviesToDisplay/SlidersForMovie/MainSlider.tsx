@@ -16,6 +16,10 @@ const MainSlider = () => {
     boxShadow: '0px 0px 70px 120px rgba(0, 0, 0, 1)',
   };
 
+  const customShadowStyle = {
+    filter: 'drop-shadow(20px 20px 6px rgba(0, 0, 0, 0.7))',
+  };
+
   const [data, setData] = useState([]);
   interface MovieType {
     logo: {
@@ -84,7 +88,12 @@ const MainSlider = () => {
                 <img className="w h-full w-full object-cover" src={movie.backdrop.url} alt="backdropMovie" />
 
                 <div className="absolute bottom-0 left-0 ml-40 font-bold h-[700px] text-white z-10">
-                  <img className="h-[120px] w-[50%] ml-2 main-slider" src={movie.logo.url} alt={movie.name} />
+                  <img
+                    className="h-[120px] w-[50%] ml-2 main-slider"
+                    src={movie.logo.url}
+                    alt={movie.name}
+                    style={customShadowStyle}
+                  />
                   <div className="flex items-center space-x-2 mt-[170px] mb-2">
                     <Link
                       to={`/genres/}`}
