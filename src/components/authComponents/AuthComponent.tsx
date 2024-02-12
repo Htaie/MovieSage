@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
-const RegisterPage = () => {
+export const AuthComponent = ({ formType }: any) => {
+  const [showPassword, setShowPassword] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [continueButtonColor, setContinueButtonColor] = useState('white');
-  const [showPassword, setShowPassword] = useState(false);
 
   const customStyles = {
     input: {
@@ -17,18 +17,22 @@ const RegisterPage = () => {
     },
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
     setContinueButtonColor(isChecked ? 'white' : 'green');
   };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
   return (
     <div className="flex items-center justify-center h-screen bg-black">
-      <div className="text-white bg-black w-[500px] h-[620px] border border-[#2b2c2e] rounded-lg">
+      <div
+        className={`text-white bg-black w-[500px] h-[${
+          formType === 'register' ? '620' : '420'
+        }px] border border-[#2b2c2e] rounded-lg`}
+      >
         <div className="flex pt-4 ml-[28px] mb-1">
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -48,23 +52,26 @@ const RegisterPage = () => {
           <h1 className="text-3xl">MovieSage</h1>
           <button className="w-20 h-12 bg-black border border-[#2b2c2e] rounded-lg ml-[182px]">Close</button>
         </div>
-        <p className="text-xs text-gray-400 ml-[28px] mb-4">Register to enjoy the features</p>
-        <h1 className="ml-[28px] mb-2">Username</h1>
+        {formType === 'register' && (
+          <>
+            <h1 className="ml-[28px] mb-2">Email</h1>
+            <div className="flex justify-center">
+              <input
+                className="w-[440px] h-12 bg-black border rounded-lg mb-3 p-2"
+                style={customStyles.input}
+                type="text"
+                placeholder="Email"
+              />
+            </div>
+          </>
+        )}
+        <h1 className="ml-[28px] mb-2">{formType === 'register' ? 'Username' : 'Email'}</h1>
         <div className="flex justify-center">
           <input
             className="w-[440px] h-12 bg-black border rounded-lg mb-3 p-2"
             style={customStyles.input}
             type="text"
-            placeholder="Username"
-          />
-        </div>
-        <h1 className="ml-[28px] mb-2">Email</h1>
-        <div className="flex justify-center">
-          <input
-            className="w-[440px] h-12 bg-black border rounded-lg mb-3 p-2"
-            style={customStyles.input}
-            type="text"
-            placeholder="Email"
+            placeholder={formType === 'register' ? 'Username' : 'Email'}
           />
         </div>
         <h1 className="ml-[28px] mb-2">Password</h1>
@@ -79,64 +86,87 @@ const RegisterPage = () => {
             {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
           </div>
         </div>
-        <h1 className="ml-[28px] mb-2">Password</h1>
-        <div className="relative flex justify-center">
-          <input
-            className="w-[440px] h-12 bg-black border rounded-lg mb-4 p-2"
-            style={customStyles.input}
-            type={showPassword ? 'text' : 'password'}
-            placeholder="Password"
-          />
-          <div className="absolute top-0 right-8 m-3 cursor-pointer" onClick={togglePasswordVisibility}>
-            {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
-          </div>
-        </div>
-        <div className="flex justify-center mb-4">
-          <div
-            className={`mr-1 rounded-full cursor-pointer ${isChecked ? 'bg-green-500' : 'bg-black'}`}
-            onClick={handleCheckboxChange}
-            style={{
-              width: '25px',
-              height: '25px',
-              border: '2px solid gray',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            {isChecked && (
-              <svg width="10" height="8" viewBox="0 0 10 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M8.78571 0L3.57143 5.14286L1.21429 2.85714L0 4L3.57143 8L10 1.14286L8.78571 0Z" fill="white" />
-              </svg>
-            )}
-          </div>
-          <p className="text-gray-400 mr-1">I agree to our</p>
-          <button className="mr-1" style={{ pointerEvents: continueButtonColor === 'white' ? 'none' : 'auto' }}>
-            Privacy Policy
-          </button>
-          <p className="text-gray-400 mr-1">and</p>
-          <button style={{ pointerEvents: continueButtonColor === 'white' ? 'none' : 'auto' }}>
-            Term & Conditions
-          </button>
-        </div>
-        <div className="flex justify-center">
-          <Link
-            to="/login"
-            className={`w-[440px] h-12 rounded-lg mb-4 inline-flex items-center justify-center ${
-              isChecked ? 'bg-green-500 text-white' : 'bg-white text-gray-800'
-            }`}
-            style={{ textDecoration: 'none', pointerEvents: continueButtonColor === 'white' ? 'none' : 'auto' }}
-          >
-            Continue
-          </Link>
-        </div>
-        <div className="flex justify-center">
-          <p className="text-xs text-gray-400 mr-2">Already have an account?</p>
-          <button className="text-xs">Login</button>
-        </div>
+        {formType === 'register' && (
+          <>
+            <h1 className="ml-[28px] mb-2">Password</h1>
+            <div className="relative flex justify-center">
+              <input
+                className="w-[440px] h-12 bg-black border rounded-lg mb-4 p-2"
+                style={customStyles.input}
+                type={showPassword ? 'text' : 'password'}
+                placeholder="Repeat Password"
+              />
+              <div className="absolute top-0 right-8 m-3 cursor-pointer" onClick={togglePasswordVisibility}>
+                {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+              </div>
+            </div>
+          </>
+        )}
+        {formType === 'login' && (
+          <>
+            <div className="flex justify-center mb-4">
+              <button className="mb-4">Forgot Password</button>
+            </div>
+            <div className="flex justify-center ">
+              <button className="w-[440px] h-12 text-gray-800 bg-white rounded-lg mb-2">Login</button>
+            </div>
+            <div className="flex justify-center">
+              <p className="text-xs text-gray-400 mr-2">Don't have an account?</p>
+              <button className="text-xs">Sign up</button>
+            </div>
+          </>
+        )}
+        {formType === 'register' && (
+          <>
+            <div className="flex justify-center mb-4">
+              <div
+                className={`mr-1 rounded-full cursor-pointer ${isChecked ? 'bg-green-500' : 'bg-black'}`}
+                onClick={handleCheckboxChange}
+                style={{
+                  width: '25px',
+                  height: '25px',
+                  border: '2px solid gray',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                {isChecked && (
+                  <svg width="10" height="8" viewBox="0 0 10 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M8.78571 0L3.57143 5.14286L1.21429 2.85714L0 4L3.57143 8L10 1.14286L8.78571 0Z"
+                      fill="white"
+                    />
+                  </svg>
+                )}
+              </div>
+              <p className="text-gray-400 mr-1">I agree to our</p>
+              <button className="mr-1" style={{ pointerEvents: continueButtonColor === 'white' ? 'none' : 'auto' }}>
+                Privacy Policy
+              </button>
+              <p className="text-gray-400 mr-1">and</p>
+              <button style={{ pointerEvents: continueButtonColor === 'white' ? 'none' : 'auto' }}>
+                Term & Conditions
+              </button>
+            </div>
+            <div className="flex justify-center">
+              <Link
+                to="/login"
+                className={`w-[440px] h-12 rounded-lg mb-4 inline-flex items-center justify-center ${
+                  isChecked ? 'bg-green-500 text-white' : 'bg-white text-gray-800'
+                }`}
+                style={{ textDecoration: 'none', pointerEvents: continueButtonColor === 'white' ? 'none' : 'auto' }}
+              >
+                Continue
+              </Link>
+            </div>
+            <div className="flex justify-center">
+              <p className="text-xs text-gray-400 mr-2">Already have an account?</p>
+              <button className="text-xs">Login</button>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
 };
-
-export default RegisterPage;
