@@ -1,8 +1,6 @@
-import { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useEffect } from 'react';
 
-const MoviePlaeer = () => {
-  const { id } = useParams()
+const MoviePlaeer = ({ id }: { id: number | string }) => {
   useEffect(() => {
     const kinoboxScript = document.createElement('script')
     kinoboxScript.src = 'https://kinobox.tv/kinobox.min.js'

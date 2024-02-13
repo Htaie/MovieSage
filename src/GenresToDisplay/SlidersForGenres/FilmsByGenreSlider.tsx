@@ -78,11 +78,10 @@ export const FilmByGenreSlider = ({ genre, type }: any) => {
         className="swiper-navigation-color"
         modules={[Navigation]}
       >
-        {Array.isArray(data)
-          ? (
-              data.map((item: any, index: number) => (
-            <SwiperSlide key={index} className="flex items-center">
-              <Link to={`/movie/${item.id}`} className="mr-[20px] transition-transform  transform hover:scale-105">
+        {Array.isArray(data) ? (
+          data.map((item: any, index: number) => (
+            <SwiperSlide key={index} className="flex items-center mx-2">
+              <Link to={`/movie/${item.id}`} className="transition-transform  transform hover:scale-105">
                 <div className="relative">
                   <img src={item.backdrop.url} alt="film image" className="w-[370px] h-[200px] rounded-lg "></img>
                   <div className="absolute inset-0 bg-black opacity-30"></div>

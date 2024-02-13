@@ -6,7 +6,7 @@ import 'swiper/css/pagination'
 import 'swiper/css'
 import GenresCards from '../../../GenresToDisplay/GenresCards/GenresCards'
 import { Link } from 'react-router-dom'
-import { RatingRounding } from '../../../textUtils'
+import { FormatingName, RatingRounding } from '../../../textUtils'
 import { TOKEN, apiUrl } from '../../../constants'
 
 const MainSlider = () => {
@@ -78,7 +78,7 @@ const MainSlider = () => {
       }}
       navigation={true}
       modules={[Pagination, Navigation, Autoplay]}
-      className='bg-black swiper-navigation-color swiper-pagination-color'
+      className="h-screen bg-black swiper-navigation-color"
     >
       {data.map(
         (movie: MovieType) =>
@@ -87,7 +87,7 @@ const MainSlider = () => {
               <div className='relative'>
                 <img className='w h-full w-full object-cover' src={movie.backdrop.url} alt='backdropMovie' />
 
-                <div className='absolute bottom-0 left-0 ml-40 font-bold h-[700px] text-white z-10'>
+                <div className='absolute bottom-12 left-0 ml-40 font-bold h-[700px] text-white z-10'>
                   <img
                     className='h-[120px] w-[50%] ml-2 main-slider'
                     src={movie.logo.url}
@@ -99,7 +99,7 @@ const MainSlider = () => {
                       to={'/genres/}'}
                       className='backdrop-blur-lg bg-white/10 hover:backdrop-blur-3xl hover:bg-white/30 px-3 py-2 rounded-3xl text-xl mx-2'
                     >
-                      {movie.type.charAt(0).toUpperCase() + movie.type.slice(1)}
+                      {FormatingName(movie.name)}
                     </Link>
                     <p>{movie.rating.imdb} IMDB</p>
                     <p>{RatingRounding(movie.rating.kp)} KINOPOISK</p>

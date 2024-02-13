@@ -17,6 +17,7 @@ dependencies:
   '@mui/material':
     specifier: ^5.15.6
     version: 5.15.6(@emotion/react@11.11.3)(@emotion/styled@11.11.0)(@types/react@18.2.48)(react-dom@18.2.0)(react@18.2.0)
+<<<<<<< Updated upstream
   add:
     specifier: ^2.0.6
     version: 2.0.6
@@ -29,6 +30,11 @@ dependencies:
   lint-staged:
     specifier: ^15.2.2
     version: 15.2.2
+=======
+  moment:
+    specifier: ^2.30.1
+    version: 2.30.1
+>>>>>>> Stashed changes
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -3008,6 +3014,10 @@ packages:
     resolution: {integrity: sha512-jYofLM5Dam9279rdkWzqHozUo4ybjdZmCsDHePy5V/PbBcVMiSZR97gmAy45aqi8CK1lG2ECd356FU86avfwUQ==}
     engines: {node: '>=16 || 14 >=14.17'}
     dev: true
+
+  /moment@2.30.1:
+    resolution: {integrity: sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how==}
+    dev: false
 
   /ms@2.1.2:
     resolution: {integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==}
