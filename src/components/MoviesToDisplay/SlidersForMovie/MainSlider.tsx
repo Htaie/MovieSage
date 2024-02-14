@@ -9,61 +9,62 @@ import { Link } from 'react-router-dom'
 import { FormatingName, RatingRounding } from '../../../textUtils'
 import { TOKEN, apiUrl } from '../../../constants'
 
-const MainSlider = () => {
+
+const MainSlider: React.FC = () => {
   const divStyle = {
     WebkitBoxShadow: '0px 0px 70px 120px rgba(0, 0, 0, 1)',
     MozBoxShadow: '0px 0px 70px 120px rgba(0, 0, 0, 1)',
-    boxShadow: '0px 0px 70px 120px rgba(0, 0, 0, 1)'
-  }
+    boxShadow: '0px 0px 70px 120px rgba(0, 0, 0, 1)',
+  };
 
   const customShadowStyle = {
-    filter: 'drop-shadow(20px 20px 6px rgba(0, 0, 0, 0.7))'
-  }
+    filter: 'drop-shadow(20px 20px 6px rgba(0, 0, 0, 0.7))',
+  };
 
-  const [data, setData] = useState([])
+  const [data, setData] = useState<MovieType[]>([]);
   interface MovieType {
     logo: {
-      url: string
-    }
-    id: number
-    type: string
-    name: string
+      url: string;
+    };
+    id: number;
+    type: string;
+    name: string;
     rating: {
-      imdb: number
-      kp: number
-    }
-    genres: Array<{ name: string }>
-    countries: Array<{ name: string }>
-    year: number
-    shortDescription: string
+      imdb: number;
+      kp: number;
+    };
+    genres: Array<{ name: string }>;
+    countries: Array<{ name: string }>;
+    year: number;
+    shortDescription: string;
     backdrop: {
-      url: string
-    }
+      url: string;
+    };
   }
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (): Promise<void> => {
       try {
         const response = await fetch(apiUrl + 'movie?page=1&limit=20', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
-            'X-API-KEY': TOKEN
-          }
-        })
+            'X-API-KEY': TOKEN,
+          },
+        });
 
         if (!response.ok) {
-          throw new Error('Network response was not ok')
+          throw new Error('Network response was not ok');
         }
 
-        const responseData = await response.json()
-        setData(responseData.docs)
-        console.log(responseData.docs)
+        const responseData = await response.json();
+        setData(responseData.docs as MovieType[]);
+        console.log(responseData.docs);
       } catch (error) {
-        console.error('There was a problem with the fetch operation:', error)
+        console.error('There was a problem with the fetch operation:', error);
       }
-    }
-    fetchData()
-  }, [])
+    };
+    void fetchData();
+  }, []);
   return (
     <Swiper
       slidesPerView={1}
@@ -74,15 +75,15 @@ const MainSlider = () => {
       //   disableOnInteraction: false,
       // }}
       pagination={{
-        clickable: true
+        clickable: true,
       }}
       navigation={true}
       modules={[Pagination, Navigation, Autoplay]}
-      className="h-screen bg-black swiper-navigation-color"
+      className="h-screen bg-black swiper-navigation-color swiper-pagination-color"
     >
       {data.map(
         (movie: MovieType) =>
-          movie.logo.url && (
+          movie.logo.url !== null && (
             <SwiperSlide key={movie.id}>
               <div className='relative'>
                 <img className='w h-full w-full object-cover' src={movie.backdrop.url} alt='backdropMovie' />
@@ -122,7 +123,7 @@ const MainSlider = () => {
           )
       )}
     </Swiper>
-  )
-}
+  );
+};
 
-export default MainSlider
+export default MainSlider;
