@@ -44,6 +44,7 @@ module.exports = {
     linkComponents: ['Hyperlink', { name: 'Link', linkAttribute: 'to' }],
   },
   rules: {
+    '@typescript-eslint/semi': 'off',
     'react/jsx-uses-react': 'error',
     'react/jsx-uses-vars': 'error',
     'react/react-in-jsx-scope': 'off',
