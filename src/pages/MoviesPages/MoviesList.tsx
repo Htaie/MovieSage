@@ -5,7 +5,7 @@ import MovieCards from '../../components/MoviesToDisplay/MoviesCards/MoviesCards
 import { FormatingName } from '../../textUtils';
 import { CircularProgress } from '@mui/material';
 
-const MoviesList = () => {
+const MoviesList = (): JSX.Element => {
   const [data, setData] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
   const [maxPages, setMaxPages] = useState(1);
@@ -15,7 +15,7 @@ const MoviesList = () => {
     scrollTo(0, 0);
   }, []);
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (): Promise<void> => {
       try {
         setLoading(true)
 
@@ -34,7 +34,7 @@ const MoviesList = () => {
 
         const responseData = await response.json()
         setData((prevData): any => [...prevData, ...responseData.docs])
-        setMaxPages(responseData.pages)
+        setMaxPages(responseData.pages )
       } catch (error) {
         console.error('There was a problem with the fetch operation:', error)
       } finally {
@@ -42,14 +42,14 @@ const MoviesList = () => {
       }
     }
 
-    fetchData()
+    void fetchData()
   }, [pageNumber, name])
   useEffect(() => {
-    const handleScroll = () => {
+    const handleScroll = (): void => {
       const windowHeight = window.innerHeight
       const documentHeight = document.documentElement.scrollHeight
       const scrollTop =
-        window.scrollY || window.scrollY || document.body.scrollTop + (document.documentElement.scrollTop || 0)
+        (window.scrollY !== 0) || (window.scrollY !== 0) || document.body.scrollTop + ((document.documentElement.scrollTop !== 0) || 0)
 
       if (!loading && windowHeight + scrollTop >= documentHeight - 400 && pageNumber < maxPages) {
         setPageNumber((prevPageNumber) => prevPageNumber + 1)

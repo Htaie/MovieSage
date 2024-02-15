@@ -7,15 +7,15 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'swiper/css'
 
-export const FilmByGenreSlider = ({ genre, type }: any) => {
+export const FilmByGenreSlider = ({ genre, type }: { genre: string; type: string }): JSX.Element => {
   const [data, setData] = useState([])
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (): Promise<void> => {
       try {
         let localStorageKey = ''
 
-        if (type) {
+        if (type.length > 0) {
           localStorageKey = `movieByTypeData_${type}`
         } else {
           localStorageKey = `movieByGenresData_${genre}`
@@ -23,12 +23,13 @@ export const FilmByGenreSlider = ({ genre, type }: any) => {
 
         const movieStoredData = localStorage.getItem(localStorageKey)
 
-        if (movieStoredData) {
+        if (movieStoredData != null) {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           setData(JSON.parse(movieStoredData))
         } else {
           let url = ''
 
-          if (type) {
+          if (type.length > 0) {
             url = `${apiUrl}movie?page=1&limit=15&selectFields=id&selectFields=name&selectFields=backdrop&notNullFields=backdrop.url&sortField=&sortType=1&type=${type}`
           } else {
             url = `${apiUrl}movie?page=1&limit=15&selectFields=id&selectFields=name&selectFields=backdrop&notNullFields=backdrop.url&sortField=&sortType=1&genres.name=${genre}`
@@ -47,6 +48,7 @@ export const FilmByGenreSlider = ({ genre, type }: any) => {
           }
 
           const responseData = await response.json()
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           setData(responseData.docs)
           localStorage.setItem(localStorageKey, JSON.stringify(responseData.docs))
           console.log(responseData)
@@ -55,7 +57,7 @@ export const FilmByGenreSlider = ({ genre, type }: any) => {
         console.error('There was a problem with the fetch operation:', error)
       }
     }
-    fetchData()
+    void fetchData()
   }, [genre, type])
 
   return (
@@ -78,7 +80,8 @@ export const FilmByGenreSlider = ({ genre, type }: any) => {
         className="swiper-navigation-color"
         modules={[Navigation]}
       >
-        {Array.isArray(data) ? (
+        {Array.isArray(data)
+? (
           data.map((item: any, index: number) => (
             <SwiperSlide key={index} className="flex items-center mx-2">
               <Link to={`/movie/${item.id}`} className="transition-transform  transform hover:scale-105">
