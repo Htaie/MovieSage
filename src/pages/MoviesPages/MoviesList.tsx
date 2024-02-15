@@ -1,19 +1,19 @@
-import { useParams } from 'react-router-dom'
-import NavBar from '../../components/Navigation/Header/NavBar'
-import { TOKEN, apiUrl } from '../../constants'
-import { useEffect, useState } from 'react'
-import MovieCards from '../../components/MoviesToDisplay/MoviesCards/MoviesCards'
-import Footer from '../../components/Navigation/Footer/Footer'
-import { FormatingName } from '../../textUtils'
-import { CircularProgress } from '@mui/material'
+import { useParams } from 'react-router-dom';
+import { TOKEN, apiUrl } from '../../constants';
+import { useEffect, useState } from 'react';
+import MovieCards from '../../components/MoviesToDisplay/MoviesCards/MoviesCards';
+import { FormatingName } from '../../textUtils';
+import { CircularProgress } from '@mui/material';
 
 const MoviesList = () => {
-  const [data, setData] = useState([])
-  const [pageNumber, setPageNumber] = useState(1)
-  const [maxPages, setMaxPages] = useState(1)
-  const { name } = useParams()
-  const [loading, setLoading] = useState(false)
-
+  const [data, setData] = useState([]);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [maxPages, setMaxPages] = useState(1);
+  const { name } = useParams();
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    scrollTo(0, 0);
+  }, []);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -65,24 +65,20 @@ const MoviesList = () => {
 
   return (
     <>
-      <NavBar />
-      <div className='bg-black h-full min-h-screen '>
-        <h1 className='text-white text-3xl mb-10 pt-36 ml-20 '>{FormatingName(name)}</h1>
-        <div className='absolute right-0'></div>
-        <div className='container mx-auto my-0 flex flex-wrap justify-between'>
+      <div className="bg-black h-full min-h-screen ">
+        <h1 className="text-white text-3xl mb-10 pt-36 ml-20 ">{FormatingName(name)}</h1>
+        <div className="absolute right-0"></div>
+        <div className="container mx-auto my-0 flex flex-wrap justify-between">
           <MovieCards data={data} />
         </div>
-        <div className='flex justify-center'>
-          {loading
-            ? (
-            <div className='w-full h-full flex justify-center items-center bg-black'>
+        <div className="flex justify-center">
+          {loading && pageNumber > 1 && (
+            <div className="w-full h-full flex justify-center items-center bg-black">
               <CircularProgress sx={{ color: 'white' }} />
             </div>
-              )
-            : null}
+          )}
         </div>
       </div>
-      <Footer />
     </>
   )
 }

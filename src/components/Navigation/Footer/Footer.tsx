@@ -2,11 +2,11 @@ import { Link } from 'react-router-dom'
 
 const Footer = () => {
   return (
-    <div className='w-full bg-black h-30'>
-      <div className='container mx-auto flex flex-col-reverse md:flex-row text-white justify-between items-center'>
-        <div className='flex items-center space-x-3 mb-2 md:mb-0 md:order-2'>
-          <Link to={'/'} className='flex items-center'>
-            <svg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'>
+    <div className="w-full bg-gray-800 h-[100px] flex items-center">
+      <div className="container mx-auto flex flex-col-reverse md:flex-row text-white justify-between items-center">
+        <div className="flex items-center space-x-3 mb-2 md:mb-0 md:order-2">
+          <Link to={'/'} className="flex items-center">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
                 d='M2.39997 5.27259C2.39997 2.60499 4.15685 0.799988 6.75692 0.799988H25.243C27.8419 0.799988 29.6 2.60372 29.6 5.27259V31.2L27.3683 28.5387V5.27259C27.3683 4.69576 27.1449 4.14251 26.7472 3.73428C26.3494 3.32604 25.8098 3.09619 25.2467 3.09519H6.76063C6.19771 3.09653 5.65827 3.32648 5.26057 3.73464C4.86287 4.1428 4.63936 4.69587 4.63903 5.27259V24.0661C4.63903 24.6429 4.86244 25.1962 5.26021 25.6044C5.65798 26.0127 6.19761 26.2425 6.76063 26.2435H22.2683L24.4839 28.521L6.75692 28.5387C4.15808 28.5387 2.39997 26.735 2.39997 24.0661V5.27259Z'
                 fill='#00925D'

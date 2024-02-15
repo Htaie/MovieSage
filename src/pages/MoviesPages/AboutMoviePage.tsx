@@ -1,17 +1,16 @@
-import { useParams } from 'react-router-dom'
-import { MainBtn } from '../../components/UI/buttons/MainBtn.tsx'
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
-import FilmInfo from '../../components/MovieDetails/FilmInfo.tsx'
-import ActorsInfo from '../../components/MovieDetails/ActorsInfo.tsx'
-import { useEffect, useState } from 'react'
-import { TOKEN, apiUrl } from '../../constants.ts'
-import { CircularProgress } from '@mui/material'
-import GenresCards from '../../GenresToDisplay/GenresCards/GenresCards.tsx'
-import { RaitingInfo } from '../../components/MovieDetails/RatingStar.tsx'
-import Navbar from '../../components/Navigation/Header/NavBar.tsx'
-import Footer from '../../components/Navigation/Footer/Footer.tsx'
-import TrailerModal from '../../components/MovieDetails/TrailerModal.tsx'
-import CloseIcon from '@mui/icons-material/Close'
+import { useParams } from 'react-router-dom';
+import { MainBtn } from '../../components/UI/buttons/MainBtn.tsx';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import FilmInfo from '../../components/MovieDetails/FilmInfo.tsx';
+import ActorsInfo from '../../components/MovieDetails/ActorsInfo.tsx';
+import { useEffect, useState, useRef } from 'react';
+import { TOKEN, apiUrl } from '../../constants.ts';
+import { CircularProgress } from '@mui/material';
+import GenresCards from '../../GenresToDisplay/GenresCards/GenresCards.tsx';
+import { RaitingInfo } from '../../components/MovieDetails/RatingStar.tsx';
+import TrailerModal from '../../components/MovieDetails/TrailerModal.tsx';
+import CloseIcon from '@mui/icons-material/Close';
+import MoviePlaeer from '../../components/UI/MoviePlayer.tsx';
 interface MovieType {
   logo: { url: string }
   id: number
@@ -30,10 +29,10 @@ interface MovieType {
 }
 
 const AboutMoviePage = () => {
-  const [data, setData] = useState<MovieType | null>(null)
-  const [openModal, setOpenModal] = useState(false)
-  const { id } = useParams()
-
+  const [data, setData] = useState<MovieType | null>(null);
+  const [openModal, setOpenModal] = useState(false);
+  const { id } = useParams();
+  const watchFilmRef = useRef<null | HTMLDivElement>(null);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -61,7 +60,7 @@ const AboutMoviePage = () => {
   }, [])
   if (!data) {
     return (
-      <div className='w-full h-full flex justify-center items-center bg-black'>
+      <div className="w-full h-screen flex justify-center items-center bg-black">
         <CircularProgress sx={{ color: 'white' }} />
       </div>
     )
@@ -74,12 +73,11 @@ const AboutMoviePage = () => {
   }
 
   return (
-    <div className='bg-black'>
-      <Navbar />
-      <div className='container mx-auto text-white pt-[100px] pb-[100px]'>
+    <div className="bg-black">
+      <div className="container mx-auto text-white pt-[100px] pb-[100px]">
         {openModal && (
-          <div className='w-full h-full absolute overflow-hidden '>
-            <div className=' bg-black opacity-75 absolute z-40  w-full h-full' onClick={() => { setOpenModal(false) }}>
+          <div className="w-full h-full absolute overflow-hidden">
+            <div className=" bg-black opacity-75 absolute z-40  w-full h-full" onClick={() => setOpenModal(false)}>
               <CloseIcon
                 onClick={() => { setOpenModal(false) }}
                 className='text-white absolute right-3 top-3 cursor-pointer'
@@ -133,10 +131,10 @@ const AboutMoviePage = () => {
                   }}
                 ></MainBtn>
                 <MainBtn
-                  text='Посмотреть фильм'
-                  to={`/watch/${data.id}`}
+                  text="Посмотреть фильм"
+                  // to={`/watch/${data.id}`}
                   onClick={() => {
-                    console.log('Click')
+                    watchFilmRef?.current?.scrollIntoView({ behavior: 'smooth' });
                   }}
                 ></MainBtn>
                 <MainBtn
@@ -154,9 +152,15 @@ const AboutMoviePage = () => {
             <p className='font-bold text-3xl mb-[60px]'>Актеры:</p>
             <ActorsInfo data={data} />
           </div>
-          <FilmInfo data={data} />
+          <div className="mb-[80px]">
+            <FilmInfo data={data} />
+          </div>
         </div>
-        <Footer />
+        <div className="mb-[80px]" ref={watchFilmRef}>
+          {/* XDD */}
+          <p className="font-bold text-3xl mb-[60px]">Смотреть фильм {data.name} онлайн без регистрации и СМС:</p>
+          <MoviePlaeer id={data.id} />
+        </div>
       </div>
     </div>
   )

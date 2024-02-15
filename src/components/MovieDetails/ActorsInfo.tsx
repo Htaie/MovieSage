@@ -22,7 +22,12 @@ const ActorsInfo = ({ data }: any) => {
         {data.persons.map((item: any, index: number) => (
           <SwiperSlide key={index} className='flex'>
             <Link key={index} to={`/actor/${item.id}`}>
-              <img src={item.photo} alt='actor image' className='w-[200px] h-[200px] rounded-lg object-cover'></img>
+              <img
+                src={item.photo}
+                alt="actor image"
+                className="w-[200px] h-[200px] rounded-lg object-cover mb-2"
+              ></img>
+              <p className="ml-1">{item.name}</p>
             </Link>
           </SwiperSlide>
         ))}
