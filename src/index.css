@@ -5,6 +5,18 @@
   width: 11px;
   height: 11px;
 }
+.swiper-button-next::after{
+  color: transparent;
+  /* или  */
+  visibility: hidden;
+}
+.swiper-button-next::after:hover{
+  color: #fff;
+  /* или  */
+  visibility: visible;
+ и тут другие стили для кнопок при наведение
+
+}
 
 @layer utilities {
   .swiper-navigation-color {
