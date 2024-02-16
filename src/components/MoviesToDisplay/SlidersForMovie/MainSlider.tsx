@@ -10,6 +10,7 @@ import { FormatingName, RatingRounding } from '../../../textUtils'
 import { TOKEN, apiUrl } from '../../../constants'
 import { MovieType } from '../../../MoviesTypes'
 
+
 const MainSlider: React.FC = () => {
   const divStyle = {
     WebkitBoxShadow: '0px 0px 70px 120px rgba(0, 0, 0, 1)',
@@ -47,6 +48,40 @@ const MainSlider: React.FC = () => {
     };
     void fetchData();
   }, []);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      const swiperElement = document.querySelector('.swiper');
+      const nextArrow = swiperElement?.querySelector('.swiper-button-next');
+      const prevArrow = swiperElement?.querySelector('.swiper-button-prev');
+      const rect = swiperElement?.getBoundingClientRect();
+      const mouseX = e.clientX - (rect?.left ?? 0);
+
+      if (
+        swiperElement !== null &&
+        nextArrow !== null &&
+        prevArrow !== undefined &&
+        prevArrow !== null &&
+        nextArrow !== undefined &&
+        rect !== undefined
+      ) {
+        if (mouseX < (rect.width ?? 0) / 2) {
+          nextArrow.classList?.remove('show');
+          prevArrow.classList?.add('show');
+        } else {
+          nextArrow.classList?.add('show');
+          prevArrow.classList?.remove('show');
+        }
+      }
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
+
   return (
     <Swiper
       slidesPerView={1}
@@ -61,7 +96,7 @@ const MainSlider: React.FC = () => {
       }}
       navigation={true}
       modules={[Pagination, Navigation, Autoplay]}
-      className="h-screen bg-black swiper-navigation-color swiper-pagination-color"
+      className='h-screen bg-black swiper-navigation-color swiper-pagination-color'
     >
       {data.map(
         (movie: MovieType) =>

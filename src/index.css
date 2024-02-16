@@ -11,8 +11,9 @@
 .swiper-button-prev::after {
   color: transparent;
 }
-#root > div > div.swiper:hover .swiper-button-next::after,
-#root > div > div.swiper:hover .swiper-button-prev::after {
+
+.swiper-button-next.show::after,
+.swiper-button-prev.show::after {
   color: #fff;
   box-shadow:
     inset 0px 0px 50px 10px rgba(0, 0, 0, 0.7),
