@@ -1,7 +1,7 @@
 import StarOutlinedIcon from '@mui/icons-material/StarOutlined'
 import { MainBtn } from '../UI/buttons/MainBtn'
 import { RatingRounding } from '../../textUtils'
-import { MovieType } from '../../types'
+import { MovieType } from '../../MoviesTypes'
 
 interface RaitingInfoProps {
   data: MovieType

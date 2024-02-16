@@ -25,7 +25,7 @@ export interface MovieType {
     url: string;
   };
 
-  genres: Array<{ name: string }>;
+  genres: Array<{ name: string, slug: string }>;
   countries: Array<{ name: string }>;
   year: number;
   shortDescription: string;

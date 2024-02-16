@@ -8,7 +8,7 @@ import GenresCards from '../../../GenresToDisplay/GenresCards/GenresCards'
 import { Link } from 'react-router-dom'
 import { FormatingName, RatingRounding } from '../../../textUtils'
 import { TOKEN, apiUrl } from '../../../constants'
-import { MovieType } from '../../../types'
+import { MovieType } from '../../../MoviesTypes'
 
 const MainSlider: React.FC = () => {
   const divStyle = {
@@ -88,7 +88,7 @@ const MainSlider: React.FC = () => {
                     <p>{RatingRounding(movie.rating.kp)} KINOPOISK</p>
                   </div>
                   <div className='flex flex-wrap w-[70%]'>
-                    <GenresCards data={movie.genres} />
+                    <GenresCards genres={movie.genres} />
                   </div>
                   <h1 className='w-[460px] text-wrap text-xl mx-2 mt-3 mb-10'>{movie.shortDescription}</h1>
                   <Link to={`/movie/${movie.id}`} className='py-4 px-7 border rounded-3xl'>

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-const MoviePlaeer = ({ id }: { id: number | string }) => {
+const MoviePlayer= ({ id }: { id: number | string }) => {
   useEffect(() => {
     const kinoboxScript = document.createElement('script')
     kinoboxScript.src = 'https://kinobox.tv/kinobox.min.js'
@@ -24,4 +24,4 @@ const MoviePlaeer = ({ id }: { id: number | string }) => {
   )
 }
 
-export default MoviePlaeer
+export default MoviePlayer

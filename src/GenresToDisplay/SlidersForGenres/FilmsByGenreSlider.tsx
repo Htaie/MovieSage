@@ -86,7 +86,7 @@ export const FilmByGenreSlider = ({ genre, type }: { genre: string; type: string
             <SwiperSlide key={index} className="flex items-center mx-2">
               <Link to={`/movie/${item.id}`} className="transition-transform  transform hover:scale-105">
                 <div className="relative">
-                  <img src={item.backdrop.url} alt="film image" className="w-[370px] h-[200px] rounded-lg "></img>
+                  <img src={item.backdrop.url} alt="film image" className="w-[370px] h-[200px] rounded-lg object-cover"></img>
                   <div className="absolute inset-0 bg-black opacity-30"></div>
                   <p className="absolute bottom-2 ml-2 text-white text-2xl">{item.name}</p>
                 </div>

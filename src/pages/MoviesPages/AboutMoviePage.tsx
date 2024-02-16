@@ -92,7 +92,7 @@ const AboutMoviePage = (): JSX.Element => {
                 <h1 className='text-4xl font-bold mt-4 mb-[40px]'>{data.name}</h1>
                   )}
               <div className='flex mb-8'>
-                <GenresCards data={data.genres} width={30} />
+                <GenresCards genres={data.genres} width={30} />
               </div>
               <div className='flex mb-4'>
                 <p>{data.year}</p>
