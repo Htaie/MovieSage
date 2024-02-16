@@ -2,10 +2,7 @@ import MainSlider from '../components/MoviesToDisplay/SlidersForMovie/MainSlider
 import GenresLinkCards from '../GenresToDisplay/GenresCards/GenresLinkCards';
 import { FilmByGenreSlider } from '../GenresToDisplay/SlidersForGenres/FilmsByGenreSlider';
 
-
 export const SecondPage = (): JSX.Element => {
-
-export const SecondPage = () => {
   const genresToDisplay = [
     'фэнтези', 'мелодрама', 'семейный', 'новости', 'реальное ТВ',
     'комедия', 'спорт', 'ром-комы', 'музыка', 'мюзикл', 'военный',
@@ -24,8 +21,7 @@ export const SecondPage = () => {
       {genresToDisplay.map((genre, index) => (
         <FilmByGenreSlider
           key={index}
-          genre={genre}
-        />
+          genre={genre} type={''} />
       ))}
 
     </div>
