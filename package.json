@@ -8,8 +8,7 @@
     "build": "tsc && vite build",
     "lint": "eslint **/*.{ts,tsx} --fix",
     "preview": "vite preview",
-    "format": "prettier --write .",
-    "prepare": "husky install"
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@emotion/react": "^11.11.3",

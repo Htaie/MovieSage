@@ -8,7 +8,7 @@ import 'swiper/css/pagination'
 import 'swiper/css'
 import { FormatingName, getEmojiForGenre } from '../../textUtils'
 
-const GenresLinkCards = () => {
+const GenresLinkCards = (): JSX.Element => {
   const [data, setData] = useState<GenresType[] | undefined>(undefined)
 
   interface GenresType {
@@ -19,10 +19,10 @@ const GenresLinkCards = () => {
   useEffect(() => {
     const storedData = localStorage.getItem('genresData')
 
-    if (storedData) {
-      setData(JSON.parse(storedData))
+    if (storedData != null) {
+      setData(JSON.parse(storedData) as GenresType[]);
     } else {
-      const fetchData = async () => {
+      const fetchData = async (): Promise<void> => {
         try {
           const url = 'https://api.kinopoisk.dev/v1/movie/possible-values-by-field?field=genres.name'
           const response = await fetch(url, {
@@ -38,7 +38,7 @@ const GenresLinkCards = () => {
           }
 
           const responseData = await response.json()
-          setData(responseData)
+          setData(responseData as GenresType[] | undefined);
 
           localStorage.setItem('genresData', JSON.stringify(responseData))
         } catch (error) {
@@ -46,7 +46,7 @@ const GenresLinkCards = () => {
         }
       }
 
-      fetchData()
+      void fetchData()
     }
   }, [])
 

@@ -3,7 +3,11 @@ import { Link } from 'react-router-dom'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 
-export const AuthComponent = ({ formType }: any) => {
+enum FormType {
+  LOGIN = 'login',
+  REGISTER = 'register',
+}
+export const AuthComponent = ({ formType }: { formType: FormType }): JSX.Element => {
   const [showPassword, setShowPassword] = useState(false)
   const [isChecked, setIsChecked] = useState(false)
   const [continueButtonColor, setContinueButtonColor] = useState('white')
@@ -17,11 +21,11 @@ export const AuthComponent = ({ formType }: any) => {
     }
   }
 
-  const togglePasswordVisibility = () => {
+  const togglePasswordVisibility: React.MouseEventHandler = () => {
     setShowPassword(!showPassword)
   }
 
-  const handleCheckboxChange = () => {
+  const handleCheckboxChange: React.MouseEventHandler<HTMLDivElement> = () => {
     setIsChecked(!isChecked)
     setContinueButtonColor(isChecked ? 'white' : 'green')
   }
@@ -52,7 +56,7 @@ export const AuthComponent = ({ formType }: any) => {
           <h1 className='text-3xl'>MovieSage</h1>
           <button className='w-20 h-12 bg-black border border-[#2b2c2e] rounded-lg ml-[182px]'>Close</button>
         </div>
-        {formType === 'register' && (
+        {FormType.REGISTER === 'register' && (
           <>
             <h1 className='ml-[28px] mb-2'>Email</h1>
             <div className='flex justify-center'>
@@ -86,7 +90,7 @@ export const AuthComponent = ({ formType }: any) => {
             {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
           </div>
         </div>
-        {formType === 'register' && (
+        {FormType.REGISTER === 'register' && (
           <>
             <h1 className='ml-[28px] mb-2'>Password</h1>
             <div className='relative flex justify-center'>
@@ -102,7 +106,7 @@ export const AuthComponent = ({ formType }: any) => {
             </div>
           </>
         )}
-        {formType === 'login' && (
+        {FormType.LOGIN === 'login' && (
           <>
             <div className='flex justify-center mb-4'>
               <button className='mb-4'>Forgot Password</button>
@@ -111,12 +115,12 @@ export const AuthComponent = ({ formType }: any) => {
               <button className='w-[440px] h-12 text-gray-800 bg-white rounded-lg mb-2'>Login</button>
             </div>
             <div className='flex justify-center'>
-              <p className='text-xs text-gray-400 mr-2'>Don't have an account?</p>
+              <p className='text-xs text-gray-400 mr-2'>Don`&apos;`t have an account?</p>
               <button className='text-xs'>Sign up</button>
             </div>
           </>
         )}
-        {formType === 'register' && (
+        {FormType.REGISTER === 'register' && (
           <>
             <div className='flex justify-center mb-4'>
               <div

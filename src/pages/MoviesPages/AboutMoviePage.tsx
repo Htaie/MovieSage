@@ -11,30 +11,15 @@ import { RaitingInfo } from '../../components/MovieDetails/RatingStar.tsx';
 import TrailerModal from '../../components/MovieDetails/TrailerModal.tsx';
 import CloseIcon from '@mui/icons-material/Close';
 import MoviePlaeer from '../../components/UI/MoviePlayer.tsx';
-interface MovieType {
-  logo: { url: string }
-  id: number
-  type: string
-  name: string
-  rating: { imdb: number, kp: number }
-  genres: Array<{ name: string }>
-  countries: Array<{ name: string }>
-  year: number
-  shortDescription: string
-  backdrop: { url: string }
-  poster: { url: string }
-  movieLength: number
-  description: string
-  videos: { trailers: Array<{ url: string }> }
-}
+import { MovieType } from '../../types.ts';
 
-const AboutMoviePage = () => {
+const AboutMoviePage = (): JSX.Element => {
   const [data, setData] = useState<MovieType | null>(null);
   const [openModal, setOpenModal] = useState(false);
   const { id } = useParams();
   const watchFilmRef = useRef<null | HTMLDivElement>(null);
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (): Promise<void> => {
       try {
         const url = `${apiUrl}movie/${id}`
         const response = await fetch(url, {
@@ -50,15 +35,15 @@ const AboutMoviePage = () => {
         }
 
         const responseData = await response.json()
-        setData(responseData)
+        setData(responseData as MovieType | null)
       } catch (error) {
         console.error('There was a problem with the fetch operation:', error)
       }
     }
 
-    fetchData()
+    void fetchData()
   }, [])
-  if (!data) {
+  if (data == null) {
     return (
       <div className="w-full h-screen flex justify-center items-center bg-black">
         <CircularProgress sx={{ color: 'white' }} />
@@ -77,7 +62,7 @@ const AboutMoviePage = () => {
       <div className="container mx-auto text-white pt-[100px] pb-[100px]">
         {openModal && (
           <div className="w-full h-full absolute overflow-hidden">
-            <div className=" bg-black opacity-75 absolute z-40  w-full h-full" onClick={() => setOpenModal(false)}>
+            <div className=" bg-black opacity-75 absolute z-40  w-full h-full" onClick={() => { setOpenModal(false); }}>
               <CloseIcon
                 onClick={() => { setOpenModal(false) }}
                 className='text-white absolute right-3 top-3 cursor-pointer'
@@ -93,13 +78,13 @@ const AboutMoviePage = () => {
           <div className=' flex'>
             <div>
               <img
-                src={data.poster.url || 'https://placehold.co/300x430'}
+                src={(data.poster.url.length > 0) ? data.poster.url : 'https://placehold.co/300x430'}
                 alt='film image'
                 className='w-[300px] h-[430px] rounded-lg mt-4 mb-4'
               ></img>
             </div>
             <div className='flex flex-col ml-[50px] mt-4'>
-              {data.logo.url
+              {(data.logo.url.length > 0)
                 ? (
                 <img src={data.logo.url} alt='film logo' className='h-10 w-[300px] mb-3 ' />
                   )
@@ -107,7 +92,7 @@ const AboutMoviePage = () => {
                 <h1 className='text-4xl font-bold mt-4 mb-[40px]'>{data.name}</h1>
                   )}
               <div className='flex mb-8'>
-                <GenresCards data={data.genres} width={30} />
+                <GenresCards genres={data.genres} width={30} />
               </div>
               <div className='flex mb-4'>
                 <p>{data.year}</p>

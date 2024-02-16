@@ -5,7 +5,11 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'swiper/css'
 
-const ActorsInfo = ({ data }: any) => {
+import { MovieType } from '../../MoviesTypes'
+interface ActorsProps {
+  data: MovieType
+}
+const ActorsInfo = ({ data }: ActorsProps): JSX.Element => {
   console.log(data)
   return (
     <>

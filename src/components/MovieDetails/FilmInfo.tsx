@@ -1,7 +1,11 @@
 import { CircularProgress } from '@mui/material'
+import { MovieType } from '../../MoviesTypes'
+interface FilmInfoProps {
+  data: MovieType
+}
 
-const FilmInfo = ({ data }: any) => {
-  if (!data) {
+const FilmInfo = ({ data }: FilmInfoProps): JSX.Element => {
+  if (data?.persons.length === 0) {
     return (
       <div className='w-full h-full flex justify-center items-center bg-black'>
         <CircularProgress sx={{ color: 'white' }} />

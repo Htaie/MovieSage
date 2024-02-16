@@ -44,6 +44,10 @@ module.exports = {
     linkComponents: ['Hyperlink', { name: 'Link', linkAttribute: 'to' }],
   },
   rules: {
+    "@typescript-eslint/consistent-type-imports": "off",
+    "indent": "off",
+    "@typescript-eslint/indent": "off",
+    "@typescript-eslint/member-delimiter-style": "off",
     "semi": "off",
     "@typescript-eslint/semi": "off",
     'react/jsx-uses-react': 'error',
