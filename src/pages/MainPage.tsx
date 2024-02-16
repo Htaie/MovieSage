@@ -1,29 +1,53 @@
+import { useEffect, useState } from 'react';
 import MainSlider from '../components/MoviesToDisplay/SlidersForMovie/MainSlider';
 import GenresLinkCards from '../GenresToDisplay/GenresCards/GenresLinkCards';
 import { FilmByGenreSlider } from '../GenresToDisplay/SlidersForGenres/FilmsByGenreSlider';
+import { TOKEN } from '../constants';
+import { MovieType } from '../MoviesTypes';
 
 export const SecondPage = (): JSX.Element => {
-  const genresToDisplay = [
-    'фэнтези', 'мелодрама', 'семейный', 'новости', 'реальное ТВ',
-    'комедия', 'спорт', 'ром-комы', 'музыка', 'мюзикл', 'военный',
-    'детектив', 'детский', 'триллер', 'приключения', 'фантастика',
-    'мультфильм', 'аниме', 'боевик', 'драма', 'для взрослых',
-    'криминал', 'биография', 'документальный', 'ужасы', 'вестерн',
-    'игра', 'история', 'ток-шоу', 'мистика', 'концерт', 'фильм-нуар',
-    'церемония', 'короткометражка'
-  ];
+  const [data, setData] = useState<MovieType[]>([]);
+  useEffect(() => {
+    const allGenresStoredData = localStorage.getItem('allGenresData');
 
+    if (allGenresStoredData != null) {
+      setData(JSON.parse(allGenresStoredData) as MovieType[]);
+    } else {
+      const fetchData = async (): Promise<void> => {
+        try {
+          const response = await fetch(
+            'https://api.kinopoisk.dev/v1/movie/possible-values-by-field?field=genres.name',
+            {
+              method: 'GET',
+              headers: {
+                Accept: 'application/json',
+                'X-API-KEY': TOKEN,
+              },
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+
+          const responseData = await response.json();
+          setData(responseData as MovieType[]);
+          localStorage.setItem('allGenresData', JSON.stringify(responseData));
+        } catch (error) {
+          console.error('There was a problem with the fetch operation:', error);
+        }
+      };
+      void fetchData();
+    }
+  }, []);
 
   return (
-    <div className="h-full bg-black">
+    <div className='h-full bg-black'>
       <MainSlider />
       <GenresLinkCards></GenresLinkCards>
-      {genresToDisplay.map((genre, index) => (
-        <FilmByGenreSlider
-          key={index}
-          genre={genre} type={''} />
+      {data.map((genre, index) => (
+        <FilmByGenreSlider key={index} genre={genre.name} slug={genre.slug} type={''} />
       ))}
-
     </div>
-  )
-}
+  );
+};
