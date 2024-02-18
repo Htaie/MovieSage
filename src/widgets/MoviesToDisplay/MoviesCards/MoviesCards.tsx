@@ -1,7 +1,7 @@
 import { CircularProgress } from '@mui/material'
 import { Link } from 'react-router-dom'
-import { RatingScore } from '../../../textUtils'
-import { MovieType } from '../../../MoviesTypes'
+import { RatingScore } from '../../../app/utils/textUtils'
+import { MovieType } from '../../../app/types/MoviesTypes'
 
 interface Props {
   data: MovieType[]

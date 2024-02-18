@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
-import { FormatingName, getEmojiForGenre } from '../../textUtils'
-import { MovieType } from '../../MoviesTypes'
+import { FormatingName, getEmojiForGenre } from '../../../app/utils/textUtils'
+import { MovieType } from '../../../app/types/MoviesTypes'
 interface Props {
   genres: MovieType['genres']
   data: MovieType

@@ -4,11 +4,11 @@ import { Autoplay, Navigation, Pagination } from 'swiper/modules'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'swiper/css'
-import GenresCards from '../../../GenresToDisplay/GenresCards/GenresCards'
+import GenresCards from '../GenresToDisplay/GenresCards/GenresCards'
 import { Link } from 'react-router-dom'
-import { FormatingName, RatingRounding } from '../../../textUtils'
-import { TOKEN, apiUrl } from '../../../constants'
-import { MovieType } from '../../../MoviesTypes'
+import { FormatingName, RatingRounding } from '../../app/utils/textUtils'
+import { TOKEN, apiUrl } from '../../app/api/constants'
+import { MovieType } from '../../app/types/MoviesTypes'
 
 
 const MainSlider: React.FC = () => {

@@ -1,16 +1,16 @@
 import { useParams } from 'react-router-dom';
-import { MainBtn } from '../../components/UI/buttons/MainBtn.tsx';
+import { MainBtn } from '../../shared/UI/buttons/MainBtn.tsx';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import FilmInfo from '../../components/MovieDetails/FilmInfo.tsx';
-import ActorsInfo from '../../components/MovieDetails/ActorsInfo.tsx';
+import FilmInfo from '../../widgets/MovieDetails/FilmInfo.tsx';
+import ActorsInfo from '../../widgets/MovieDetails/ActorsInfo.tsx';
 import { useEffect, useState, useRef } from 'react';
-import { TOKEN, apiUrl } from '../../constants.ts';
+import { TOKEN, apiUrl } from '../../app/api/constants.ts';
 import { CircularProgress } from '@mui/material';
-import GenresCards from '../../GenresToDisplay/GenresCards/GenresCards.tsx';
-import { RaitingInfo } from '../../components/MovieDetails/RatingStar.tsx';
-import TrailerModal from '../../components/MovieDetails/TrailerModal.tsx';
+import GenresCards from '../../widgets/GenresToDisplay/GenresCards/GenresCards.tsx';
+import { RaitingInfo } from '../../widgets/MovieDetails/RatingStar.tsx';
+import TrailerModal from '../../widgets/MovieDetails/TrailerModal.tsx';
 import CloseIcon from '@mui/icons-material/Close';
-import MoviePlaeer from '../../components/UI/MoviePlayer.tsx';
+import MoviePlaeer from '../../shared/UI/MoviePlayer.tsx';
 import { MovieType } from '../../types.ts';
 
 const AboutMoviePage = (): JSX.Element => {

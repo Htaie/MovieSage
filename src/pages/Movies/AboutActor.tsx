@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { TOKEN, apiUrl } from '../../constants.ts';
+import { TOKEN, apiUrl } from '../../app/api/constants.ts';
 import moment from 'moment';
 import 'moment/dist/locale/ru';
 export const AboutActorPage = (): JSX.Element => {

@@ -1,8 +1,8 @@
 import { useParams } from 'react-router-dom';
-import { TOKEN, apiUrl } from '../../constants';
+import { TOKEN, apiUrl } from '../../app/api/constants';
 import { useEffect, useState } from 'react';
-import MovieCards from '../../components/MoviesToDisplay/MoviesCards/MoviesCards';
-import { FormatingName } from '../../textUtils';
+import MovieCards from '../../widgets/MoviesToDisplay/MoviesCards/MoviesCards';
+import { FormatingName } from '../../app/utils/textUtils';
 import { CircularProgress } from '@mui/material';
 
 const MoviesList = (): JSX.Element => {

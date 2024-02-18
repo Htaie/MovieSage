@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
-import { TOKEN } from '../../constants'
+import { TOKEN } from '../../../app/api/constants'
 import { Link } from 'react-router-dom'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper/modules'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'swiper/css'
-import { FormatingName, getEmojiForGenre } from '../../textUtils'
+import { FormatingName, getEmojiForGenre } from '../../../app/utils/textUtils'
 
 const GenresLinkCards = (): JSX.Element => {
   const [data, setData] = useState<GenresType[] | undefined>(undefined)

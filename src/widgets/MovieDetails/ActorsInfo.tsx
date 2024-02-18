@@ -5,7 +5,7 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'swiper/css'
 
-import { MovieType } from '../../MoviesTypes'
+import { MovieType } from '../../app/types/MoviesTypes'
 interface ActorsProps {
   data: MovieType
 }

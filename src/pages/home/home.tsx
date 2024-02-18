@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import MainSlider from '../components/MoviesToDisplay/SlidersForMovie/MainSlider';
-import GenresLinkCards from '../GenresToDisplay/GenresCards/GenresLinkCards';
-import { FilmByGenreSlider } from '../GenresToDisplay/SlidersForGenres/FilmsByGenreSlider';
-import { TOKEN } from '../constants';
-import { MovieType } from '../MoviesTypes';
+import MainSlider from '../../widgets/SlidersForMovie/MainSlider';
+import GenresLinkCards from '../../widgets/GenresToDisplay/GenresCards/GenresLinkCards';
+import { FilmByGenreSlider } from '../../widgets/GenresToDisplay/SlidersForGenres/FilmsByGenreSlider';
+import { TOKEN } from '../../app/api/constants';
+import { MovieType } from '../../app/types/MoviesTypes';
 
 export const SecondPage = (): JSX.Element => {
   const [data, setData] = useState<MovieType[]>([]);

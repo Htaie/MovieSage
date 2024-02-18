@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { TOKEN, apiUrl } from '../../constants';
+import { TOKEN, apiUrl } from '../../../app/api/constants';
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';

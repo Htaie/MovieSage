@@ -1,12 +1,12 @@
 import { createBrowserRouter } from 'react-router-dom';
-import LoginPage from '../pages/AuthPages/LoginPage'
-import RegisterPage from '../pages/AuthPages/RegisterPage'
-import { SecondPage } from '../pages/MainPage';
-import SearchFilms from '../pages/MoviesPages/MoviesList';
-import AboutMoviePage from '../pages/MoviesPages/AboutMoviePage';
-import { AboutActorPage } from '../pages/MoviesPages/AboutActorPage';
-import PagesTests from '../PagesTests';
-import App from '../App';
+import LoginPage from '../pages/Auth/LoginPage'
+import RegisterPage from '../pages/Auth/RegisterPage'
+import { SecondPage } from '../pages/home/home';
+import SearchFilms from '../pages/Movies/MoviesList';
+import AboutMoviePage from '../pages/Movies/AboutMovie';
+import { AboutActorPage } from '../pages/Movies/AboutActor';
+import PagesTests from '../pages/PagesTests';
+import App from '../app/App';
 
 export const router = createBrowserRouter([
   {
