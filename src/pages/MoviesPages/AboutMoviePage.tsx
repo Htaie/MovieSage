@@ -21,50 +21,57 @@ const AboutMoviePage = (): JSX.Element => {
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       try {
-        const url = `${apiUrl}movie/${id}`
+        const url = `${apiUrl}movie/${id}`;
         const response = await fetch(url, {
           method: 'GET',
           headers: {
             Accept: 'application/json',
-            'X-API-KEY': TOKEN
-          }
-        })
+            'X-API-KEY': TOKEN,
+          },
+        });
 
         if (!response.ok) {
-          throw new Error('Network response was not ok')
+          throw new Error('Network response was not ok');
         }
 
-        const responseData = await response.json()
-        setData(responseData as MovieType | null)
+        const responseData = await response.json();
+        setData(responseData as MovieType | null);
       } catch (error) {
-        console.error('There was a problem with the fetch operation:', error)
+        console.error('There was a problem with the fetch operation:', error);
       }
-    }
+    };
 
-    void fetchData()
-  }, [])
+    void fetchData();
+  }, []);
   if (data == null) {
     return (
-      <div className="w-full h-screen flex justify-center items-center bg-black">
+      <div className='w-full h-screen flex justify-center items-center bg-black'>
         <CircularProgress sx={{ color: 'white' }} />
       </div>
-    )
+    );
   }
   if (openModal) {
-    document.body.style.overflow = 'hidden'
-    scrollTo(0, 0)
+    document.body.style.overflow = 'hidden';
+    scrollTo(0, 0);
   } else {
-    document.body.style.overflow = 'auto'
+    document.body.style.overflow = 'auto';
   }
 
   return (
-    <div className="bg-black">
-      <div className="container mx-auto text-white pt-[100px] pb-[100px]">
+    <div className='bg-black'>
+      <div className='container mx-auto text-white pt-[100px] pb-[100px]'>
         {openModal && (
-          <div className="w-full h-full absolute overflow-hidden">
-            <div className=" bg-black opacity-75 absolute z-40  w-full h-full" onClick={() => { setOpenModal(false); }}>
+          <div className='w-full h-full absolute overflow-hidden'>
+            <div
+              className=' bg-black opacity-75 absolute z-40  w-full h-full'
+              onClick={() => {
+                setOpenModal(false);
+              }}
+            >
               <CloseIcon
-                onClick={() => { setOpenModal(false) }}
+                onClick={() => {
+                  setOpenModal(false);
+                }}
                 className='text-white absolute right-3 top-3 cursor-pointer'
                 style={{ fontSize: '50px' }}
               />
@@ -78,19 +85,17 @@ const AboutMoviePage = (): JSX.Element => {
           <div className=' flex'>
             <div>
               <img
-                src={(data.poster.url.length > 0) ? data.poster.url : 'https://placehold.co/300x430'}
+                src={data.poster.url.length > 0 ? data.poster.url : 'https://placehold.co/300x430'}
                 alt='film image'
                 className='w-[300px] h-[430px] rounded-lg mt-4 mb-4'
               ></img>
             </div>
             <div className='flex flex-col ml-[50px] mt-4'>
-              {(data.logo.url.length > 0)
-                ? (
-                <img src={data.logo.url} alt='film logo' className='h-10 w-[300px] mb-3 ' />
-                  )
-                : (
+              {data.logo.url.length > 0 ? (
+                <img src={data.logo.url} alt='film logo' className='h-[120px] w-[50%] mb-3 ' />
+              ) : (
                 <h1 className='text-4xl font-bold mt-4 mb-[40px]'>{data.name}</h1>
-                  )}
+              )}
               <div className='flex mb-8'>
                 <GenresCards genres={data.genres} width={30} />
               </div>
@@ -98,7 +103,7 @@ const AboutMoviePage = (): JSX.Element => {
                 <p>{data.year}</p>
                 <div className='flex'>
                   {data.countries.map((item, index) => (
-                    <p key={index} className='mr-2'>
+                    <p key={index} className='mx-2'>
                       {item.name}
                     </p>
                   ))}
@@ -112,11 +117,11 @@ const AboutMoviePage = (): JSX.Element => {
                 <MainBtn
                   text='Посмотреть трейлер'
                   onClick={() => {
-                    setOpenModal(true)
+                    setOpenModal(true);
                   }}
                 ></MainBtn>
                 <MainBtn
-                  text="Посмотреть фильм"
+                  text='Посмотреть фильм'
                   // to={`/watch/${data.id}`}
                   onClick={() => {
                     watchFilmRef?.current?.scrollIntoView({ behavior: 'smooth' });
@@ -126,7 +131,7 @@ const AboutMoviePage = (): JSX.Element => {
                   text={<MoreHorizIcon />}
                   to={''}
                   onClick={() => {
-                    console.log('Click')
+                    console.log('Click');
                   }}
                 ></MainBtn>
               </div>
@@ -137,18 +142,18 @@ const AboutMoviePage = (): JSX.Element => {
             <p className='font-bold text-3xl mb-[60px]'>Актеры:</p>
             <ActorsInfo data={data} />
           </div>
-          <div className="mb-[80px]">
+          <div className='mb-[80px]'>
             <FilmInfo data={data} />
           </div>
         </div>
-        <div className="mb-[80px]" ref={watchFilmRef}>
+        <div className='mb-[80px]' ref={watchFilmRef}>
           {/* XDD */}
-          <p className="font-bold text-3xl mb-[60px]">Смотреть фильм {data.name} онлайн без регистрации и СМС:</p>
+          <p className='font-bold text-3xl mb-[60px]'>Смотреть фильм {data.name} онлайн без регистрации и СМС:</p>
           <MoviePlaeer id={data.id} />
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AboutMoviePage
+export default AboutMoviePage;
