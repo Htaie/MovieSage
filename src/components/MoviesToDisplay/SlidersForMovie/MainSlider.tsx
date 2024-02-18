@@ -1,15 +1,14 @@
-import { useEffect, useState } from 'react'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Autoplay, Navigation, Pagination } from 'swiper/modules'
-import 'swiper/css/navigation'
-import 'swiper/css/pagination'
-import 'swiper/css'
-import GenresCards from '../../../GenresToDisplay/GenresCards/GenresCards'
-import { Link } from 'react-router-dom'
-import { FormatingName, RatingRounding } from '../../../textUtils'
-import { TOKEN, apiUrl } from '../../../constants'
-import { MovieType } from '../../../MoviesTypes'
-
+import { useEffect, useState } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css';
+import GenresCards from '../../../GenresToDisplay/GenresCards/GenresCards';
+import { Link } from 'react-router-dom';
+import { FormatingName, RatingRounding } from '../../../textUtils';
+import { TOKEN, apiUrl } from '../../../constants';
+import { MovieType } from '../../../MoviesTypes';
 
 const MainSlider: React.FC = () => {
   const divStyle = {
@@ -31,8 +30,8 @@ const MainSlider: React.FC = () => {
           method: 'GET',
           headers: {
             Accept: 'application/json',
-            'X-API-KEY': TOKEN
-          }
+            'X-API-KEY': TOKEN,
+          },
         });
 
         if (!response.ok) {
@@ -56,6 +55,8 @@ const MainSlider: React.FC = () => {
       const prevArrow = swiperElement?.querySelector('.swiper-button-prev');
       const rect = swiperElement?.getBoundingClientRect();
       const mouseX = e.clientX - (rect?.left ?? 0);
+      const screenWidth = window.innerWidth;
+      const threshold = 800;
 
       if (
         swiperElement !== null &&
@@ -65,11 +66,14 @@ const MainSlider: React.FC = () => {
         nextArrow !== undefined &&
         rect !== undefined
       ) {
-        if (mouseX < (rect.width ?? 0) / 2) {
+        if (mouseX < screenWidth / 2 - threshold) {
           nextArrow.classList?.remove('show');
           prevArrow.classList?.add('show');
-        } else {
+        } else if (mouseX > screenWidth / 2 + threshold) {
           nextArrow.classList?.add('show');
+          prevArrow.classList?.remove('show');
+        } else {
+          nextArrow.classList?.remove('show');
           prevArrow.classList?.remove('show');
         }
       }
@@ -92,7 +96,7 @@ const MainSlider: React.FC = () => {
       //   disableOnInteraction: false,
       // }}
       pagination={{
-        clickable: true
+        clickable: true,
       }}
       navigation={true}
       modules={[Pagination, Navigation, Autoplay]}
