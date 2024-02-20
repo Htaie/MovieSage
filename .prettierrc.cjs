@@ -9,5 +9,6 @@ module.exports = {
   arrowParens: 'always',
   jsxSingleQuote: true,
   bracketSameLine: false,
+
   endOfLine: 'lf',
 };

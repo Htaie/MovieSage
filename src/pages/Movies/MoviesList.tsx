@@ -1,8 +1,8 @@
 import { useParams } from 'react-router-dom';
-import { TOKEN, apiUrl } from '../../app/api/constants';
+import { API_URL, TOKEN } from '../../shared/constants/constants';
 import { useEffect, useState } from 'react';
 import MovieCards from '../../widgets/MoviesToDisplay/MoviesCards/MoviesCards';
-import { FormatingName } from '../../app/utils/textUtils';
+import { FormatingName } from '../../shared/utils/textUtils';
 import { CircularProgress } from '@mui/material';
 
 const MoviesList = (): JSX.Element => {
@@ -19,7 +19,7 @@ const MoviesList = (): JSX.Element => {
       try {
         setLoading(true)
 
-        const url = `${apiUrl}movie?page=${pageNumber}&limit=50&genres.name=${name}&notNullFields=poster.url`
+        const url = `${API_URL}movie?page=${pageNumber}&limit=50&genres.name=${name}&notNullFields=poster.url`
         const response = await fetch(url, {
           method: 'GET',
           headers: {

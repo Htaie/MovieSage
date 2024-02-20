@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { TOKEN, apiUrl } from '../../app/api/constants.ts';
+import { TOKEN, API_URL } from '../../shared/constants/constants.ts';
 import moment from 'moment';
 import 'moment/dist/locale/ru';
 export const AboutActorPage = (): JSX.Element => {
@@ -11,7 +11,7 @@ export const AboutActorPage = (): JSX.Element => {
   useEffect(() => {
     const fetchActor = async (): Promise<void> => {
       try {
-        const response = await fetch(`${apiUrl}person/${id}`, {
+        const response = await fetch(`${API_URL}person/${id}`, {
           method: 'GET',
           headers: {
             Accept: 'application/json',

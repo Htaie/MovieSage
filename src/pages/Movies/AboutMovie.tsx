@@ -4,9 +4,9 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import FilmInfo from '../../widgets/MovieDetails/FilmInfo.tsx';
 import ActorsInfo from '../../widgets/MovieDetails/ActorsInfo.tsx';
 import { useEffect, useState, useRef } from 'react';
-import { TOKEN, apiUrl } from '../../app/api/constants.ts';
+import { API_URL, TOKEN } from '../../shared/constants/constants.ts';
 import { CircularProgress } from '@mui/material';
-import GenresCards from '../../widgets/GenresToDisplay/GenresCards/GenresCards.tsx';
+import GenresCards from '../../features/GenreLink/GenreLink.tsx';
 import { RaitingInfo } from '../../widgets/MovieDetails/RatingStar.tsx';
 import TrailerModal from '../../widgets/MovieDetails/TrailerModal.tsx';
 import CloseIcon from '@mui/icons-material/Close';
@@ -21,7 +21,7 @@ const AboutMoviePage = (): JSX.Element => {
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       try {
-        const url = `${apiUrl}movie/${id}`
+        const url = `${API_URL}movie/${id}`
         const response = await fetch(url, {
           method: 'GET',
           headers: {

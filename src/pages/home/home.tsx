@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import MainSlider from '../../widgets/SlidersForMovie/MainSlider';
-import GenresLinkCards from '../../widgets/GenresToDisplay/GenresCards/GenresLinkCards';
-import { FilmByGenreSlider } from '../../widgets/GenresToDisplay/SlidersForGenres/FilmsByGenreSlider';
-import { TOKEN } from '../../app/api/constants';
-import { MovieType } from '../../app/types/MoviesTypes';
+import { FilmByGenreSlider } from '../../entities/SlidersForGenres/FilmsByGenreSlider';
+import { GENRES, MOVIE_GENRES_API_URL, TOKEN } from '../../shared/constants/constants';
+import { MovieType } from '../../shared/types/MoviesTypes';
+import GenreLinkSlider from '../../features/GenreCarousel/GenreLinkSlider';
+import GenreBlock from '../../widgets/GenreBlock';
 
-export const SecondPage = (): JSX.Element => {
+export const Home = (): JSX.Element => {
   const [data, setData] = useState<MovieType[]>([]);
   useEffect(() => {
     const allGenresStoredData = localStorage.getItem('allGenresData');
@@ -15,16 +16,13 @@ export const SecondPage = (): JSX.Element => {
     } else {
       const fetchData = async (): Promise<void> => {
         try {
-          const response = await fetch(
-            'https://api.kinopoisk.dev/v1/movie/possible-values-by-field?field=genres.name',
-            {
-              method: 'GET',
-              headers: {
-                Accept: 'application/json',
-                'X-API-KEY': TOKEN,
-              },
-            }
-          );
+          const response = await fetch(MOVIE_GENRES_API_URL, {
+            method: 'GET',
+            headers: {
+              Accept: 'application/json',
+              'X-API-KEY': TOKEN,
+            },
+          });
 
           if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -44,10 +42,7 @@ export const SecondPage = (): JSX.Element => {
   return (
     <div className='h-full bg-black'>
       <MainSlider />
-      <GenresLinkCards></GenresLinkCards>
-      {data.map((genre, index) => (
-        <FilmByGenreSlider key={index} genre={genre.name} slug={genre.slug} type={''} />
-      ))}
+      <GenreBlock />
     </div>
   );
 };

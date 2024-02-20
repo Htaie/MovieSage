@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Autoplay, Navigation, Pagination } from 'swiper/modules'
-import 'swiper/css/navigation'
-import 'swiper/css/pagination'
-import 'swiper/css'
-import GenresCards from '../GenresToDisplay/GenresCards/GenresCards'
-import { Link } from 'react-router-dom'
-import { FormatingName, RatingRounding } from '../../app/utils/textUtils'
-import { TOKEN, apiUrl } from '../../app/api/constants'
-import { MovieType } from '../../app/types/MoviesTypes'
-
+import { useEffect, useState } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css';
+import GenresCards from '../../features/GenreLink/GenreLink';
+import { Link } from 'react-router-dom';
+import { FormatingName, RatingRounding } from '../../shared/utils/textUtils';
+import { TOKEN, API_URL } from '../../shared/constants/constants';
+import { MovieType } from '../../shared/types/MoviesTypes';
+import GenreLink from '../../features/GenreLink/GenreLink';
 
 const MainSlider: React.FC = () => {
   const divStyle = {
@@ -27,12 +27,12 @@ const MainSlider: React.FC = () => {
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       try {
-        const response = await fetch(apiUrl + 'movie?page=1&limit=20', {
+        const response = await fetch(API_URL + 'movie?page=1&limit=20', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
-            'X-API-KEY': TOKEN
-          }
+            'X-API-KEY': TOKEN,
+          },
         });
 
         if (!response.ok) {
@@ -92,7 +92,7 @@ const MainSlider: React.FC = () => {
       //   disableOnInteraction: false,
       // }}
       pagination={{
-        clickable: true
+        clickable: true,
       }}
       navigation={true}
       modules={[Pagination, Navigation, Autoplay]}
@@ -123,7 +123,7 @@ const MainSlider: React.FC = () => {
                     <p>{RatingRounding(movie.rating.kp)} KINOPOISK</p>
                   </div>
                   <div className='flex flex-wrap w-[70%]'>
-                    <GenresCards genres={movie.genres} />
+                    <GenreLink genres={movie.genres} />
                   </div>
                   <h1 className='w-[460px] text-wrap text-xl mx-2 mt-3 mb-10'>{movie.shortDescription}</h1>
                   <Link to={`/movie/${movie.id}`} className='py-4 px-7 border rounded-3xl'>

@@ -1,5 +1,5 @@
 import { CircularProgress } from '@mui/material'
-import { MovieType } from '../../app/types/MoviesTypes'
+import { MovieType } from '../../shared/types/MoviesTypes'
 interface FilmInfoProps {
   data: MovieType
 }

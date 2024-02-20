@@ -1,17 +1,17 @@
-import { CircularProgress } from '@mui/material'
-import { Link } from 'react-router-dom'
-import { RatingScore } from '../../../app/utils/textUtils'
-import { MovieType } from '../../../app/types/MoviesTypes'
+import { CircularProgress } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { RatingScore } from '../../../shared/utils/textUtils';
+import { MovieType } from '../../../shared/types/MoviesTypes';
 
 interface Props {
-  data: MovieType[]
+  data: MovieType[];
 }
 
 const boxShadowStyle = {
   WebkitBoxShadow: '0px -82px 65px -15px rgba(6, 6, 6, 0.33) inset',
   MozBoxShadow: '0px -82px 65px -15px rgba(6, 6, 6, 0.33) inset',
-  boxShadow: '0px -82px 65px -15px rgba(6, 6, 6, 0.33) inset'
-}
+  boxShadow: '0px -82px 65px -15px rgba(6, 6, 6, 0.33) inset',
+};
 
 const MovieCards = ({ data }: Props): JSX.Element => {
   if (data?.length === 0) {
@@ -19,7 +19,7 @@ const MovieCards = ({ data }: Props): JSX.Element => {
       <div className='w-full h-full flex justify-center items-center bg-black'>
         <CircularProgress sx={{ color: 'white' }} />
       </div>
-    )
+    );
   }
 
   return (
@@ -43,7 +43,7 @@ const MovieCards = ({ data }: Props): JSX.Element => {
         </Link>
       ))}
     </>
-  )
-}
+  );
+};
 
-export default MovieCards
+export default MovieCards;

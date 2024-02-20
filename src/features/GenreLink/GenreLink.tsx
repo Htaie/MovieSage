@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom'
-import { FormatingName, getEmojiForGenre } from '../../../app/utils/textUtils'
-import { MovieType } from '../../../app/types/MoviesTypes'
+import { FormatingName, getEmojiForGenre } from '../../shared/utils/textUtils'
+import { MovieType } from '../../shared/types/MoviesTypes'
 interface Props {
   genres: MovieType['genres']
   data: MovieType
 }
 
-const GenresCards = (data: Props): JSX.Element => {
+const GenreLink = (data: Props): JSX.Element => {
   return (
     <>
       {data.genres.map((item) => (
@@ -24,4 +24,4 @@ const GenresCards = (data: Props): JSX.Element => {
   )
 }
 
-export default GenresCards
+export default GenreLink
