@@ -52,10 +52,11 @@ const GenresLinkCards = (): JSX.Element => {
 
   return (
     <>
-      <h1 className='text-3xl text-white ml-12'>Жанры</h1>
+      <h1 className='text-3xl text-white ml-12 mt-4'>Жанры</h1>
 
       <Swiper
         slidesPerView={5}
+        slidesPerGroup={5}
         spaceBetween={30}
         loop={true}
         pagination={{
@@ -70,7 +71,7 @@ const GenresLinkCards = (): JSX.Element => {
               data.map((genre: GenresType) => (
             <SwiperSlide
               key={genre.slug}
-              className='backdrop-blur-lg bg-white/10 hover:backdrop-blur-xl hover:bg-white/30  py-16  px-10  rounded-2xl text-xl mx-2 my-16'
+              className='backdrop-blur-lg bg-white/10 hover:backdrop-blur-xl hover:bg-white/30  py-16  px-10  rounded-2xl text-xl mx-2 my-12'
             >
               <Link to={`/genre/${genre.name}`} className=' text-center text-xl'>
                 <p className='text-[79px] mb-10'>{getEmojiForGenre(genre.name)}</p>

@@ -6,6 +6,7 @@ import { Navigation } from 'swiper/modules';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css';
+import { FormatingName } from '../../../app/utils/textUtils';
 
 export const FilmByGenreSlider = ({ genre, type }: { genre: string; type: string }): JSX.Element => {
   const [data, setData] = useState([]);
@@ -39,8 +40,8 @@ export const FilmByGenreSlider = ({ genre, type }: { genre: string; type: string
             method: 'GET',
             headers: {
               Accept: 'application/json',
-              'X-API-KEY': TOKEN,
-            },
+              'X-API-KEY': TOKEN
+            }
           });
 
           if (!response.ok) {
@@ -62,25 +63,26 @@ export const FilmByGenreSlider = ({ genre, type }: { genre: string; type: string
 
   return (
     <>
-      <h1 className='text-3xl text-white ml-12'>{genre || type}</h1>
+      <h1 className='text-3xl text-white ml-12 mb-10'>{FormatingName(genre || type)}</h1>
 
       <Swiper
         style={
           {
             width: '100%',
-            height: '300px',
+            height: '300px'
           } as any
         }
         slidesPerView={5}
         slidesPerGroup={5}
         pagination={{
-          clickable: true,
+          clickable: true
         }}
         navigation={true}
         className='swiper-navigation-color'
         modules={[Navigation]}
       >
-        {Array.isArray(data) ? (
+        {Array.isArray(data)
+? (
           data.map((item: any, index: number) => (
             <SwiperSlide key={index} className='flex items-center mx-2'>
               <Link to={`/movie/${item.id}`} className='transition-transform  transform hover:scale-105'>
@@ -96,7 +98,8 @@ export const FilmByGenreSlider = ({ genre, type }: { genre: string; type: string
               </Link>
             </SwiperSlide>
           ))
-        ) : (
+        )
+: (
           <p>Loading...</p>
         )}
       </Swiper>
