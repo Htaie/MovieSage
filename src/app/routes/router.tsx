@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
-import LoginPage from '../../pages/Auth/LoginPage'
-import RegisterPage from '../../pages/Auth/RegisterPage'
+import LoginPage from '../../pages/Auth/LoginPage';
+import RegisterPage from '../../pages/Auth/RegisterPage';
+import { ProfilePage } from '../../pages/UserPages/ProfilePage';
 import SearchFilms from '../../pages/Movies/MoviesList';
 import AboutMoviePage from '../../pages/Movies/AboutMovie';
 import { AboutActorPage } from '../../pages/Movies/AboutActor';
@@ -16,32 +17,36 @@ export const router = createBrowserRouter([
     children: [
       {
         path: Route.HOME,
-        element: <Home/>
+        element: <Home />,
       },
       {
         path: Route.LOGIN,
-        element: <LoginPage />
+        element: <LoginPage />,
       },
       {
         path: Route.REGISTER,
-        element: <RegisterPage />
+        element: <RegisterPage />,
+      },
+      {
+        path: Route.PROFILE,
+        element: <ProfilePage />,
       },
       {
         path: Route.GENRE,
-        element: <SearchFilms />
+        element: <SearchFilms />,
       },
       {
         path: Route.MOVIE,
-        element: <AboutMoviePage />
+        element: <AboutMoviePage />,
       },
       {
         path: Route.ACTOR,
-        element: <AboutActorPage />
+        element: <AboutActorPage />,
       },
       {
         path: Route.TEST,
-        element: <PagesTests />
-      }
-    ]
-  }
+        element: <PagesTests />,
+      },
+    ],
+  },
 ]);

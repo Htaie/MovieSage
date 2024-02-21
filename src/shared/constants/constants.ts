@@ -2,11 +2,13 @@ export const API_URL = 'https://api.kinopoisk.dev/v1.4/';
 export const MOVIE_GENRES_API_URL = 'https://api.kinopoisk.dev/v1/movie/possible-values-by-field?field=genres.name';
 
 export const TOKEN = import.meta.env.REACT_APP_SECRET_TOKEN;
+export const SUPABASE_KEY = import.meta.env.REACT_APP_SUPABASE_KEY;
 
 export const Route = {
   HOME: '/',
   LOGIN: '/login',
   REGISTER: '/register',
+  PROFILE: '/profile',
   GENRE: '/genre/:name',
   MOVIE: '/movie/:id',
   ACTOR: '/actor/:id',
