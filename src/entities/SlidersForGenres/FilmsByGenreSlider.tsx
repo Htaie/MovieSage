@@ -19,23 +19,27 @@ export const FilmByGenreSlider = ({ genre }: { genre: string }): JSX.Element => 
     const fetchData = async (): Promise<void> => {
       const url = `
       https://api.kinopoisk.dev/v1.4/movie?page=1&limit=10&selectFields=id&selectFields=name&selectFields=year&selectFields=rating&selectFields=movieLength&selectFields=poster&notNullFields=name&notNullFields=year&notNullFields=movieLength&notNullFields=poster.url&genres.name=${genre}`;
-
+      const movieStoredData = localStorage.getItem(`movieByGenresData_${genre}`);
       try {
-        const response = await fetch(url, {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-            'X-API-KEY': TOKEN,
-          },
-        });
+        if (movieStoredData) {
+          setData(JSON.parse(movieStoredData));
+        } else {
+          const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+              Accept: 'application/json',
+              'X-API-KEY': TOKEN,
+            },
+          });
 
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+
+          const responseData = await response.json();
+          setData(responseData.docs);
+          localStorage.setItem(`movieByGenresData_${genre}`, JSON.stringify(responseData.docs));
         }
-
-        const responseData = await response.json();
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        setData(responseData.docs);
       } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
       }
