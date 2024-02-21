@@ -8,8 +8,11 @@ import 'swiper/css/pagination';
 import 'swiper/css';
 import { ConvertMinutes, FormatingName, RatingRounding, RatingScore } from '../../shared/utils/textUtils';
 import { MovieType } from '../../shared/types/MoviesTypes';
+import View from '../../features/View';
+import MainLoader from '../../shared/loader/MainLoader';
+import MovieCard from '../../features/MovieCard';
 
-export const FilmByGenreSlider = ({ genre }: { genre: string; type: string }): JSX.Element => {
+export const FilmByGenreSlider = ({ genre }: { genre: string }): JSX.Element => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -18,85 +21,65 @@ export const FilmByGenreSlider = ({ genre }: { genre: string; type: string }): J
       https://api.kinopoisk.dev/v1.4/movie?page=1&limit=10&selectFields=id&selectFields=name&selectFields=year&selectFields=rating&selectFields=movieLength&selectFields=poster&notNullFields=name&notNullFields=year&notNullFields=movieLength&notNullFields=poster.url&genres.name=${genre}`;
 
       try {
-        const movieStoredData = localStorage.getItem('movieByGenresData');
-        if (movieStoredData != null) {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-          setData(JSON.parse(movieStoredData));
-        } else {
-          const response = await fetch(url, {
-            method: 'GET',
-            headers: {
-              Accept: 'application/json',
-              'X-API-KEY': TOKEN,
-            },
-          });
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'X-API-KEY': TOKEN,
+          },
+        });
 
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-
-          const responseData = await response.json();
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-          setData(responseData.docs);
-          localStorage.setItem('movieByGenresData', JSON.stringify(responseData.docs));
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
         }
+
+        const responseData = await response.json();
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        setData(responseData.docs);
       } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
       }
     };
     void fetchData();
   }, [genre]);
-  const boxShadowStyle = {
-    WebkitBoxShadow: '6px 1px 10px 200px rgba(0, 0, 0, 0.35) inset',
-    MozBoxShadow: '6px 1px 10px 200px rgba(0, 0, 0, 0.35) inset',
-    boxShadow: '6px 1px 10px 200px rgba(0, 0, 0, 0.35) inset',
-  };
+
   return (
     <>
-      <h1 className='text-3xl text-white ml-12 mb-10'>{FormatingName(genre)}</h1>
+      <h1 className='text-3xl text-white ml-12 my-10'>{FormatingName(genre)}</h1>
 
       <Swiper
         style={{
           width: '100%',
         }}
         slidesPerView={5}
+        spaceBetween={30}
         slidesPerGroup={5}
         pagination={{
           clickable: true,
         }}
         navigation={true}
-        className='swiper-navigation-color'
+        className='swiper-navigation-color '
         modules={[Navigation]}
       >
         {Array.isArray(data) ? (
           data.map((item: MovieType, index: number) => (
-            <SwiperSlide key={index} className='flex items-center mx-2 '>
-              <Link to={`/movie/${item.id}`}>
-                <div className='relative'>
-                  <img src={item.poster.url} alt='film image' className='rounded-lg object-cover'></img>
-                  <div
-                    className='absolute inset-0  opacity-0 transition-opacity box-shadow duration-300 hover:opacity-100 '
-                    style={boxShadowStyle}
-                  >
-                    <span
-                      className='px-3 py-2 rounded-xl text-white absolute right-2 top-2'
-                      style={{ backgroundColor: RatingScore(item.rating.imdb) }}
-                    >
-                      {RatingRounding(item.rating.imdb)}
-                    </span>
-                    <div className=' text-gray-400  text-xl bottom-3 left-3 absolute'>
-                      <p className='text-white'>{item.name}</p>
-                      <span className='mr-2'>{item.year}</span>
-                      <span>{ConvertMinutes(item.movieLength)}</span>
-                    </div>
-                  </div>
-                </div>
-              </Link>
+            <SwiperSlide key={index} className='flex items-center mx-2 w-[288px] h-[432px] '>
+              <MovieCard
+                id={item.id}
+                poster={item.poster.url}
+                rating={item.rating.imdb}
+                name={item.name}
+                year={item.year}
+                movieLength={item.movieLength}
+              />
             </SwiperSlide>
           ))
         ) : (
-          <p>Loading...</p>
+          <MainLoader />
         )}
+        <SwiperSlide className='w-[288px] h-[432px]'>
+          <View genre={genre} />
+        </SwiperSlide>
       </Swiper>
     </>
   );

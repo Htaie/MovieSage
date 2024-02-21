@@ -1,7 +1,7 @@
-import { CircularProgress } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { RatingScore } from '../../../shared/utils/textUtils';
 import { MovieType } from '../../../shared/types/MoviesTypes';
+import MainLoader from '../../../shared/loader/MainLoader';
 
 interface Props {
   data: MovieType[];
@@ -15,11 +15,7 @@ const boxShadowStyle = {
 
 const MovieCards = ({ data }: Props): JSX.Element => {
   if (data?.length === 0) {
-    return (
-      <div className='w-full h-full flex justify-center items-center bg-black'>
-        <CircularProgress sx={{ color: 'white' }} />
-      </div>
-    );
+    return <MainLoader />;
   }
 
   return (
