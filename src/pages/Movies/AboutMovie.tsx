@@ -6,9 +6,12 @@ import { API_URL, TOKEN } from '../../shared/constants/constants.ts';
 import GenresCards from '../../features/GenreLink/GenreLink.tsx';
 import TrailerModal from '../../features/MovieDetails/TrailerModal.tsx';
 import CloseIcon from '@mui/icons-material/Close';
-import MoviePlaeer from '../../shared/UI/MoviePlayer.tsx';
-import { MovieType } from '../../types.ts';
+import MoviePlayer from '../../shared/UI/MoviePlayer.tsx';
+import { MovieType } from '../../shared/types/MoviesTypes.ts';
 import MainLoader from '../../shared/loader/MainLoader.tsx';
+import MovieDescription from '../../widgets/MovieDescription/MovieDescription.tsx';
+import ActorsInMovie from '../../widgets/MovieDescription/ActorsInMovie.tsx';
+import FilmInfo from '../../features/MovieDetails/FilmDesc/FilmInfo.tsx';
 
 const AboutMoviePage = (): JSX.Element => {
   const [data, setData] = useState<MovieType | null>(null);
@@ -103,9 +106,7 @@ const AboutMoviePage = (): JSX.Element => {
                 </div>
                 <p>{data.movieLength} мин</p>
               </div>
-              <p className='mb-8' style={{ maxWidth: '800px' }}>
-                {data.description}
-              </p>
+              <MovieDescription data={data} />
               <div className='mb-6'>
                 <MainBtn
                   text='Посмотреть трейлер'
@@ -133,7 +134,9 @@ const AboutMoviePage = (): JSX.Element => {
         </div>
         <div className='mb-[80px]' ref={watchFilmRef}>
           <p className='font-bold text-3xl mb-[60px]'>Смотреть фильм {data.name} онлайн без регистрации и СМС:</p>
-          <MoviePlaeer id={data.id} />
+          <ActorsInMovie data={data} />
+          <FilmInfo data={data} />
+          <MoviePlayer id={data.id} />
         </div>
       </div>
     </div>
