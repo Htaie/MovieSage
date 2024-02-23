@@ -1,48 +1,22 @@
 import { useParams } from 'react-router-dom';
 import { MainBtn } from '../../shared/UI/buttons/MainBtn.tsx';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import { useEffect, useState, useRef } from 'react';
-import { API_URL, TOKEN } from '../../shared/constants/constants.ts';
+import { useState, useRef } from 'react';
 import GenresCards from '../../features/GenreLink/GenreLink.tsx';
 import TrailerModal from '../../features/MovieDetails/TrailerModal.tsx';
 import CloseIcon from '@mui/icons-material/Close';
 import MoviePlayer from '../../shared/UI/MoviePlayer.tsx';
-import { MovieType } from '../../shared/types/MoviesTypes.ts';
 import MainLoader from '../../shared/loader/MainLoader.tsx';
 import MovieDescription from '../../widgets/MovieDescription/MovieDescription.tsx';
 import ActorsInMovie from '../../widgets/MovieDescription/ActorsInMovie.tsx';
 import FilmInfo from '../../features/MovieDetails/FilmDesc/FilmInfo.tsx';
+import MovieDataFetcher from '../../features/MovieDetails/MovieDataFetcher/MovieDataFetcher.tsx';
 
 const AboutMoviePage = (): JSX.Element => {
-  const [data, setData] = useState<MovieType | null>(null);
   const [openModal, setOpenModal] = useState(false);
   const { id } = useParams();
+  const data = MovieDataFetcher(id); //я добавил в новом файлике фиче MovieDataFetcher для id тип стринг, вроде там должен быть намбер но и вроде стринг подходит потому что там запрос как никак и вот тут красным подсвечивает хз поч
   const watchFilmRef = useRef<null | HTMLDivElement>(null);
-  useEffect(() => {
-    const fetchData = async (): Promise<void> => {
-      try {
-        const url = `${API_URL}movie/${id}`;
-        const response = await fetch(url, {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-            'X-API-KEY': TOKEN,
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-
-        const responseData = await response.json();
-        setData(responseData as MovieType | null);
-      } catch (error) {
-        console.error('There was a problem with the fetch operation:', error);
-      }
-    };
-
-    void fetchData();
-  }, []);
   if (data == null) {
     return <MainLoader />;
   }
