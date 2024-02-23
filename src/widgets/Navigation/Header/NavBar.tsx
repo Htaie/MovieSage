@@ -73,7 +73,7 @@ const NavBar = () => {
           <SearchIcon
             className='hover:cursor-pointer'
             onClick={() => {
-              setOpen(!open);
+              SignOut();
             }}
           />
           {isLoggedIn ? (
