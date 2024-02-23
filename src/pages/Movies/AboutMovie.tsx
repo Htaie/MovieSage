@@ -5,13 +5,13 @@ import FilmInfo from '../../widgets/MovieDetails/FilmInfo.tsx';
 import ActorsInfo from '../../widgets/MovieDetails/ActorsInfo.tsx';
 import { useEffect, useState, useRef } from 'react';
 import { API_URL, TOKEN } from '../../shared/constants/constants.ts';
-import { CircularProgress } from '@mui/material';
 import GenresCards from '../../features/GenreLink/GenreLink.tsx';
 import { RaitingInfo } from '../../widgets/MovieDetails/RatingStar.tsx';
 import TrailerModal from '../../widgets/MovieDetails/TrailerModal.tsx';
 import CloseIcon from '@mui/icons-material/Close';
 import MoviePlaeer from '../../shared/UI/MoviePlayer.tsx';
 import { MovieType } from '../../types.ts';
+import MainLoader from '../../shared/loader/MainLoader.tsx';
 
 const AboutMoviePage = (): JSX.Element => {
   const [data, setData] = useState<MovieType | null>(null);
@@ -44,11 +44,7 @@ const AboutMoviePage = (): JSX.Element => {
     void fetchData();
   }, []);
   if (data == null) {
-    return (
-      <div className='w-full h-screen flex justify-center items-center bg-black'>
-        <CircularProgress sx={{ color: 'white' }} />
-      </div>
-    );
+    return <MainLoader />;
   }
   if (openModal) {
     document.body.style.overflow = 'hidden';
