@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { API_URL, TOKEN } from '../../../shared/constants/constants.ts';
-import { MovieType } from '../../../shared/types/MoviesTypes.ts';
+import { API_URL, TOKEN } from '../../shared/constants/constants.ts';
+import { MovieType } from '../../shared/types/MoviesTypes.ts';
 
 const MovieDataFetcher = (id: string): MovieType | null => {
   const [data, setData] = useState<MovieType | null>(null);

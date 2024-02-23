@@ -10,7 +10,7 @@ import MainLoader from '../../shared/loader/MainLoader.tsx';
 import MovieDescription from '../../widgets/MovieDescription/MovieDescription.tsx';
 import ActorsInMovie from '../../widgets/MovieDescription/ActorsInMovie.tsx';
 import FilmInfo from '../../features/MovieDetails/FilmDesc/FilmInfo.tsx';
-import MovieDataFetcher from '../../features/MovieDetails/MovieDataFetcher/MovieDataFetcher.tsx';
+import MovieDataFetcher from '../../entities/MovieDataFetcher/MovieDataFetcher.tsx';
 
 const AboutMoviePage = (): JSX.Element => {
   const [openModal, setOpenModal] = useState(false);
