@@ -4,31 +4,19 @@ import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useEffect, useState } from 'react';
 import { supabase } from '../../../shared/apiClient/client';
-
+import { useStore } from 'effector-react';
+import { isLoggedInStore, updateIsLoggedIn } from '../../../components/Auth';
 const NavBar = () => {
   const [open, setOpen] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
 
   const [data, setData] = useState();
+  const isLoggedIn = useStore(isLoggedInStore);
 
-  useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
-        setData(user);
-      } catch (error) {
-        console.error('Ошибка при получении заданий:');
-      }
-    };
-
-    fetchTasks();
-  }, []);
   const SignOut = async () => {
     const { error } = await supabase.auth.signOut();
-
+    updateIsLoggedIn(false);
     if (error) {
       console.log(error);
     }
@@ -90,7 +78,7 @@ const NavBar = () => {
               SignOut();
             }}
           />
-          {data ? (
+          {isLoggedIn ? (
             <>
               <NotificationsNoneIcon />
               <img

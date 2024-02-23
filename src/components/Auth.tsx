@@ -3,7 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { supabase } from '../shared/apiClient/client';
+import { createEvent, createStore } from 'effector';
 
+import { Route } from '../shared/constants/constants';
+export const updateIsLoggedIn = createEvent<boolean>();
+export const isLoggedInStore = createStore<boolean>(false).on(updateIsLoggedIn, (_, isLoggedIn) => isLoggedIn);
 export const AuthComponent = ({ formType, setToken }: { formType: string; setToken: any }): JSX.Element => {
   const [showPassword, setShowPassword] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
@@ -40,9 +44,9 @@ export const AuthComponent = ({ formType, setToken }: { formType: string; setTok
           password: authData.password,
         });
         if (error) throw error;
-        console.log(data);
         setToken(data);
-        navigate('/');
+        updateIsLoggedIn(true);
+        navigate(Route.HOME);
       } else if (formType === 'register') {
         const { data, error } = await supabase.auth.signUp({
           email: authData.email,
@@ -165,7 +169,7 @@ export const AuthComponent = ({ formType, setToken }: { formType: string; setTok
               </button>
             </div>
             <div className='flex justify-center'>
-              <p className='text-xs text-gray-400 mr-2'>Don`&apos;`t have an account?</p>
+              <p className='text-xs text-gray-400 mr-2'>Don&apos;t have an account?</p>
               <button className='text-xs'>Sign up</button>
             </div>
           </>
