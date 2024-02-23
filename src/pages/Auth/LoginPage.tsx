@@ -1,7 +1,7 @@
 import { AuthComponent } from '../../components/Auth';
 import { useEffect, useState } from 'react';
 
-import { supabase } from '../../shared/apiClient/client';
+import { supabase } from '../../../backend/apiClient/client';
 
 const LoginPage = () => {
   const [authToken, setAuthToken] = useState(false);

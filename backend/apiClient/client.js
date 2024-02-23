@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import { SUPABASE_KEY } from '../constants/constants';
+import { SUPABASE_KEY } from '../../src/shared/constants/constants';
 
 const supabaseUrl = 'https://vgmwwmeokixssdlcxyba.supabase.co';
 const supabaseKey = SUPABASE_KEY;

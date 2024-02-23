@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import { supabase } from '../shared/apiClient/client';
+import { supabase } from '../../backend/apiClient/client';
 import { createEvent, createStore } from 'effector';
 
 import { Route } from '../shared/constants/constants';
@@ -28,8 +28,6 @@ export const AuthComponent = ({ formType, setToken }: { formType: string; setTok
       color: 'white',
     },
   };
-
-  console.log(authData);
 
   function handleChange(event: any) {
     setAuthData({ ...authData, [event.target.name]: event.target.value });

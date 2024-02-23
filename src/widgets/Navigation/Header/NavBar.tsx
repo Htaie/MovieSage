@@ -3,7 +3,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useEffect, useState } from 'react';
-import { supabase } from '../../../shared/apiClient/client';
+import { supabase } from '../../../../backend/apiClient/client';
 import { useStore } from 'effector-react';
 import { isLoggedInStore, updateIsLoggedIn } from '../../../components/Auth';
 const NavBar = () => {
