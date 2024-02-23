@@ -28,7 +28,6 @@ export const router = createBrowserRouter([
       },
       {
         path: Route.GENRE,
-        element: <SearchFilms />,
         element: <MoviePage />,
       },
       {
