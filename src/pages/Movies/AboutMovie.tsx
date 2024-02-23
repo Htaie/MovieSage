@@ -1,13 +1,10 @@
 import { useParams } from 'react-router-dom';
 import { MainBtn } from '../../shared/UI/buttons/MainBtn.tsx';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import FilmInfo from '../../widgets/MovieDetails/FilmInfo.tsx';
-import ActorsInfo from '../../widgets/MovieDetails/ActorsInfo.tsx';
 import { useEffect, useState, useRef } from 'react';
 import { API_URL, TOKEN } from '../../shared/constants/constants.ts';
 import GenresCards from '../../features/GenreLink/GenreLink.tsx';
-import { RaitingInfo } from '../../widgets/MovieDetails/RatingStar.tsx';
-import TrailerModal from '../../widgets/MovieDetails/TrailerModal.tsx';
+import TrailerModal from '../../features/MovieDetails/TrailerModal.tsx';
 import CloseIcon from '@mui/icons-material/Close';
 import MoviePlaeer from '../../shared/UI/MoviePlayer.tsx';
 import { MovieType } from '../../types.ts';
@@ -133,17 +130,8 @@ const AboutMoviePage = (): JSX.Element => {
               </div>
             </div>
           </div>
-          <RaitingInfo data={data} />
-          <div className='mb-[80px]'>
-            <p className='font-bold text-3xl mb-[60px]'>Актеры:</p>
-            <ActorsInfo data={data} />
-          </div>
-          <div className='mb-[80px]'>
-            <FilmInfo data={data} />
-          </div>
         </div>
         <div className='mb-[80px]' ref={watchFilmRef}>
-          {/* XDD */}
           <p className='font-bold text-3xl mb-[60px]'>Смотреть фильм {data.name} онлайн без регистрации и СМС:</p>
           <MoviePlaeer id={data.id} />
         </div>
