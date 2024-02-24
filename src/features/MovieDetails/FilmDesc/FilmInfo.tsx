@@ -1,16 +1,12 @@
-import { CircularProgress } from '@mui/material'
-import { MovieType } from '../../shared/types/MoviesTypes'
+import { MovieType } from '../../../shared/types/MoviesTypes';
+import MainLoader from '../../../shared/loader/MainLoader';
 interface FilmInfoProps {
-  data: MovieType
+  data: MovieType;
 }
 
 const FilmInfo = ({ data }: FilmInfoProps): JSX.Element => {
   if (data?.persons.length === 0) {
-    return (
-      <div className='w-full h-full flex justify-center items-center bg-black'>
-        <CircularProgress sx={{ color: 'white' }} />
-      </div>
-    )
+    return <MainLoader />;
   }
   return (
     <div className='flex grid grid-cols-1 gap-y-2 md:grid-cols-[1fr,2fr]'>
@@ -35,7 +31,7 @@ const FilmInfo = ({ data }: FilmInfoProps): JSX.Element => {
         <p>Людовико Эйнауди</p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default FilmInfo
+export default FilmInfo;

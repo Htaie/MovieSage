@@ -1,54 +1,25 @@
 import { useParams } from 'react-router-dom';
 import { MainBtn } from '../../shared/UI/buttons/MainBtn.tsx';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import FilmInfo from '../../widgets/MovieDetails/FilmInfo.tsx';
-import ActorsInfo from '../../widgets/MovieDetails/ActorsInfo.tsx';
-import { useEffect, useState, useRef } from 'react';
-import { API_URL, TOKEN } from '../../shared/constants/constants.ts';
-import { CircularProgress } from '@mui/material';
+import { useState, useRef } from 'react';
 import GenresCards from '../../features/GenreLink/GenreLink.tsx';
-import { RaitingInfo } from '../../widgets/MovieDetails/RatingStar.tsx';
-import TrailerModal from '../../widgets/MovieDetails/TrailerModal.tsx';
+import TrailerModal from '../../features/MovieDetails/TrailerModal.tsx';
 import CloseIcon from '@mui/icons-material/Close';
-import MoviePlaeer from '../../shared/UI/MoviePlayer.tsx';
-import { MovieType } from '../../types.ts';
+import MoviePlayer from '../../shared/UI/MoviePlayer.tsx';
+import MainLoader from '../../shared/loader/MainLoader.tsx';
+import MovieDescription from '../../widgets/MovieDescription/MovieDescription.tsx';
+import ActorsInMovie from '../../widgets/MovieDescription/ActorsInMovie.tsx';
+import FilmInfo from '../../features/MovieDetails/FilmDesc/FilmInfo.tsx';
+import MovieDataFetcher from '../../features/MovieDetails/MovieDataFetcher/MovieDataFetcher.tsx';
 
 const AboutMoviePage = (): JSX.Element => {
-  const [data, setData] = useState<MovieType | null>(null);
   const [openModal, setOpenModal] = useState(false);
   const { id } = useParams();
+  const data = MovieDataFetcher(id); //я добавил в новом файлике фиче MovieDataFetcher для id тип стринг, вроде там должен быть намбер но и вроде стринг подходит потому что там запрос как никак и вот тут красным подсвечивает хз поч
   const watchFilmRef = useRef<null | HTMLDivElement>(null);
-  useEffect(() => {
-    const fetchData = async (): Promise<void> => {
-      try {
-        const url = `${API_URL}movie/${id}`;
-        const response = await fetch(url, {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-            'X-API-KEY': TOKEN,
-          },
-        });
 
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-
-        const responseData = await response.json();
-        setData(responseData as MovieType | null);
-      } catch (error) {
-        console.error('There was a problem with the fetch operation:', error);
-      }
-    };
-
-    void fetchData();
-  }, []);
   if (data == null) {
-    return (
-      <div className='w-full h-screen flex justify-center items-center bg-black'>
-        <CircularProgress sx={{ color: 'white' }} />
-      </div>
-    );
+    return <MainLoader />;
   }
   if (openModal) {
     document.body.style.overflow = 'hidden';
@@ -110,9 +81,7 @@ const AboutMoviePage = (): JSX.Element => {
                 </div>
                 <p>{data.movieLength} мин</p>
               </div>
-              <p className='mb-8' style={{ maxWidth: '800px' }}>
-                {data.description}
-              </p>
+              <MovieDescription data={data} />
               <div className='mb-6'>
                 <MainBtn
                   text='Посмотреть трейлер'
@@ -137,6 +106,7 @@ const AboutMoviePage = (): JSX.Element => {
               </div>
             </div>
           </div>
+<<<<<<< HEAD
           <RaitingInfo data={data} />
           <div className='mb-[80px]'>
             <p className='font-bold text-3xl mb-[60px]'>Актеры:</p>
@@ -150,6 +120,14 @@ const AboutMoviePage = (): JSX.Element => {
           {/* XDD */}
           <p className='font-bold text-3xl mb-[60px]'>Смотреть фильм {data.name} онлайн без регистрации и СМС:</p>
           <MoviePlaeer id={data.id} />
+=======
+        </div>
+        <div className='mb-[80px]' ref={watchFilmRef}>
+          <p className='font-bold text-3xl mb-[60px]'>Смотреть фильм {data.name} онлайн без регистрации и СМС:</p>
+          <ActorsInMovie data={data} />
+          <FilmInfo data={data} />
+          <MoviePlayer id={data.id} />
+>>>>>>> test/-new-structure-project
         </div>
       </div>
     </div>

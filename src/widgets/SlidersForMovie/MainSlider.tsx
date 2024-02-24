@@ -4,7 +4,6 @@ import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css';
-import GenresCards from '../../features/GenreLink/GenreLink';
 import { Link } from 'react-router-dom';
 import { FormatingName, RatingRounding } from '../../shared/utils/textUtils';
 import { TOKEN, API_URL } from '../../shared/constants/constants';
@@ -96,7 +95,7 @@ const MainSlider: React.FC = () => {
       }}
       navigation={true}
       modules={[Pagination, Navigation, Autoplay]}
-      className='h-screen bg-black swiper-navigation-color swiper-pagination-color'
+      className='h-full bg-[#1C3334] swiper-navigation-color swiper-pagination-color'
     >
       {data.map(
         (movie: MovieType) =>
