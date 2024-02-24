@@ -106,28 +106,12 @@ const AboutMoviePage = (): JSX.Element => {
               </div>
             </div>
           </div>
-<<<<<<< HEAD
-          <RaitingInfo data={data} />
-          <div className='mb-[80px]'>
-            <p className='font-bold text-3xl mb-[60px]'>Актеры:</p>
-            <ActorsInfo data={data} />
-          </div>
-          <div className='mb-[80px]'>
-            <FilmInfo data={data} />
-          </div>
-        </div>
-        <div className='mb-[80px]' ref={watchFilmRef}>
-          {/* XDD */}
-          <p className='font-bold text-3xl mb-[60px]'>Смотреть фильм {data.name} онлайн без регистрации и СМС:</p>
-          <MoviePlaeer id={data.id} />
-=======
         </div>
         <div className='mb-[80px]' ref={watchFilmRef}>
           <p className='font-bold text-3xl mb-[60px]'>Смотреть фильм {data.name} онлайн без регистрации и СМС:</p>
           <ActorsInMovie data={data} />
           <FilmInfo data={data} />
           <MoviePlayer id={data.id} />
->>>>>>> test/-new-structure-project
         </div>
       </div>
     </div>
