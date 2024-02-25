@@ -1,37 +1,24 @@
-import { useState, useEffect } from 'react';
 import { API_URL, TOKEN } from '../../shared/constants/constants.ts';
 import { MovieType } from '../../shared/types/MoviesTypes.ts';
+import { createEffect, createStore } from 'effector';
 
-const MovieDataFetcher = (id: string): MovieType | null => {
-  const [data, setData] = useState<MovieType | null>(null);
+export const MovieDataFetcher = createEffect(async (id: string) => {
+  const url = `${API_URL}movie/${id}`;
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'X-API-KEY': TOKEN,
+    },
+  });
 
-  useEffect(() => {
-    const fetchData = async (): Promise<void> => {
-      try {
-        const url = `${API_URL}movie/${id}`;
-        const response = await fetch(url, {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-            'X-API-KEY': TOKEN,
-          },
-        });
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
 
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
+  return response.json();
+});
 
-        const responseData = await response.json();
-        setData(responseData as MovieType | null);
-      } catch (error) {
-        console.error('There was a problem with the fetch operation:', error);
-      }
-    };
-
-    void fetchData();
-  }, [id]);
-
-  return data;
-};
-
-export default MovieDataFetcher;
+export const movieDataStore = createStore<MovieType | null>(null)
+  .on(MovieDataFetcher.done, (_, payload) => payload.result)
+  .reset(MovieDataFetcher.fail);

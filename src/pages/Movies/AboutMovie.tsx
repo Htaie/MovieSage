@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { MainBtn } from '../../shared/UI/buttons/MainBtn.tsx';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import GenresCards from '../../features/GenreLink/GenreLink.tsx';
 import TrailerModal from '../../features/MovieDetails/TrailerModal.tsx';
 import CloseIcon from '@mui/icons-material/Close';
@@ -10,12 +10,17 @@ import MainLoader from '../../shared/loader/MainLoader.tsx';
 import MovieDescription from '../../widgets/MovieDescription/MovieDescription.tsx';
 import ActorsInMovie from '../../widgets/MovieDescription/ActorsInMovie.tsx';
 import FilmInfo from '../../features/MovieDetails/FilmDesc/FilmInfo.tsx';
-import MovieDataFetcher from '../../entities/MovieDataFetcher/MovieDataFetcher.tsx';
+import { MovieDataFetcher, movieDataStore } from '../../entities/MovieDataFetcher/MovieDataFetcher.tsx';
+import { useStore } from 'effector-react';
 
 const AboutMoviePage = (): JSX.Element => {
   const [openModal, setOpenModal] = useState(false);
   const { id } = useParams();
-  const data = MovieDataFetcher(id); //я добавил в новом файлике фиче MovieDataFetcher для id тип стринг, вроде там должен быть намбер но и вроде стринг подходит потому что там запрос как никак и вот тут красным подсвечивает хз поч
+  useEffect(() => {
+    MovieDataFetcher(id);
+  }, [id]); //у меня ощущения будто это не совсем то что нужно но если честно то я вообще чет не смог ничего больше сделать рабочего с этим вонючим effector'ом
+
+  const data = useStore(movieDataStore);
   const watchFilmRef = useRef<null | HTMLDivElement>(null);
   if (data == null) {
     return <MainLoader />;
