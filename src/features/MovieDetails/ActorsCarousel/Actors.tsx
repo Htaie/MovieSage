@@ -1,23 +1,23 @@
-import { Link } from 'react-router-dom'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Navigation } from 'swiper/modules'
-import 'swiper/css/navigation'
-import 'swiper/css/pagination'
-import 'swiper/css'
+import { Link } from 'react-router-dom';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css';
 
-import { MovieType } from '../../shared/types/MoviesTypes'
+import { MovieType } from '../../../shared/types/MoviesTypes';
 interface ActorsProps {
-  data: MovieType
+  data: MovieType;
 }
 const ActorsInfo = ({ data }: ActorsProps): JSX.Element => {
-  console.log(data)
+  console.log(data);
   return (
     <>
       <Swiper
         slidesPerView={6}
         loop={true}
         pagination={{
-          clickable: true
+          clickable: true,
         }}
         navigation={true}
         modules={[Navigation]}
@@ -28,16 +28,16 @@ const ActorsInfo = ({ data }: ActorsProps): JSX.Element => {
             <Link key={index} to={`/actor/${item.id}`}>
               <img
                 src={item.photo}
-                alt="actor image"
-                className="w-[200px] h-[200px] rounded-lg object-cover mb-2"
+                alt='actor image'
+                className='w-[200px] h-[200px] rounded-lg object-cover mb-2'
               ></img>
-              <p className="ml-1">{item.name}</p>
+              <p className='ml-1'>{item.name}</p>
             </Link>
           </SwiperSlide>
         ))}
       </Swiper>
     </>
-  )
-}
+  );
+};
 
-export default ActorsInfo
+export default ActorsInfo;

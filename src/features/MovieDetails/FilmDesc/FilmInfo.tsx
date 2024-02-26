@@ -1,5 +1,5 @@
-import { MovieType } from '../../shared/types/MoviesTypes';
-import MainLoader from '../../shared/loader/MainLoader';
+import { MovieType } from '../../../shared/types/MoviesTypes';
+import MainLoader from '../../../shared/loader/MainLoader';
 interface FilmInfoProps {
   data: MovieType;
 }
