@@ -111,13 +111,7 @@ const MainSlider: React.FC = () => {
                     alt={movie.name}
                     style={customShadowStyle}
                   />
-                  <div className='flex items-center space-x-2 mt-[170px] mb-2'>
-                    <Link
-                      to={'/genres/}'}
-                      className='backdrop-blur-lg bg-white/10 hover:backdrop-blur-3xl hover:bg-white/30 px-3 py-2 rounded-3xl text-xl mx-2'
-                    >
-                      {FormatingName(movie.name)}
-                    </Link>
+                  <div className='flex items-center space-x-2 mt-[170px] ml-2 mb-2'>
                     <p>{movie.rating.imdb} IMDB</p>
                     <p>{RatingRounding(movie.rating.kp)} KINOPOISK</p>
                   </div>

@@ -1,9 +1,15 @@
+import { MovieGenresList } from '../../features/MovieDetails/FilmDesc/MovieGenresList';
+import { MovieLogo } from '../../features/MovieDetails/FilmDesc/MovieLogo';
+import { MovieSummary } from '../../features/MovieDetails/FilmDesc/MovieSummary';
+import MovieSynopsis from '../../features/MovieDetails/FilmDesc/MovieSynopsis';
+
 const MovieDescription = ({ data }: any) => {
   return (
     <>
-      <p className='mb-8' style={{ maxWidth: '800px' }}>
-        {data.description}
-      </p>
+      <MovieLogo data={data} />
+      <MovieGenresList data={data} />
+      <MovieSummary data={data} />
+      <MovieSynopsis data={data} />
     </>
   );
 };

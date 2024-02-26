@@ -16,6 +16,8 @@
     "@mui/icons-material": "^5.15.6",
     "@mui/material": "^5.15.6",
     "add": "^2.0.6",
+    "effector": "^23.2.0",
+    "effector-react": "^23.2.0",
     "eslint-config-prettier": "^9.1.0",
     "lint-staged": "^15.2.2",
     "moment": "^2.30.1",
