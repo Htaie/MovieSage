@@ -6,7 +6,7 @@ import { Navigation } from 'swiper/modules';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css';
-import { ConvertMinutes, FormatingName, RatingRounding, RatingScore } from '../../shared/utils/textUtils';
+import { FormatingName } from '../../shared/utils/textUtils';
 import { MovieType } from '../../shared/types/MoviesTypes';
 import View from '../../features/View';
 import MainLoader from '../../shared/loader/MainLoader';
@@ -50,7 +50,6 @@ export const FilmByGenreSlider = ({ genre }: { genre: string }): JSX.Element => 
   return (
     <>
       <h1 className='text-3xl text-white ml-12 my-10'>{FormatingName(genre)}</h1>
-
       <Swiper
         style={{
           width: '100%',
