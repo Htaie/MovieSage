@@ -3,7 +3,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useEffect, useState } from 'react';
-import { supabase } from '../../../../backend/apiClient/client';
+import { supabase } from '../../../../backend/apiClient/client.js';
 import { useStore } from 'effector-react';
 import { isLoggedInStore, updateIsLoggedIn } from '../../../components/Auth';
 const NavBar = () => {
@@ -79,11 +79,13 @@ const NavBar = () => {
           {isLoggedIn ? (
             <>
               <NotificationsNoneIcon />
-              <img
-                className='w-10 h-10 rounded-full'
-                src='https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80'
-                alt='Profile Img'
-              />
+              <Link to={'/profile'}>
+                <img
+                  className='w-10 h-10 rounded-full'
+                  src='https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80'
+                  alt='Profile Img'
+                />
+              </Link>
               <KeyboardArrowDownIcon />
             </>
           ) : (

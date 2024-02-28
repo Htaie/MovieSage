@@ -20,6 +20,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", ".eslintrc.js", "backend/apiClient"],
+  "include": ["src", ".eslintrc.js", "backend/apiClient/client.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -8,6 +8,7 @@ import App from '../App';
 import { Route } from '../../shared/constants/constants';
 import { Home } from '../../pages/Home/home';
 import MoviePage from '../../pages/MoviePage';
+import { ProfilePage } from '../../pages/UserPages/ProfilePage';
 
 export const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ export const router = createBrowserRouter([
       {
         path: Route.REGISTER,
         element: <RegisterPage />,
+      },
+      {
+        path: Route.PROFILE,
+        element: <ProfilePage />,
       },
       {
         path: Route.GENRE,

@@ -2,12 +2,15 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import { supabase } from '../../backend/apiClient/client';
+import { supabase } from '../../backend/apiClient/client.js';
 import { createEvent, createStore } from 'effector';
 
 import { Route } from '../shared/constants/constants';
 export const updateIsLoggedIn = createEvent<boolean>();
 export const isLoggedInStore = createStore<boolean>(false).on(updateIsLoggedIn, (_, isLoggedIn) => isLoggedIn);
+export const userDataStore = createStore(null);
+export const updateUserData = createEvent();
+userDataStore.on(updateUserData, (_, userData) => userData);
 export const AuthComponent = ({ formType, setToken }: { formType: string; setToken: any }): JSX.Element => {
   const [showPassword, setShowPassword] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
@@ -43,7 +46,9 @@ export const AuthComponent = ({ formType, setToken }: { formType: string; setTok
         });
         if (error) throw error;
         setToken(data);
+        console.log('User:', data);
         updateIsLoggedIn(true);
+        updateUserData(data);
         navigate(Route.HOME);
       } else if (formType === 'register') {
         const { data, error } = await supabase.auth.signUp({
@@ -51,6 +56,12 @@ export const AuthComponent = ({ formType, setToken }: { formType: string; setTok
           username: authData.username,
           password: authData.password,
           repeatPassword: authData.repeatPassword,
+          options: {
+            data: {
+              username: authData.username,
+              avatar: 'https://i.pinimg.com/736x/0a/bf/33/0abf33085bcf7d2f4697a348931f679d.jpg',
+            },
+          },
         });
 
         if (error) throw error;
