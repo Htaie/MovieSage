@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -6,11 +6,17 @@ import { supabase } from '../../backend/apiClient/client.js';
 import { createEvent, createStore } from 'effector';
 
 import { Route } from '../shared/constants/constants';
-export const updateIsLoggedIn = createEvent<boolean>();
-export const isLoggedInStore = createStore<boolean>(false).on(updateIsLoggedIn, (_, isLoggedIn) => isLoggedIn);
-export const userDataStore = createStore(null);
-export const updateUserData = createEvent();
+export const userDataStore = createStore<null | any>(null);
+export const updateUserData = createEvent<null>();
 userDataStore.on(updateUserData, (_, userData) => userData);
+
+const saveUserDataToLocalStorage = (userData) => {
+  localStorage.setItem('userData', JSON.stringify(userData));
+};
+
+const clearUserDataFromLocalStorage = () => {
+  localStorage.removeItem('userData');
+};
 export const AuthComponent = ({ formType, setToken }: { formType: string; setToken: any }): JSX.Element => {
   const [showPassword, setShowPassword] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
@@ -47,7 +53,7 @@ export const AuthComponent = ({ formType, setToken }: { formType: string; setTok
         if (error) throw error;
         setToken(data);
         console.log('User:', data);
-        updateIsLoggedIn(true);
+        saveUserDataToLocalStorage(data);
         updateUserData(data);
         navigate(Route.HOME);
       } else if (formType === 'register') {
@@ -82,6 +88,13 @@ export const AuthComponent = ({ formType, setToken }: { formType: string; setTok
     setIsChecked(!isChecked);
     setContinueButtonColor(isChecked ? 'white' : 'green');
   };
+
+  useEffect(() => {
+    const savedUserData = JSON.parse(localStorage.getItem('userData'));
+    if (savedUserData) {
+      updateUserData(savedUserData);
+    }
+  }, []);
 
   return (
     <div className='flex items-center justify-center h-screen bg-black'>
