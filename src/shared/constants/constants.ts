@@ -9,6 +9,7 @@ export const Route = {
   LOGIN: '/login',
   REGISTER: '/register',
   PROFILE: '/profile',
+  SETTINGS: '/settings',
   GENRE: '/genre/:name',
   MOVIE: '/movie/:id',
   ACTOR: '/actor/:id',

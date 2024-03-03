@@ -9,6 +9,7 @@ import { Route } from '../../shared/constants/constants';
 import { Home } from '../../pages/Home/home';
 import MoviePage from '../../pages/MoviePage';
 import { ProfilePage } from '../../pages/UserPages/ProfilePage';
+import { ProfileSettingPage } from '../../pages/UserPages/ProfileSettingPage';
 
 export const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
       {
         path: Route.PROFILE,
         element: <ProfilePage />,
+      },
+      {
+        path: Route.SETTINGS,
+        element: <ProfileSettingPage />,
       },
       {
         path: Route.GENRE,
