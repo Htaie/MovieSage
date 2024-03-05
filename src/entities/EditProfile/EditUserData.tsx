@@ -8,55 +8,17 @@ export const EditUserData: React.FC = () => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
-  const [base64File, setBase64File] = useState<string | null>(null);
+  const user = JSON.parse(localStorage.getItem('userData'));
 
-  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    try {
-      const selectedFile = event.target.files?.[0];
-      if (selectedFile) {
-        setAvatarFile(selectedFile);
-        const base64Data = await fileToBase64(selectedFile);
-        setBase64File(base64Data); // Обновляем состояние с base64
-        console.log('Base64 representation of selected file:', base64Data);
-      }
-    } catch (error) {
-      console.error('Error handling file change:', error);
-    }
-  };
-
-  const fileToBase64 = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = (error) => reject(error);
-    });
-  };
-
-  const updateAvatar = async (base64Data: string) => {
-    try {
-      const { error } = await supabase.auth.updateUser({ data: { avatar: base64Data } });
-      if (error) {
-        throw error;
-      }
-      alert('Avatar updated successfully!');
-    } catch (error) {
-      console.error('Error updating avatar:', error.message);
-      alert('An error occurred while updating avatar. Please try again later.');
-    }
-  };
-
-  const handleAvatarSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    try {
-      if (base64File) {
-        await updateAvatar(base64File);
-      }
-    } catch (error) {
-      console.error('Error updating avatar:', error.message);
-      alert('An error occurred while updating avatar. Please try again later.');
-    }
-  };
+  async function uploadImage(e: any) {
+    let file = e.target.files[0];
+    const { data, error } = await supabase.storage
+      .from('images')
+      .upload(user?.user?.email + '/' + user?.user?.id, file, {
+        contentType: 'image/png',
+        upsert: true,
+      });
+  }
 
   const handleUsernameSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -150,15 +112,9 @@ export const EditUserData: React.FC = () => {
       <div className='bg-[#242626] h-[150px] rounded-lg'>
         <p className='text-xl ml-4 pt-3'>Изменить фото профиля</p>
         <div className='ml-4 mr-4'>
-          <form onSubmit={handleAvatarSubmit}>
+          <form>
             <p>Avatar:</p>
-            <input
-              type='file'
-              id='avatar'
-              accept='image/*'
-              className='bg-[#1a1c1c] w-full mb-4'
-              onChange={handleFileChange}
-            />
+            <input type='file' accept='image/png, image/jpeg' onChange={(e) => uploadImage(e)} />
             <button type='submit' className='w-[100px] bg-blue-500'>
               Сохранить
             </button>

@@ -1,11 +1,7 @@
-import { useState } from 'react';
-import { updateUserData } from '../../components/Auth';
-
 export const UserSlice = () => {
-  const userDataFromStorage = localStorage.getItem('userData');
-  const [userData, setUserData] = useState(userDataFromStorage ? JSON.parse(userDataFromStorage) : null);
+  const userData = JSON.parse(localStorage.getItem('userData'));
 
-  console.log(userData);
+  const profileImage = CDNURL + userData.user.email + '/' + userData.user.id;
 
   return (
     <div className='h-[1000px] pt-[100px]'>
@@ -13,7 +9,7 @@ export const UserSlice = () => {
         {userData ? userData.user.user_metadata.username : 'No user data available'}
       </p>
       <img
-        src={userData ? userData.user.user_metadata.avatar : 'https://placehold.co/200x200'}
+        src={profileImage ? profileImage : 'https://placehold.co/200x200'}
         alt='user avatar'
         className='w-[200px] h-[200px] rounded-full'
       ></img>
