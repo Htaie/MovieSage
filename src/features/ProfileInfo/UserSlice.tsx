@@ -1,3 +1,5 @@
+import { CDNURL } from '../../shared/constants/constants';
+
 export const UserSlice = () => {
   const userData = JSON.parse(localStorage.getItem('userData'));
 
