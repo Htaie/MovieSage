@@ -2,14 +2,14 @@ import React from 'react';
 import { useState } from 'react';
 import { supabase } from '../../../backend/apiClient/client.js';
 import { useStore } from 'effector-react';
-import { userDataStore } from '../../components/Auth.js';
+import { userAuthDataStore } from '../../shared/store/UserStore';
 
 export const EditUserData: React.FC = () => {
   const [newUsername, setNewUsername] = useState('');
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
-  const user = useStore(userDataStore);
+  const user = useStore(userAuthDataStore);
 
   async function uploadImage(e: any) {
     let file = e.target.files[0];

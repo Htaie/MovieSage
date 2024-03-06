@@ -3,36 +3,17 @@ import { Link, useNavigate } from 'react-router-dom';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { supabase } from '../../backend/apiClient/client.js';
-import { createEvent, createStore } from 'effector';
-
 import { Route } from '../shared/constants/constants';
-// При загрузке приложения, попытайтесь загрузить данные из localStorage
-const initialUserData = JSON.parse(localStorage.getItem('userData')) || null;
-
-// Используйте полученные данные при создании хранилища
-export const userDataStore = createStore<null | any>(initialUserData);
-
-export const updateUserData = createEvent<null | any>(null);
-
-userDataStore.on(updateUserData, (state, userData) => userData);
-
-const saveUserDataToLocalStorage = (userData) => {
-  localStorage.setItem('userData', JSON.stringify(userData));
-};
-
-// const clearUserDataFromLocalStorage = () => {
-//   localStorage.removeItem('userData');
-// };
-
-userDataStore.watch((userData) => {
-  saveUserDataToLocalStorage(userData);
-});
+import { saveUserDataToLocalStorage, updateUserAuthData, userAuthDataStore } from '../shared/store/UserStore.js';
+import { useStore } from 'effector-react';
 
 export const AuthComponent = ({ formType, setToken }: { formType: string; setToken: any }): JSX.Element => {
   const [showPassword, setShowPassword] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [continueButtonColor, setContinueButtonColor] = useState('white');
   const navigate = useNavigate();
+
+  const userDataStore = useStore(userAuthDataStore);
   const [authData, setAuthData] = useState({
     email: '',
     username: '',
@@ -65,7 +46,7 @@ export const AuthComponent = ({ formType, setToken }: { formType: string; setTok
         setToken(data);
         console.log('User:', data);
         saveUserDataToLocalStorage(data);
-        updateUserData(data);
+        updateUserAuthData(data);
         navigate(Route.HOME);
       } else if (formType === 'register') {
         const { data, error } = await supabase.auth.signUp({
@@ -99,13 +80,6 @@ export const AuthComponent = ({ formType, setToken }: { formType: string; setTok
     setIsChecked(!isChecked);
     setContinueButtonColor(isChecked ? 'white' : 'green');
   };
-
-  useEffect(() => {
-    const savedUserData = JSON.parse(localStorage.getItem('userData'));
-    if (savedUserData) {
-      updateUserData(savedUserData);
-    }
-  }, []);
 
   return (
     <div className='flex items-center justify-center h-screen bg-black'>

@@ -4,14 +4,14 @@ import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useEffect, useState } from 'react';
 import { supabase } from '../../../../backend/apiClient/client.js';
-import { userDataStore, updateUserData } from '../../../components/Auth';
+import { userAuthDataStore, updateUserAuthData } from '../../../shared/store/UserStore.js';
 import { CDNURL } from '../../../shared/constants/constants.js';
 import { useStore } from 'effector-react';
 const NavBar = () => {
   const [open, setOpen] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
-  const userData = useStore(userDataStore);
+  const userData = useStore(userAuthDataStore);
   const isLoggedIn = userData;
 
   const profileImage = CDNURL + userData?.user?.email + '/' + userData?.user?.id;
@@ -21,7 +21,7 @@ const NavBar = () => {
     if (error) {
       console.log(error);
     } else {
-      updateUserData(null);
+      updateUserAuthData(null);
       userData.reset();
     }
   };

@@ -1,7 +1,9 @@
+import { useStore } from 'effector-react';
 import { CDNURL } from '../../shared/constants/constants';
+import { userAuthDataStore } from '../../shared/store/UserStore';
 
 export const UserSlice = () => {
-  const userData = JSON.parse(localStorage.getItem('userData'));
+  const userData = useStore(userAuthDataStore);
 
   const profileImage = CDNURL + userData.user.email + '/' + userData.user.id;
 
