@@ -4,16 +4,13 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { supabase } from '../../backend/apiClient/client.js';
 import { Route } from '../shared/constants/constants';
-import { saveUserDataToLocalStorage, updateUserAuthData, userAuthDataStore } from '../shared/store/UserStore.js';
-import { useStore } from 'effector-react';
+import { saveUserDataToLocalStorage, updateUserData } from '../shared/store/UserStore.js';
 
 export const AuthComponent = ({ formType, setToken }: { formType: string; setToken: any }): JSX.Element => {
   const [showPassword, setShowPassword] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [continueButtonColor, setContinueButtonColor] = useState('white');
   const navigate = useNavigate();
-
-  const userDataStore = useStore(userAuthDataStore);
   const [authData, setAuthData] = useState({
     email: '',
     username: '',
@@ -46,7 +43,7 @@ export const AuthComponent = ({ formType, setToken }: { formType: string; setTok
         setToken(data);
         console.log('User:', data);
         saveUserDataToLocalStorage(data);
-        updateUserAuthData(data);
+        updateUserData(data);
         navigate(Route.HOME);
       } else if (formType === 'register') {
         const { data, error } = await supabase.auth.signUp({

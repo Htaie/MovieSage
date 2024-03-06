@@ -2,14 +2,14 @@ import React from 'react';
 import { useState } from 'react';
 import { supabase } from '../../../backend/apiClient/client.js';
 import { useStore } from 'effector-react';
-import { userAuthDataStore } from '../../shared/store/UserStore';
+import { updateUserData, userDataStore } from '../../shared/store/UserStore';
 
 export const EditUserData: React.FC = () => {
   const [newUsername, setNewUsername] = useState('');
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
-  const user = useStore(userAuthDataStore);
+  const user = useStore(userDataStore);
 
   async function uploadImage(e: any) {
     let file = e.target.files[0];
@@ -19,15 +19,18 @@ export const EditUserData: React.FC = () => {
         contentType: 'image/png',
         upsert: true,
       });
+    updateUserData(user);
   }
 
   const handleUsernameSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     try {
       const { error } = await supabase.auth.updateUser({ data: { username: newUsername } });
       if (error) {
         throw error;
       }
       alert('Username updated successfully!');
+      updateUserData(user);
     } catch (error) {
       console.error('Error updating username:', error.message);
       alert('An error occurred while updating username. Please try again later.');
@@ -35,6 +38,7 @@ export const EditUserData: React.FC = () => {
   };
 
   const handlePasswordSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     try {
       if (newPassword === confirmNewPassword) {
         const { error } = await supabase.auth.updateUser({ password: newPassword }, { password: currentPassword });
@@ -49,6 +53,7 @@ export const EditUserData: React.FC = () => {
       console.error('Error updating password:', error.message);
       alert('An error occurred while updating password. Please try again later.');
     }
+    updateUserData(user);
   };
 
   return (
