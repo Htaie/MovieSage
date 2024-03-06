@@ -30,7 +30,10 @@ export const EditUserData: React.FC = () => {
         throw error;
       }
       alert('Username updated successfully!');
-      updateUserData(user);
+      updateUserData({
+        ...user,
+        user: { ...user?.user, user_metadata: { ...user?.user?.user_metadata, username: newUsername } },
+      });
     } catch (error) {
       console.error('Error updating username:', error.message);
       alert('An error occurred while updating username. Please try again later.');
