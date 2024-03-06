@@ -1,14 +1,15 @@
 import React from 'react';
 import { useState } from 'react';
 import { supabase } from '../../../backend/apiClient/client.js';
+import { useStore } from 'effector-react';
+import { userDataStore } from '../../components/Auth.js';
 
 export const EditUserData: React.FC = () => {
   const [newUsername, setNewUsername] = useState('');
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
-  const [avatarFile, setAvatarFile] = useState<File | null>(null);
-  const user = JSON.parse(localStorage.getItem('userData'));
+  const user = useStore(userDataStore);
 
   async function uploadImage(e: any) {
     let file = e.target.files[0];
@@ -21,7 +22,6 @@ export const EditUserData: React.FC = () => {
   }
 
   const handleUsernameSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
     try {
       const { error } = await supabase.auth.updateUser({ data: { username: newUsername } });
       if (error) {
@@ -35,7 +35,6 @@ export const EditUserData: React.FC = () => {
   };
 
   const handlePasswordSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
     try {
       if (newPassword === confirmNewPassword) {
         const { error } = await supabase.auth.updateUser({ password: newPassword }, { password: currentPassword });

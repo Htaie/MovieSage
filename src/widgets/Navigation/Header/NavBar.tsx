@@ -4,14 +4,14 @@ import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useEffect, useState } from 'react';
 import { supabase } from '../../../../backend/apiClient/client.js';
-import { updateUserData } from '../../../components/Auth';
+import { userDataStore, updateUserData } from '../../../components/Auth';
 import { CDNURL } from '../../../shared/constants/constants.js';
+import { useStore } from 'effector-react';
 const NavBar = () => {
   const [open, setOpen] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
-  const userDataFromStorage = localStorage.getItem('userData');
-  const [userData, setUserData] = useState(userDataFromStorage ? JSON.parse(userDataFromStorage) : null);
+  const userData = useStore(userDataStore);
   const isLoggedIn = userData;
 
   const profileImage = CDNURL + userData?.user?.email + '/' + userData?.user?.id;
@@ -21,9 +21,8 @@ const NavBar = () => {
     if (error) {
       console.log(error);
     } else {
-      setUserData(null);
       updateUserData(null);
-      localStorage.removeItem('userData');
+      userData.reset();
     }
   };
 
@@ -41,6 +40,11 @@ const NavBar = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [prevScrollPos, visible]);
+
+  useEffect(() => {
+    // Сохраняем данные пользователя в localStorage при изменении
+    localStorage.setItem('userData', JSON.stringify(userData));
+  }, [userData]);
 
   const togglePanel = () => {
     setOpen(!open);

@@ -6,17 +6,28 @@ import { supabase } from '../../backend/apiClient/client.js';
 import { createEvent, createStore } from 'effector';
 
 import { Route } from '../shared/constants/constants';
-export const userDataStore = createStore<null | any>(null);
-export const updateUserData = createEvent<null>();
-userDataStore.on(updateUserData, (_, userData) => userData);
+// При загрузке приложения, попытайтесь загрузить данные из localStorage
+const initialUserData = JSON.parse(localStorage.getItem('userData')) || null;
+
+// Используйте полученные данные при создании хранилища
+export const userDataStore = createStore<null | any>(initialUserData);
+
+export const updateUserData = createEvent<null | any>(null);
+
+userDataStore.on(updateUserData, (state, userData) => userData);
 
 const saveUserDataToLocalStorage = (userData) => {
   localStorage.setItem('userData', JSON.stringify(userData));
 };
 
-const clearUserDataFromLocalStorage = () => {
-  localStorage.removeItem('userData');
-};
+// const clearUserDataFromLocalStorage = () => {
+//   localStorage.removeItem('userData');
+// };
+
+userDataStore.watch((userData) => {
+  saveUserDataToLocalStorage(userData);
+});
+
 export const AuthComponent = ({ formType, setToken }: { formType: string; setToken: any }): JSX.Element => {
   const [showPassword, setShowPassword] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
