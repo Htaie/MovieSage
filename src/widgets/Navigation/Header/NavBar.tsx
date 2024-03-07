@@ -1,11 +1,11 @@
-import { Link } from 'react-router-dom';
+import { Link, Routes } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useEffect, useState } from 'react';
 import { supabase } from '../../../../backend/apiClient/client.js';
 import { userDataStore, updateUserData } from '../../../shared/store/UserStore.js';
-import { CDNURL } from '../../../shared/constants/constants.js';
+import { CDNURL, Route } from '../../../shared/constants/constants.js';
 import { useStore } from 'effector-react';
 const NavBar = () => {
   const [open, setOpen] = useState(false);
@@ -88,17 +88,17 @@ const NavBar = () => {
               </Link>
               <KeyboardArrowDownIcon onClick={togglePanel} />
               {open && (
-                <div className='absolute flex flex-col bg-[#1C3334] mt-[275px] text-xl w-[160px] h-[220px] rounded-lg'>
+                <div className='absolute flex flex-col bg-[#142526] mt-[275px] text-xl w-[160px] h-[220px] rounded-lg'>
                   <p className='text-2xl py-3 ml-2'>
                     {userData ? userData.user.user_metadata.username : 'No user data available'}
                   </p>
-                  <Link to='/profile' onClick={togglePanel} className='py-3 ml-2'>
+                  <Link to={Route.PROFILE} onClick={togglePanel} className='py-3 ml-2'>
                     Profile
                   </Link>
-                  <Link to='/settings' onClick={togglePanel} className='py-3 ml-2'>
+                  <Link to={Route.SETTINGS} onClick={togglePanel} className='py-3 ml-2'>
                     Settings
                   </Link>
-                  <Link to='/' onClick={SignOut} className='py-3 ml-2'>
+                  <Link to={Route.HOME} onClick={SignOut} className='py-3 ml-2'>
                     Sign Out
                   </Link>
                 </div>
