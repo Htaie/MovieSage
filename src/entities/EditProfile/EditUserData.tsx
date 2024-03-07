@@ -11,17 +11,6 @@ export const EditUserData: React.FC = () => {
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
   const user = useStore(userDataStore);
 
-  async function uploadImage(e: any) {
-    let file = e.target.files[0];
-    const { data, error } = await supabase.storage
-      .from('images')
-      .upload(user?.user?.email + '/' + user?.user?.id, file, {
-        contentType: 'image/png',
-        upsert: true,
-      });
-    updateUserData(user);
-  }
-
   const handleUsernameSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
@@ -110,18 +99,6 @@ export const EditUserData: React.FC = () => {
               value={confirmNewPassword}
               onChange={(e) => setConfirmNewPassword(e.target.value)}
             />
-            <button type='submit' className='w-[100px] bg-blue-500'>
-              Сохранить
-            </button>
-          </form>
-        </div>
-      </div>
-      <div className='bg-[#242626] h-[150px] rounded-lg'>
-        <p className='text-xl ml-4 pt-3'>Изменить фото профиля</p>
-        <div className='ml-4 mr-4'>
-          <form>
-            <p>Avatar:</p>
-            <input type='file' accept='image/png, image/jpeg' onChange={(e) => uploadImage(e)} />
             <button type='submit' className='w-[100px] bg-blue-500'>
               Сохранить
             </button>

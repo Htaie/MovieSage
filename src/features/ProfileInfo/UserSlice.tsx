@@ -1,6 +1,7 @@
 import { useStore } from 'effector-react';
 import { CDNURL } from '../../shared/constants/constants';
 import { userDataStore } from '../../shared/store/UserStore';
+import { ChangeUserPhoto } from '../../entities/EditProfile/ChangeUserPhoto';
 
 export const UserSlice = () => {
   const userData = useStore(userDataStore);
@@ -17,6 +18,7 @@ export const UserSlice = () => {
         alt='user avatar'
         className='w-[200px] h-[200px] rounded-full'
       ></img>
+      <ChangeUserPhoto />
     </div>
   );
 };
