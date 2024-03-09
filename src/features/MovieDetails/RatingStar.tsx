@@ -8,7 +8,18 @@ import { createStore } from 'effector';
 interface RaitingInfoProps {
   data: MovieType;
 }
-export const userRatingStore = createStore<any | null>(null);
+
+interface RatedData {
+  clickedRating: number;
+  MovieData: {
+    image: string;
+    id: number;
+    title: string;
+    year: number;
+  };
+}
+
+export const userRatingStore = createStore<RatedData | null>(null);
 
 export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
   const [userRating, setUserRating] = useState<number | null>(null);
