@@ -11,6 +11,7 @@ export const Route = {
   REGISTER: '/register',
   PROFILE: '/profile',
   SETTINGS: '/settings',
+  RATED: '/ratedlist',
   GENRE: '/genre/:name',
   MOVIE: '/movie/:id',
   ACTOR: '/actor/:id',

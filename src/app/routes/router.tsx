@@ -10,6 +10,7 @@ import { Home } from '../../pages/Home/home';
 import MoviePage from '../../pages/MoviePage';
 import { ProfilePage } from '../../pages/UserPages/ProfilePage';
 import { ProfileSettingPage } from '../../pages/UserPages/ProfileSettingPage';
+import { RatedFilmsPage } from '../../pages/UserPages/RatedFilmsPage';
 
 export const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ export const router = createBrowserRouter([
       {
         path: Route.SETTINGS,
         element: <ProfileSettingPage />,
+      },
+      {
+        path: Route.RATED,
+        element: <RatedFilmsPage />,
       },
       {
         path: Route.GENRE,
