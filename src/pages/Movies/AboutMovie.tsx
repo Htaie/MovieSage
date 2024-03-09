@@ -8,6 +8,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import MoviePlayer from '../../shared/UI/MoviePlayer.tsx';
 import MainLoader from '../../shared/loader/MainLoader.tsx';
 import MovieDescription from '../../widgets/MovieDescription/MovieDescription.tsx';
+import { RaitingInfo } from '../../features/MovieDetails/RatingStar.tsx';
 import ActorsInMovie from '../../widgets/MovieDescription/ActorsInMovie.tsx';
 import FilmInfo from '../../features/MovieDetails/FilmDesc/FilmInfo.tsx';
 import MovieDataFetcher from '../../features/MovieDetails/MovieDataFetcher/MovieDataFetcher.tsx';
@@ -109,6 +110,7 @@ const AboutMoviePage = (): JSX.Element => {
         </div>
         <div className='mb-[80px]' ref={watchFilmRef}>
           <p className='font-bold text-3xl mb-[60px]'>Смотреть фильм {data.name} онлайн без регистрации и СМС:</p>
+          <RaitingInfo data={data} />
           <ActorsInMovie data={data} />
           <FilmInfo data={data} />
           <MoviePlayer id={data.id} />

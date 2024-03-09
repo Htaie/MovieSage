@@ -1,18 +1,30 @@
-import StarOutlinedIcon from '@mui/icons-material/StarOutlined'
-import { MainBtn } from '../../shared/UI/buttons/MainBtn'
-import { RatingRounding } from '../../shared/utils/textUtils'
-import { MovieType } from '../../shared/types/MoviesTypes'
+import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
+import { MainBtn } from '../../shared/UI/buttons/MainBtn';
+import { RatingRounding } from '../../shared/utils/textUtils';
+import { MovieType } from '../../shared/types/MoviesTypes';
+import { useState } from 'react';
+import { createStore } from 'effector';
 
 interface RaitingInfoProps {
-  data: MovieType
+  data: MovieType;
 }
+export const userRatingStore = createStore<any | null>(null);
 
 export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
+  const [userRating, setUserRating] = useState<number | null>(null);
+
   const stars = Array.from({ length: 10 }, (_, index) => (
     <StarOutlinedIcon key={index} style={{ fontSize: '3em', color: '#a0a0a0' }} />
-  ))
+  ));
 
-  const ratingScore = RatingRounding(data.rating.kp, 1)
+  const ratingScore = RatingRounding(data.rating.kp, 1);
+
+  const handleStarClick = (clickedRating: number) => {
+    setUserRating(clickedRating);
+    const MovieData = { image: data.poster.url, id: data.id, title: data.name, year: data.year };
+    const RatedData = { clickedRating, MovieData };
+    userRatingStore.setState(RatedData);
+  };
 
   return (
     <>
@@ -21,23 +33,33 @@ export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
         <div className='grid grid-cols-[1fr,2fr]'>
           <div className='flex flex-row items-center'>
             {stars.map((_, index) => {
-              const rating = index + 1
-              const starColor = rating <= ratingScore ? '#ffffff' : '#a0a0a0'
+              const rating = index + 1;
+              const starColor = rating <= ratingScore ? '#ffffff' : '#a0a0a0';
 
               return (
                 <div key={index} className='flex flex-col items-center'>
-                  <StarOutlinedIcon style={{ fontSize: '3em', color: starColor }} />
+                  <StarOutlinedIcon
+                    style={{ fontSize: '3em', color: starColor }}
+                    className='hover:cursor-pointer hover:scale-110'
+                    onClick={() => handleStarClick(rating)}
+                  />
                   <span>{rating}</span>
                 </div>
-              )
+              );
             })}
           </div>
           <div className='flex justify-between'>
             <p className='font-bold text-5xl'>{ratingScore}</p>
+            {userRating ? (
+              <div className='flex'>
+                <p className='font-bold text-4xl mr-[20px]'>Ваша оценка:</p>
+                <span className='font-bold text-5xl'>{userRating}</span>
+              </div>
+            ) : null}
             <MainBtn
               text={'Оценить фильм'}
               onClick={() => {
-                console.log('Liked')
+                console.log('Liked');
               }}
               style={{ marginBottom: '20px' }}
             />
@@ -45,5 +67,5 @@ export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
