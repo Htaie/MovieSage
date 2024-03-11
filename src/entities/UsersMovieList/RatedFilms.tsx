@@ -7,10 +7,17 @@ export const RatedFilms = () => {
 
   return (
     <div className='bg-[#1C3334] text-white h-[1000px] pt-[100px]'>
-      <img src={data?.MovieData.image} alt='MoviePoster' className='w-[200px]'></img>
-      <p>{data?.clickedRating}</p>
-      <p>{data?.MovieData.title}</p>
-      <p>{data?.MovieData.year}</p>
+      {Object.keys(data).map((filmId) => {
+        const film = data[filmId];
+        return (
+          <div key={filmId}>
+            <img src={film.image} alt='MoviePoster' className='w-[200px]' />
+            <p>{film.clickedRating}</p>
+            <p>{film.title}</p>
+            <p>{film.year}</p>
+          </div>
+        );
+      })}
     </div>
   );
 };

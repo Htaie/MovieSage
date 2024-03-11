@@ -10,16 +10,15 @@ interface RaitingInfoProps {
 }
 
 interface RatedData {
-  clickedRating: number;
-  MovieData: {
+  [id: number]: {
+    clickedRating: number;
     image: string;
-    id: number;
     title: string;
     year: number;
   };
 }
 
-export const userRatingStore = createStore<RatedData | null>(null);
+export const userRatingStore = createStore<RatedData>({});
 
 export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
   const [userRating, setUserRating] = useState<number | null>(null);
@@ -32,8 +31,11 @@ export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
 
   const handleStarClick = (clickedRating: number) => {
     setUserRating(clickedRating);
-    const MovieData = { image: data.poster.url, id: data.id, title: data.name, year: data.year };
-    const RatedData = { clickedRating, MovieData };
+    const { id, name, year, poster } = data;
+    const RatedData = {
+      ...userRatingStore.getState(),
+      [id]: { clickedRating, title: name, year, image: poster.url },
+    };
     userRatingStore.setState(RatedData);
   };
 
