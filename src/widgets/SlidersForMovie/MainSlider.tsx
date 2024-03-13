@@ -95,7 +95,7 @@ const MainSlider: React.FC = () => {
       }}
       navigation={true}
       modules={[Pagination, Navigation, Autoplay]}
-      className='h-full bg-[#1C3334] swiper-navigation-color swiper-pagination-color'
+      className='h-[70%] w-[70%] bg-[#1C3334] mt-20 swiper-navigation-color swiper-pagination-color rounded-3xl'
     >
       {data.map(
         (movie: MovieType) =>

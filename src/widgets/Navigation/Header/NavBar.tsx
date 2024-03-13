@@ -56,10 +56,10 @@ const NavBar = () => {
   };
   return (
     <div
-      className={`w-screen fixed z-30 transition-all duration-300 ${visible ? 'top-0' : '-top-20'}`}
-      style={gradientBackground}
+      className={`w-screen bg-[#212124] fixed z-30 transition-all duration-300 ${visible ? 'top-0' : '-top-20'}`}
+      //style={gradientBackground}
     >
-      <div className='container mx-auto my-0 flex h-32 items-center justify-between text-white'>
+      <div className='container mx-auto my-0 flex h-20 items-center justify-between text-white'>
         <Link to={'/'} className='flex space-x-3 items-center'>
           <h1>MovieSage</h1>
         </Link>
@@ -88,7 +88,7 @@ const NavBar = () => {
               </Link>
               <KeyboardArrowDownIcon onClick={togglePanel} />
               {open && (
-                <div className='absolute flex flex-col bg-[#142526] mt-[275px] text-xl w-[160px] h-[220px] rounded-lg'>
+                <div className='absolute flex flex-col bg-[#212124] mt-[275px] text-xl w-[160px] h-[220px] rounded-lg'>
                   <p className='text-2xl py-3 ml-2'>
                     {userData ? userData.user.user_metadata.username : 'No user data available'}
                   </p>
