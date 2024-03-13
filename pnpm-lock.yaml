@@ -23,9 +23,6 @@ dependencies:
   add:
     specifier: ^2.0.6
     version: 2.0.6
-  base-64:
-    specifier: ^1.0.0
-    version: 1.0.0
   effector:
     specifier: ^23.2.0
     version: 23.2.0

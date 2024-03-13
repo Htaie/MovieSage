@@ -1,8 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { MainBtn } from '../../shared/UI/buttons/MainBtn.tsx';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import { useState, useRef } from 'react';
-import GenresCards from '../../features/GenreLink/GenreLink.tsx';
+import { useState, useRef, useEffect } from 'react';
 import TrailerModal from '../../features/MovieDetails/TrailerModal.tsx';
 import CloseIcon from '@mui/icons-material/Close';
 import MoviePlayer from '../../shared/UI/MoviePlayer.tsx';
@@ -11,12 +10,17 @@ import MovieDescription from '../../widgets/MovieDescription/MovieDescription.ts
 import { RaitingInfo } from '../../features/MovieDetails/RatingStar.tsx';
 import ActorsInMovie from '../../widgets/MovieDescription/ActorsInMovie.tsx';
 import FilmInfo from '../../features/MovieDetails/FilmDesc/FilmInfo.tsx';
-import MovieDataFetcher from '../../features/MovieDetails/MovieDataFetcher/MovieDataFetcher.tsx';
+import { MovieDataFetcher, movieDataStore } from '../../entities/MovieDataFetcher/MovieDataFetcher.tsx';
+import { useStore } from 'effector-react';
 
 const AboutMoviePage = (): JSX.Element => {
   const [openModal, setOpenModal] = useState(false);
   const { id } = useParams();
-  const data = MovieDataFetcher(id); //я добавил в новом файлике фиче MovieDataFetcher для id тип стринг, вроде там должен быть намбер но и вроде стринг подходит потому что там запрос как никак и вот тут красным подсвечивает хз поч
+  useEffect(() => {
+    MovieDataFetcher(id);
+  }, [id]); //у меня ощущения будто это не совсем то что нужно но если честно то я вообще чет не смог ничего больше сделать рабочего с этим вонючим effector'ом
+
+  const data = useStore(movieDataStore);
   const watchFilmRef = useRef<null | HTMLDivElement>(null);
 
   if (data == null) {
@@ -63,25 +67,6 @@ const AboutMoviePage = (): JSX.Element => {
               ></img>
             </div>
             <div className='flex flex-col ml-[50px] mt-4'>
-              {data.logo.url.length > 0 ? (
-                <img src={data.logo.url} alt='film logo' className='h-10 w-[300px] mb-3 ' />
-              ) : (
-                <h1 className='text-4xl font-bold mt-4 mb-[40px]'>{data.name}</h1>
-              )}
-              <div className='flex mb-8'>
-                <GenresCards genres={data.genres} width={30} />
-              </div>
-              <div className='flex mb-4'>
-                <p>{data.year}</p>
-                <div className='flex'>
-                  {data.countries.map((item, index) => (
-                    <p key={index} className='mr-2'>
-                      {item.name}
-                    </p>
-                  ))}
-                </div>
-                <p>{data.movieLength} мин</p>
-              </div>
               <MovieDescription data={data} />
               <div className='mb-6'>
                 <MainBtn
