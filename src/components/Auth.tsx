@@ -1,34 +1,82 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import VisibilityIcon from '@mui/icons-material/Visibility'
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { supabase } from '../../backend/apiClient/client.js';
+import { Route } from '../shared/constants/constants';
+import { saveUserDataToLocalStorage, updateUserData } from '../shared/store/UserStore.js';
 
-enum FormType {
-  LOGIN = 'login',
-  REGISTER = 'register',
-}
-export const AuthComponent = ({ formType }: { formType: FormType }): JSX.Element => {
-  const [showPassword, setShowPassword] = useState(false)
-  const [isChecked, setIsChecked] = useState(false)
-  const [continueButtonColor, setContinueButtonColor] = useState('white')
+export const AuthComponent = ({ formType, setToken }: { formType: string; setToken: any }): JSX.Element => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
+  const [continueButtonColor, setContinueButtonColor] = useState('white');
+  const navigate = useNavigate();
+  const [authData, setAuthData] = useState({
+    email: '',
+    username: '',
+    password: '',
+    repeatPassword: '',
+  });
 
   const customStyles = {
     input: {
       backgroundColor: 'black',
       border: '2px solid #2b2c2e',
       borderRadius: '5px',
-      color: 'white'
-    }
+      color: 'white',
+    },
+  };
+
+  function handleChange(event: any) {
+    setAuthData({ ...authData, [event.target.name]: event.target.value });
   }
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    try {
+      if (formType === 'login') {
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: authData.email,
+          password: authData.password,
+        });
+        if (error) throw error;
+        setToken(data);
+        console.log('User:', data);
+        saveUserDataToLocalStorage(data);
+        updateUserData(data);
+        navigate(Route.HOME);
+      } else if (formType === 'register') {
+        const { data, error } = await supabase.auth.signUp({
+          email: authData.email,
+          username: authData.username,
+          password: authData.password,
+          repeatPassword: authData.repeatPassword,
+          options: {
+            data: {
+              username: authData.username,
+              avatar: 'https://i.pinimg.com/736x/0a/bf/33/0abf33085bcf7d2f4697a348931f679d.jpg',
+            },
+          },
+        });
+
+        if (error) throw error;
+        alert('Check your email for the login link!');
+
+        console.log('User:', data);
+      }
+    } catch (error) {
+      console.error('Auth error:', error.message);
+    }
+  };
 
   const togglePasswordVisibility: React.MouseEventHandler = () => {
-    setShowPassword(!showPassword)
-  }
+    setShowPassword(!showPassword);
+  };
 
   const handleCheckboxChange: React.MouseEventHandler<HTMLDivElement> = () => {
-    setIsChecked(!isChecked)
-    setContinueButtonColor(isChecked ? 'white' : 'green')
-  }
+    setIsChecked(!isChecked);
+    setContinueButtonColor(isChecked ? 'white' : 'green');
+  };
 
   return (
     <div className='flex items-center justify-center h-screen bg-black'>
@@ -56,7 +104,7 @@ export const AuthComponent = ({ formType }: { formType: FormType }): JSX.Element
           <h1 className='text-3xl'>MovieSage</h1>
           <button className='w-20 h-12 bg-black border border-[#2b2c2e] rounded-lg ml-[182px]'>Close</button>
         </div>
-        {FormType.REGISTER === 'register' && (
+        {formType === 'register' && (
           <>
             <h1 className='ml-[28px] mb-2'>Email</h1>
             <div className='flex justify-center'>
@@ -65,6 +113,8 @@ export const AuthComponent = ({ formType }: { formType: FormType }): JSX.Element
                 style={customStyles.input}
                 type='text'
                 placeholder='Email'
+                name='email'
+                onChange={handleChange}
               />
             </div>
           </>
@@ -76,6 +126,8 @@ export const AuthComponent = ({ formType }: { formType: FormType }): JSX.Element
             style={customStyles.input}
             type='text'
             placeholder={formType === 'register' ? 'Username' : 'Email'}
+            name={formType === 'register' ? 'username' : 'email'}
+            onChange={handleChange}
           />
         </div>
         <h1 className='ml-[28px] mb-2'>Password</h1>
@@ -85,12 +137,14 @@ export const AuthComponent = ({ formType }: { formType: FormType }): JSX.Element
             style={customStyles.input}
             type={showPassword ? 'text' : 'password'}
             placeholder='Password'
+            name='password'
+            onChange={handleChange}
           />
           <div className='absolute top-0 right-8 m-3 cursor-pointer' onClick={togglePasswordVisibility}>
             {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
           </div>
         </div>
-        {FormType.REGISTER === 'register' && (
+        {formType === 'register' && (
           <>
             <h1 className='ml-[28px] mb-2'>Password</h1>
             <div className='relative flex justify-center'>
@@ -99,6 +153,8 @@ export const AuthComponent = ({ formType }: { formType: FormType }): JSX.Element
                 style={customStyles.input}
                 type={showPassword ? 'text' : 'password'}
                 placeholder='Repeat Password'
+                name='repeatPassword'
+                onChange={handleChange}
               />
               <div className='absolute top-0 right-8 m-3 cursor-pointer' onClick={togglePasswordVisibility}>
                 {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
@@ -106,21 +162,23 @@ export const AuthComponent = ({ formType }: { formType: FormType }): JSX.Element
             </div>
           </>
         )}
-        {FormType.LOGIN === 'login' && (
+        {formType === 'login' && (
           <>
             <div className='flex justify-center mb-4'>
               <button className='mb-4'>Forgot Password</button>
             </div>
             <div className='flex justify-center '>
-              <button className='w-[440px] h-12 text-gray-800 bg-white rounded-lg mb-2'>Login</button>
+              <button onClick={handleSubmit} className='w-[440px] h-12 text-gray-800 bg-white rounded-lg mb-2'>
+                Login
+              </button>
             </div>
             <div className='flex justify-center'>
-              <p className='text-xs text-gray-400 mr-2'>Don`&apos;`t have an account?</p>
+              <p className='text-xs text-gray-400 mr-2'>Don&apos;t have an account?</p>
               <button className='text-xs'>Sign up</button>
             </div>
           </>
         )}
-        {FormType.REGISTER === 'register' && (
+        {formType === 'register' && (
           <>
             <div className='flex justify-center mb-4'>
               <div
@@ -132,7 +190,7 @@ export const AuthComponent = ({ formType }: { formType: FormType }): JSX.Element
                   border: '2px solid gray',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
                 }}
               >
                 {isChecked && (
@@ -156,6 +214,7 @@ export const AuthComponent = ({ formType }: { formType: FormType }): JSX.Element
             <div className='flex justify-center'>
               <Link
                 to='/login'
+                onClick={handleSubmit}
                 className={`w-[440px] h-12 rounded-lg mb-4 inline-flex items-center justify-center ${
                   isChecked ? 'bg-green-500 text-white' : 'bg-white text-gray-800'
                 }`}
@@ -164,13 +223,9 @@ export const AuthComponent = ({ formType }: { formType: FormType }): JSX.Element
                 Continue
               </Link>
             </div>
-            <div className='flex justify-center'>
-              <p className='text-xs text-gray-400 mr-2'>Already have an account?</p>
-              <button className='text-xs'>Login</button>
-            </div>
           </>
         )}
       </div>
     </div>
-  )
-}
+  );
+};

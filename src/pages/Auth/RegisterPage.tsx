@@ -1,11 +1,11 @@
-import { AuthComponent } from '../../components/Auth'
+import { AuthComponent } from '../../components/Auth';
 
 const RegisterPage = () => {
   return (
     <div>
-      <AuthComponent formType='register' />
+      <AuthComponent formType='register' setToken={null} />
     </div>
-  )
-}
+  );
+};
 
-export default RegisterPage
+export default RegisterPage;
