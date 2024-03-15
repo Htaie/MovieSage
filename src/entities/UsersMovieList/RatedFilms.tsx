@@ -6,7 +6,7 @@ export const RatedFilms = () => {
   console.log(data);
 
   return (
-    <div className='bg-[#1C3334] text-white h-[1000px] pt-[100px]'>
+    <div className='bg-[#212124] text-white h-[1000px] pt-[100px]'>
       {Object.keys(data).map((filmId) => {
         const film = data[filmId];
         return (
