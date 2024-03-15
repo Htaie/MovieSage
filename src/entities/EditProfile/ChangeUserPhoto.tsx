@@ -10,6 +10,7 @@ export const ChangeUserPhoto = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const profileImage = CDNURL + user.user.email + '/' + user.user.id;
+  console.log(profileImage);
 
   async function uploadImage() {
     if (!selectedFile) return;
@@ -56,15 +57,11 @@ export const ChangeUserPhoto = () => {
 
   return (
     <div className='text-white h-[150px] rounded-lg'>
-      {previewImage && (
-        <div>
-          <img
-            src={profileImage ? previewImage : 'https://placehold.co/200x200'}
-            alt='user avatar'
-            className='w-[200px] h-[200px] rounded-full'
-          ></img>
-        </div>
-      )}
+      <img
+        src={previewImage ? previewImage : profileImage ? profileImage : 'https://placehold.co/200x200'}
+        alt='user avatar'
+        className='w-[200px] h-[200px] rounded-full'
+      />
       <p className='text-white text-3xl'>{user ? user.user.user_metadata.username : 'No user data available'}</p>
       <p className='text-xl ml-4 pt-3 mb-4'>Загрузить аватар</p>
       <div className='ml-4 mr-4'>
