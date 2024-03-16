@@ -15,6 +15,7 @@ interface RatedData {
     image: string;
     title: string;
     year: number;
+    type: string;
   };
 }
 
@@ -31,10 +32,10 @@ export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
 
   const handleStarClick = (clickedRating: number) => {
     setUserRating(clickedRating);
-    const { id, name, year, poster } = data;
+    const { id, name, year, poster, type } = data;
     const RatedData = {
       ...userRatingStore.getState(),
-      [id]: { clickedRating, title: name, year, image: poster.url },
+      [id]: { clickedRating, title: name, year, image: poster.url, type },
     };
     userRatingStore.setState(RatedData);
   };

@@ -68,7 +68,7 @@ export const ChangeUserPhoto = () => {
         <form>
           <div className='flex'>
             <label htmlFor='file-input' onDragOver={handleDragLeave} onDragEnter={handleDragEnter} onDrop={handleDrop}>
-              <div className='border-dashed border-4 border-[#6E707A] w-[350px] h-[250px] text-center cursor-pointer mb-4 mr-4'>
+              <div className='border-dashed border-4 border-[#6E707A] w-[550px] h-[250px] text-center cursor-pointer mb-4 mr-4'>
                 <CloudUploadIcon style={{ fontSize: '30px' }} />
                 <p className='text-xl'>Нажмите или перетащите изображение для загрузки</p>
               </div>
