@@ -21,6 +21,11 @@ export const RatedFilms = () => {
     setIsHovered(false);
   };
 
+  const shadowStyle = {
+    boxShadow: '0px 0px 15px 15px rgba(0, 0, 0, 0.5)',
+    MozBoxShadow: '0px 0px 15px 15px rgba(0, 0, 0, 0.5)',
+  };
+
   return (
     <div className='text-white bg-[#6E727A] h-[100%] w-[80%] pb-[400px] mx-auto'>
       {Object.keys(data).map((filmId) => {
@@ -48,7 +53,7 @@ export const RatedFilms = () => {
       {isHovered && modalImage && (
         <div
           className='absolute bg-[#45475B] w-[500px]'
-          style={{ top: linkPosition.y - 10, left: linkPosition.x + 40 }}
+          style={{ top: linkPosition.y - 10, left: linkPosition.x + 40, ...shadowStyle }}
         >
           <img src={modalImage} alt='Movie Poster' className='w-[200px]' />
         </div>
