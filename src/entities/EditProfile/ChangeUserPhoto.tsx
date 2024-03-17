@@ -56,7 +56,7 @@ export const ChangeUserPhoto = () => {
   };
 
   return (
-    <div className='text-white h-[150px] rounded-lg'>
+    <div className='text-white h-[150px] rounded-lg flex flex-col items-center pt-3'>
       <img
         src={previewImage ? previewImage : profileImage ? profileImage : 'https://placehold.co/200x200'}
         alt='user avatar'

@@ -4,6 +4,7 @@ import { supabase } from '../../../backend/apiClient/client.js';
 import { useStore } from 'effector-react';
 import { updateUserData, userDataStore } from '../../shared/store/UserStore';
 import { ChangeUserPhoto } from './ChangeUserPhoto.tsx';
+import { UserSlice } from '../../features/ProfileInfo/UserSlice.tsx';
 
 export const EditUserData: React.FC = () => {
   const [newUsername, setNewUsername] = useState('');
@@ -59,7 +60,7 @@ export const EditUserData: React.FC = () => {
   };
 
   return (
-    <div className='text-white bg-[#45475B] h-[100%] w-[70%] pt-[100px] pb-[400px] mx-auto flex'>
+    <div className='text-white bg-[#45475B] h-[100%] w-[80%] pb-[400px] mx-auto flex'>
       <div className='w-1/2'>
         <ChangeUserPhoto />
       </div>

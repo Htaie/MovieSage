@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { userRatingStore } from '../../features/MovieDetails/RatingStar';
 import { useStore } from 'effector-react';
+import { UserSlice } from '../../features/ProfileInfo/UserSlice';
 
 export const RatedFilms = () => {
   const data = useStore(userRatingStore);
@@ -21,7 +22,7 @@ export const RatedFilms = () => {
   };
 
   return (
-    <div className='text-white bg-[#6E727A] h-[100%] w-[70%] pt-[100px] pb-[400px] mx-auto'>
+    <div className='text-white bg-[#6E727A] h-[100%] w-[80%] pb-[400px] mx-auto'>
       {Object.keys(data).map((filmId) => {
         const film = data[filmId];
         return (
@@ -45,7 +46,10 @@ export const RatedFilms = () => {
         );
       })}
       {isHovered && modalImage && (
-        <div className='absolute' style={{ top: linkPosition.y, left: linkPosition.x + 20 }}>
+        <div
+          className='absolute bg-[#45475B] w-[500px]'
+          style={{ top: linkPosition.y - 10, left: linkPosition.x + 40 }}
+        >
           <img src={modalImage} alt='Movie Poster' className='w-[200px]' />
         </div>
       )}
