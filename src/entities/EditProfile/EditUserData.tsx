@@ -4,7 +4,6 @@ import { supabase } from '../../../backend/apiClient/client.js';
 import { useStore } from 'effector-react';
 import { updateUserData, userDataStore } from '../../shared/store/UserStore';
 import { ChangeUserPhoto } from './ChangeUserPhoto.tsx';
-import { UserSlice } from '../../features/ProfileInfo/UserSlice.tsx';
 
 export const EditUserData: React.FC = () => {
   const [newUsername, setNewUsername] = useState('');
