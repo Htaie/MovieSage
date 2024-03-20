@@ -3,11 +3,14 @@ import { supabase } from '../../../backend/apiClient/client.js';
 import { useStore } from 'effector-react';
 import { useState } from 'react';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { CDNURL } from '../../shared/constants/constants.js';
 
 export const ChangeUserPhoto = () => {
   const user = useStore(userDataStore);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const profileImage = CDNURL + user.user.email + '/' + user.user.id;
+  console.log(profileImage);
 
   async function uploadImage() {
     if (!selectedFile) return;
@@ -53,22 +56,23 @@ export const ChangeUserPhoto = () => {
   };
 
   return (
-    <div className='text-white h-[150px] rounded-lg'>
-      <p className='text-xl ml-4 pt-3 mb-4'>Аватар</p>
+    <div className='text-white h-[150px] rounded-lg flex flex-col items-center pt-3'>
+      <img
+        src={previewImage ? previewImage : profileImage ? profileImage : 'https://placehold.co/200x200'}
+        alt='user avatar'
+        className='w-[200px] h-[200px] rounded-full'
+      />
+      <p className='text-white text-3xl'>{user ? user.user.user_metadata.username : 'No user data available'}</p>
+      <p className='text-xl ml-4 pt-3 mb-4'>Загрузить аватар</p>
       <div className='ml-4 mr-4'>
         <form>
           <div className='flex'>
             <label htmlFor='file-input' onDragOver={handleDragLeave} onDragEnter={handleDragEnter} onDrop={handleDrop}>
-              <div className='border-dashed border-2 border-white w-[150px] h-[150px] text-center cursor-pointer mb-4 mr-4'>
+              <div className='border-dashed border-4 border-[#6E707A] w-[550px] h-[250px] text-center cursor-pointer mb-4 mr-4'>
                 <CloudUploadIcon style={{ fontSize: '30px' }} />
                 <p className='text-xl'>Нажмите или перетащите изображение для загрузки</p>
               </div>
             </label>
-            {previewImage && (
-              <div className='w-[155px] h-[155px]'>
-                <img src={previewImage} alt='Preview' className='w-full h-full object-cover' />
-              </div>
-            )}
           </div>
           <input
             id='file-input'

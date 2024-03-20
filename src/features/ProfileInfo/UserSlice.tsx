@@ -1,28 +1,32 @@
-import { useStore } from 'effector-react';
-import { CDNURL, Route } from '../../shared/constants/constants';
-import { userDataStore } from '../../shared/store/UserStore';
-import { ChangeUserPhoto } from '../../entities/EditProfile/ChangeUserPhoto';
+import { useState } from 'react';
+import { ProfileComponent } from '../../components/ProfileComponent';
+import { Route } from '../../shared/constants/constants';
 import { Link } from 'react-router-dom';
 
 export const UserSlice = () => {
-  const userData = useStore(userDataStore);
+  const [formType, setFormType] = useState('');
 
-  const profileImage = CDNURL + userData.user.email + '/' + userData.user.id;
+  const handleLinkClick = (newFormType) => {
+    setFormType(newFormType);
+  };
 
   return (
-    <div className='bg-[#1C3334] h-[1000px] pt-[100px]'>
-      <p className='text-white text-3xl'>
-        {userData ? userData.user.user_metadata.username : 'No user data available'}
-      </p>
-      <img
-        src={profileImage ? profileImage : 'https://placehold.co/200x200'}
-        alt='user avatar'
-        className='w-[200px] h-[200px] rounded-full'
-      ></img>
-      <Link to={Route.RATED} className='text-white'>
-        Список оцененных фильмов
-      </Link>
-      <ChangeUserPhoto />
+    <div className='bg-[#212124] h-[200px] pt-[100px] pb-[50%]'>
+      <div className='flex space-x-5 text-2xl ml-[195px]'>
+        <Link to='#' onClick={() => handleLinkClick('ratedlist')} className='text-white'>
+          Просмотренные
+        </Link>
+        <Link to='#' onClick={() => handleLinkClick('ratedlist')} className='text-white'>
+          Смотреть позже
+        </Link>
+        <Link to='#' onClick={() => handleLinkClick('settings')} className='text-white'>
+          Настройки
+        </Link>
+        <Link to={Route.HOME} className='text-red-500'>
+          Выйти
+        </Link>
+      </div>
+      <ProfileComponent formType={formType} />
     </div>
   );
 };

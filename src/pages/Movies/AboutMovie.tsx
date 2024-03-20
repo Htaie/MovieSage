@@ -34,7 +34,7 @@ const AboutMoviePage = (): JSX.Element => {
   }
 
   return (
-    <div className='bg-black'>
+    <div className='bg-[#212124]'>
       <div className='container mx-auto text-white pt-[100px] pb-[100px]'>
         {openModal && (
           <div className='w-full h-full absolute overflow-hidden'>

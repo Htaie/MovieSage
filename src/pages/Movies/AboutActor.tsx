@@ -15,7 +15,7 @@ export const AboutActorPage = (): JSX.Element => {
           method: 'GET',
           headers: {
             Accept: 'application/json',
-            'X-API-KEY': TOKEN
+            'X-API-KEY': TOKEN,
           },
         });
         const data = await response.json();
@@ -28,25 +28,25 @@ export const AboutActorPage = (): JSX.Element => {
     void fetchActor();
   }, []);
   return (
-    <div className="bg-black text-white w-full h-screen">
-      <div className="grid grid-cols-1 lg:grid-cols-[2fr,2fr] container mx-auto md:grid-cols-[2fr,1fr] sm:grid-cols-[2fr,1fr] pt-40 pb-40">
+    <div className='bg-[#212124] text-white w-full h-screen'>
+      <div className='grid grid-cols-1 lg:grid-cols-[2fr,2fr] container mx-auto md:grid-cols-[2fr,1fr] sm:grid-cols-[2fr,1fr] pt-40 pb-40'>
         <div>
           <img
             src={actorData?.photo.length > 0 ? actorData?.photo : 'https://placehold.co/400x550'}
-            alt="actor image"
-            className="rounded-lg ml-12 h-[400px]"
+            alt='actor image'
+            className='rounded-lg ml-12 h-[400px]'
           ></img>
         </div>
         <div>
-          <div className="mb-8">
-            {(Boolean((actorData?.name))) && <p className="text-3xl">{actorData?.name}</p>}
-            {(Boolean((actorData?.enName))) && <p className="text-xl">{actorData?.enName}</p>}
+          <div className='mb-8'>
+            {Boolean(actorData?.name) && <p className='text-3xl'>{actorData?.name}</p>}
+            {Boolean(actorData?.enName) && <p className='text-xl'>{actorData?.enName}</p>}
           </div>
-          <div className="grid grid-cols-1 gap-y-2 md:grid-cols-[1fr,2fr]">
-            {(Boolean((actorData?.profession?.length))) && (
-              <div className="flex flex-col">
-                <p className="text-gray-400 text-xl">Карьера:</p>
-                <p className="text-xl">
+          <div className='grid grid-cols-1 gap-y-2 md:grid-cols-[1fr,2fr]'>
+            {Boolean(actorData?.profession?.length) && (
+              <div className='flex flex-col'>
+                <p className='text-gray-400 text-xl'>Карьера:</p>
+                <p className='text-xl'>
                   {actorData?.profession.map((e: { value: string }, i: number) => (
                     <span key={i}>
                       {e.value}
@@ -56,28 +56,28 @@ export const AboutActorPage = (): JSX.Element => {
                 </p>
               </div>
             )}
-            {(Boolean((actorData?.birthday))) && (
+            {Boolean(actorData?.birthday) && (
               <div>
-                <p className="text-gray-400 text-xl">Дата рождения:</p>
-                <p className="text-xl">{moment(actorData?.birthday).format('LL')}</p>
+                <p className='text-gray-400 text-xl'>Дата рождения:</p>
+                <p className='text-xl'>{moment(actorData?.birthday).format('LL')}</p>
               </div>
             )}
-            {(Boolean((actorData?.growth))) && (
+            {Boolean(actorData?.growth) && (
               <div>
-                <p className="text-gray-400 text-xl">Рост:</p>
-                <p className="text-xl">{actorData?.growth / 100} м</p>
+                <p className='text-gray-400 text-xl'>Рост:</p>
+                <p className='text-xl'>{actorData?.growth / 100} м</p>
               </div>
             )}
-            {(Boolean((actorData?.death))) && (
+            {Boolean(actorData?.death) && (
               <div>
-                <p className="text-gray-400 text-xl">Дата смерти:</p>
-                <p className="text-xl">{moment(actorData?.death).format('LL')}</p>
+                <p className='text-gray-400 text-xl'>Дата смерти:</p>
+                <p className='text-xl'>{moment(actorData?.death).format('LL')}</p>
               </div>
             )}
-            {(Boolean((actorData?.birthPlace))) && (
+            {Boolean(actorData?.birthPlace) && (
               <div>
-                <p className="text-gray-400 text-xl">Место рождения:</p>
-                <p className="text-xl">
+                <p className='text-gray-400 text-xl'>Место рождения:</p>
+                <p className='text-xl'>
                   {actorData?.birthPlace.map((e: { value: string }, i: number) => (
                     <span key={i}>
                       {e.value}
@@ -91,5 +91,5 @@ export const AboutActorPage = (): JSX.Element => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

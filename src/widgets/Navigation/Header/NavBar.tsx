@@ -50,25 +50,26 @@ const NavBar = () => {
     setOpen(!open);
   };
 
-  const gradientBackground = {
-    background:
-      'linear-gradient(180deg, rgba(0,0,0,.6), rgba(0,0,0,.595) 6.67%, rgba(0,0,0,.579) 13.33%, rgba(0,0,0,.551) 20%, rgba(0,0,0,.512) 26.67%, rgba(0,0,0,.461) 33.33%, rgba(0,0,0,.401) 40%, rgba(0,0,0,.334) 46.67%, rgba(0,0,0,.266) 53.33%, rgba(0,0,0,.199) 60%, rgba(0,0,0,.139) 66.67%, rgba(0,0,0,.088) 73.33%, rgba(0,0,0,.049) 80%, rgba(0,0,0,.021) 86.67%, rgba(0,0,0,.005) 93.33%, transparent)',
-  };
+  // const gradientBackground = {
+  //   background:
+  //     'linear-gradient(180deg, rgba(0,0,0,.6), rgba(0,0,0,.595) 6.67%, rgba(0,0,0,.579) 13.33%, rgba(0,0,0,.551) 20%, rgba(0,0,0,.512) 26.67%, rgba(0,0,0,.461) 33.33%, rgba(0,0,0,.401) 40%, rgba(0,0,0,.334) 46.67%, rgba(0,0,0,.266) 53.33%, rgba(0,0,0,.199) 60%, rgba(0,0,0,.139) 66.67%, rgba(0,0,0,.088) 73.33%, rgba(0,0,0,.049) 80%, rgba(0,0,0,.021) 86.67%, rgba(0,0,0,.005) 93.33%, transparent)',
+  // };
   return (
     <div
-      className={`w-screen fixed z-30 transition-all duration-300 ${visible ? 'top-0' : '-top-20'}`}
-      style={gradientBackground}
+      className={`w-screen bg-[#212124] fixed z-30 transition-all duration-300 ${visible ? 'top-0' : '-top-20'}`}
+      // style={gradientBackground}
     >
-      <div className='container mx-auto my-0 flex h-32 items-center justify-between text-white'>
-        <Link to={'/'} className='flex space-x-3 items-center'>
-          <h1>MovieSage</h1>
+      <div className='container mx-auto my-0 flex h-20 items-center justify-between text-white'>
+        <Link to={'/'} className='flex space-x-3 items-center text-3xl'>
+          <h1>
+            <span className='text-white'>Movie</span>
+            <span className='text-[#5138E9]'>Sage</span>
+          </h1>
         </Link>
         <div className='flex space-x-5'>
-          <Link to={'genre/аниме'}>Anime</Link>
-          <Link to={'/'}>About</Link>
-          <Link to={'/'}>Contact</Link>
-          <Link to={'/'}>Contact</Link>
-          <Link to={'/'}>SearchFilmTest</Link>
+          <Link to={'genre/аниме'}>Аниме</Link>
+          <Link to={'/'}>Фильмы</Link>
+          <Link to={'/'}>Сериалы</Link>
         </div>
         <div className='flex space-x-3 items-center'>
           <SearchIcon className='hover:cursor-pointer' />
@@ -88,7 +89,7 @@ const NavBar = () => {
               </Link>
               <KeyboardArrowDownIcon onClick={togglePanel} />
               {open && (
-                <div className='absolute flex flex-col bg-[#142526] mt-[275px] text-xl w-[160px] h-[220px] rounded-lg'>
+                <div className='absolute flex flex-col bg-[#212124] mt-[275px] text-xl w-[160px] h-[220px] rounded-lg'>
                   <p className='text-2xl py-3 ml-2'>
                     {userData ? userData.user.user_metadata.username : 'No user data available'}
                   </p>
