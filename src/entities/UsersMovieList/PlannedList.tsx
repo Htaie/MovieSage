@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { userRatingStore } from '../../features/MovieDetails/RatingStar';
 import { useStore } from 'effector-react';
+import { userPlanListStore } from '../../features/MovieDetails/RatingStar';
 import { RatingRounding } from '../../shared/utils/textUtils';
+import { useState } from 'react';
 import { ModalDataType } from '../../shared/types/ModalDataTypes';
 import MovieModal from '../../shared/UI/modal/MovieModal';
+import { Link } from 'react-router-dom';
 
-export const RatedFilms = () => {
-  const data = useStore(userRatingStore);
+export const PlannedList = () => {
+  const data = useStore(userPlanListStore);
   const [modalData, setModalData] = useState({} as ModalDataType);
   const [isHovered, setIsHovered] = useState(false);
   const [linkPosition, setLinkPosition] = useState({ x: 0, y: 0 });

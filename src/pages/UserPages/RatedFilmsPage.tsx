@@ -1,4 +1,4 @@
-import { RatedFilms } from '../../entities/UsersMovieLists/RatedFilms';
+import { RatedFilms } from '../../entities/UsersMovieList/RatedFilms';
 
 export const RatedFilmsPage = () => {
   return (
