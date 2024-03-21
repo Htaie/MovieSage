@@ -23,6 +23,7 @@ interface RatedData {
 }
 
 export const userRatingStore = createStore<RatedData>({});
+export const userPlanListStore = createStore<RatedData>({});
 
 export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
   const [userRating, setUserRating] = useState<number | null>(null);
@@ -50,6 +51,24 @@ export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
       },
     };
     userRatingStore.setState(RatedData);
+  };
+
+  const handleAddToPlanList = () => {
+    const { id, name, year, poster, type } = data;
+    const RatedData = {
+      ...userPlanListStore.getState(),
+      [id]: {
+        clickedRating: 0,
+        title: name,
+        year,
+        image: poster.url,
+        type,
+        rating: data.rating.kp,
+        shortDescription: data.shortDescription,
+        genres: data.genres,
+      },
+    };
+    userPlanListStore.setState(RatedData);
   };
 
   return (
@@ -83,9 +102,9 @@ export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
               </div>
             ) : null}
             <MainBtn
-              text={'Оценить фильм'}
+              text={'Добавить в запланированные'}
               onClick={() => {
-                console.log('Liked');
+                handleAddToPlanList();
               }}
               style={{ marginBottom: '20px' }}
             />
