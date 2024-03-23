@@ -11,6 +11,7 @@ export const RatedFilms = () => {
   const [modalData, setModalData] = useState({} as ModalDataType);
   const [isHovered, setIsHovered] = useState(false);
   const [linkPosition, setLinkPosition] = useState({ x: 0, y: 0 });
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleMouseEnter = (film: ModalDataType, event) => {
     const { image, title, clickedRating, type, year, shortDescription, rating, genres } = film;
@@ -25,17 +26,12 @@ export const RatedFilms = () => {
   };
 
   const handleMouseLeave = () => {
-    setModalData({
-      image: null,
-      title: null,
-      rating: null,
-      shortDescription: null,
-      type: null,
-      year: null,
-      clickedRating: null,
-      genres: null,
-    });
-    setIsHovered(false);
+    if (!isModalOpen && !isHovered) {
+      setTimeout(() => {
+        setModalData({} as ModalDataType);
+        setIsModalOpen(false);
+      }, 250);
+    }
   };
 
   return (
@@ -62,7 +58,14 @@ export const RatedFilms = () => {
           </div>
         );
       })}
-      <MovieModal modalData={modalData} isHovered={isHovered} linkPosition={linkPosition} />
+      <MovieModal
+        modalData={modalData}
+        isHovered={isHovered}
+        linkPosition={linkPosition}
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        setIsHovered={setIsHovered}
+      />
     </div>
   );
 };

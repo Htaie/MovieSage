@@ -5,9 +5,30 @@ interface Props {
   modalData: ModalDataType;
   isHovered: boolean;
   linkPosition: { x: number; y: number };
+  isModalOpen: boolean;
+  setIsModalOpen: (value: boolean) => void;
+  setIsHovered: (value: boolean) => void;
 }
 
-const MovieModal: React.FC<Props> = ({ modalData, isHovered, linkPosition }) => {
+const MovieModal: React.FC<Props> = ({
+  modalData,
+  isHovered,
+  linkPosition,
+  isModalOpen,
+  setIsModalOpen,
+  setIsHovered,
+}) => {
+  const hadleModalEnter = () => {
+    console.log('modal enter');
+    setIsModalOpen(true);
+  };
+
+  const hadleModalLeave = () => {
+    console.log('modal leave');
+    setIsModalOpen(false);
+    setIsHovered(false);
+  };
+
   if (!isHovered || !modalData.image) {
     return null;
   }
@@ -21,6 +42,8 @@ const MovieModal: React.FC<Props> = ({ modalData, isHovered, linkPosition }) => 
     <div
       className='absolute bg-[#45475B] w-[510px] h-[300px]'
       style={{ top: linkPosition.y - 10, left: linkPosition.x + 40, ...shadowStyle }}
+      onMouseEnter={hadleModalEnter}
+      onMouseLeave={hadleModalLeave}
     >
       <div className='flex'>
         <img
