@@ -1,4 +1,5 @@
 export interface ModalDataType {
+  id: number | null;
   image: string | null;
   title: string | null;
   rating: number | null;

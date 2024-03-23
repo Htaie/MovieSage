@@ -19,6 +19,7 @@ interface RatedData {
     rating: number;
     shortDescription: string;
     genres: string[];
+    id: number;
   };
 }
 
@@ -40,6 +41,7 @@ export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
     const RatedData = {
       ...userRatingStore.getState(),
       [id]: {
+        id: id,
         clickedRating,
         title: name,
         year,

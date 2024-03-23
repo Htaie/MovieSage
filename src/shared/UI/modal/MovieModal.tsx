@@ -1,35 +1,44 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ModalDataType } from '../../types/ModalDataTypes';
 
 interface Props {
   modalData: ModalDataType;
   isHovered: boolean;
   linkPosition: { x: number; y: number };
-  isModalOpen: boolean;
-  setIsModalOpen: (value: boolean) => void;
   setIsHovered: (value: boolean) => void;
+  currentLink: number | null;
 }
 
-const MovieModal: React.FC<Props> = ({
-  modalData,
-  isHovered,
-  linkPosition,
-  isModalOpen,
-  setIsModalOpen,
-  setIsHovered,
-}) => {
-  const hadleModalEnter = () => {
-    console.log('modal enter');
-    setIsModalOpen(true);
+const MovieModal: React.FC<Props> = ({ modalData, isHovered, linkPosition, setIsHovered, currentLink }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const [isModalHovered, setIsModalHovered] = useState(false);
+
+  useEffect(() => {
+    if (isHovered && modalData.id === currentLink) {
+      setIsVisible(true);
+    } else {
+      const timer = setTimeout(() => {
+        if (!isModalHovered) {
+          setIsVisible(false);
+        }
+      }, 250);
+      return () => clearTimeout(timer);
+    }
+  }, [isHovered, currentLink, modalData.id, isModalHovered]);
+
+  const handleModalEnter = () => {
+    setIsHovered(true);
+    setIsModalHovered(true);
+    setIsVisible(true);
   };
 
-  const hadleModalLeave = () => {
-    console.log('modal leave');
-    setIsModalOpen(false);
+  const handleModalLeave = () => {
     setIsHovered(false);
+    setIsModalHovered(false);
+    setIsVisible(false);
   };
 
-  if (!isHovered || !modalData.image) {
+  if (!isVisible || !modalData.image) {
     return null;
   }
 
@@ -42,8 +51,8 @@ const MovieModal: React.FC<Props> = ({
     <div
       className='absolute bg-[#45475B] w-[510px] h-[300px]'
       style={{ top: linkPosition.y - 10, left: linkPosition.x + 40, ...shadowStyle }}
-      onMouseEnter={hadleModalEnter}
-      onMouseLeave={hadleModalLeave}
+      onMouseEnter={handleModalEnter}
+      onMouseLeave={handleModalLeave}
     >
       <div className='flex'>
         <img

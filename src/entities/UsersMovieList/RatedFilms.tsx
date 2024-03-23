@@ -10,28 +10,25 @@ export const RatedFilms = () => {
   const data = useStore(userRatingStore);
   const [modalData, setModalData] = useState({} as ModalDataType);
   const [isHovered, setIsHovered] = useState(false);
+  const [currentLink, setCurrentLink] = useState(null as number | null);
   const [linkPosition, setLinkPosition] = useState({ x: 0, y: 0 });
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleMouseEnter = (film: ModalDataType, event) => {
-    const { image, title, clickedRating, type, year, shortDescription, rating, genres } = film;
+    const { id, image, title, clickedRating, type, year, shortDescription, rating, genres } = film;
     if (rating !== null) {
       const roundedRating = RatingRounding(rating);
-      setModalData({ image, title, rating: roundedRating, clickedRating, type, year, shortDescription, genres });
+      setModalData({ id, image, title, rating: roundedRating, clickedRating, type, year, shortDescription, genres });
     } else {
-      setModalData({ image, title, rating, clickedRating, type, year, shortDescription, genres });
+      setModalData({ id, image, title, rating, clickedRating, type, year, shortDescription, genres });
     }
     setIsHovered(true);
     setLinkPosition({ x: event.clientX, y: event.clientY });
+    setCurrentLink(id);
   };
 
   const handleMouseLeave = () => {
-    if (!isModalOpen && !isHovered) {
-      setTimeout(() => {
-        setModalData({} as ModalDataType);
-        setIsModalOpen(false);
-      }, 250);
-    }
+    setIsHovered(false);
+    setCurrentLink(null);
   };
 
   return (
@@ -62,9 +59,8 @@ export const RatedFilms = () => {
         modalData={modalData}
         isHovered={isHovered}
         linkPosition={linkPosition}
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
         setIsHovered={setIsHovered}
+        currentLink={currentLink}
       />
     </div>
   );
