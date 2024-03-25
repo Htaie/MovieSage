@@ -3,7 +3,7 @@ import { MainBtn } from '../../shared/UI/buttons/MainBtn';
 import { RatingRounding } from '../../shared/utils/textUtils';
 import { MovieType } from '../../shared/types/MoviesTypes';
 import { useState } from 'react';
-import { createStore } from 'effector';
+import { createEvent, createStore } from 'effector';
 
 interface RaitingInfoProps {
   data: MovieType;
@@ -25,6 +25,14 @@ interface RatedData {
 
 export const userRatingStore = createStore<RatedData>({});
 export const userPlanListStore = createStore<RatedData>({});
+
+export const deleteUserRating = createEvent<number>();
+
+userRatingStore.on(deleteUserRating, (state, id) => {
+  const newState = { ...state };
+  delete newState[id];
+  return newState;
+});
 
 export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
   const [userRating, setUserRating] = useState<number | null>(null);

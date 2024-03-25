@@ -10,36 +10,29 @@ export const PlannedList = () => {
   const data = useStore(userPlanListStore);
   const [modalData, setModalData] = useState({} as ModalDataType);
   const [isHovered, setIsHovered] = useState(false);
+  const [currentLink, setCurrentLink] = useState(null as number | null);
   const [linkPosition, setLinkPosition] = useState({ x: 0, y: 0 });
 
   const handleMouseEnter = (film: ModalDataType, event) => {
-    const { image, title, clickedRating, type, year, shortDescription, rating, genres } = film;
+    const { id, image, title, clickedRating, type, year, shortDescription, rating, genres } = film;
     if (rating !== null) {
       const roundedRating = RatingRounding(rating);
-      setModalData({ image, title, rating: roundedRating, clickedRating, type, year, shortDescription, genres });
+      setModalData({ id, image, title, rating: roundedRating, clickedRating, type, year, shortDescription, genres });
     } else {
-      setModalData({ image, title, rating, clickedRating, type, year, shortDescription, genres });
+      setModalData({ id, image, title, rating, clickedRating, type, year, shortDescription, genres });
     }
     setIsHovered(true);
     setLinkPosition({ x: event.clientX, y: event.clientY });
+    setCurrentLink(id);
   };
 
   const handleMouseLeave = () => {
-    setModalData({
-      image: null,
-      title: null,
-      rating: null,
-      shortDescription: null,
-      type: null,
-      year: null,
-      clickedRating: null,
-      genres: null,
-    });
     setIsHovered(false);
+    setCurrentLink(null);
   };
 
   return (
-    <div className='text-white bg-[#6E727A] h-[100%] w-[80%] pb-[400px] mx-auto'>
+    <div className='text-white border-2 border-solid border-[#5138E9] rounded-lg h-[100%] w-[80%] pb-[400px] mx-auto mt-[30px]'>
       {Object.keys(data).map((filmId) => {
         const film = data[filmId];
         return (
@@ -62,7 +55,13 @@ export const PlannedList = () => {
           </div>
         );
       })}
-      <MovieModal modalData={modalData} isHovered={isHovered} linkPosition={linkPosition} />
+      <MovieModal
+        modalData={modalData}
+        isHovered={isHovered}
+        linkPosition={linkPosition}
+        setIsHovered={setIsHovered}
+        currentLink={currentLink}
+      />
     </div>
   );
 };
