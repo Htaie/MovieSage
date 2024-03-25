@@ -34,6 +34,12 @@ userRatingStore.on(deleteUserRating, (state, id) => {
   return newState;
 });
 
+userPlanListStore.on(deleteUserRating, (state, id) => {
+  const newState = { ...state };
+  delete newState[id];
+  return newState;
+});
+
 export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
   const [userRating, setUserRating] = useState<number | null>(null);
 

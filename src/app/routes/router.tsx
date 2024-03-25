@@ -10,7 +10,7 @@ import { Home } from '../../pages/Home/home';
 import MoviePage from '../../pages/MoviePage';
 import { ProfilePage } from '../../pages/UserPages/ProfilePage';
 import { ProfileSettingPage } from '../../pages/UserPages/ProfileSettingPage';
-import { RatedFilmsPage } from '../../pages/UserPages/RatedFilmsPage';
+import { RatedFilmsPage } from '../../pages/UserPages/UsersFilmsPage';
 
 export const router = createBrowserRouter([
   {

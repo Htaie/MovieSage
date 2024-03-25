@@ -1,13 +1,14 @@
-import { useStore } from 'effector-react';
-import { userPlanListStore } from '../../features/MovieDetails/RatingStar';
-import { RatingRounding } from '../../shared/utils/textUtils';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { userRatingStore, userPlanListStore, deleteUserRating } from '../../features/MovieDetails/RatingStar';
+import { useStore } from 'effector-react';
+import { RatingRounding } from '../../shared/utils/textUtils';
 import { ModalDataType } from '../../shared/types/ModalDataTypes';
 import MovieModal from '../../shared/UI/modal/MovieModal';
-import { Link } from 'react-router-dom';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
-export const PlannedList = () => {
-  const data = useStore(userPlanListStore);
+export const UsersFilmsList = ({ formType }: { formType: string }) => {
+  const data = formType === 'ratedlist' ? useStore(userRatingStore) : useStore(userPlanListStore);
   const [modalData, setModalData] = useState({} as ModalDataType);
   const [isHovered, setIsHovered] = useState(false);
   const [currentLink, setCurrentLink] = useState(null as number | null);
@@ -31,6 +32,10 @@ export const PlannedList = () => {
     setCurrentLink(null);
   };
 
+  const handleDeleteFilm = (filmId: number) => {
+    deleteUserRating(filmId);
+  };
+
   return (
     <div className='text-white border-2 border-solid border-[#5138E9] rounded-lg h-[100%] w-[80%] pb-[400px] mx-auto mt-[30px]'>
       {Object.keys(data).map((filmId) => {
@@ -51,6 +56,10 @@ export const PlannedList = () => {
             <div className='flex-1 flex justify-end items-center mr-4'>
               <p className='text-xl mr-4'>{film.clickedRating}/10</p>
               <p className='text-xl'>{film.type}</p>
+              <DeleteForeverIcon
+                onClick={() => handleDeleteFilm(Number(filmId))}
+                className='text-3xl ml-4 cursor-pointer hover:text-red-500'
+              ></DeleteForeverIcon>
             </div>
           </div>
         );
