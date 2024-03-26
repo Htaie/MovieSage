@@ -33,7 +33,7 @@ To run this project locally, follow these steps:
 
 ## Contributors🤓
 - [Hte](https://github.com/Htaie)
-- [Rezzzero] (https://github.com/Rezzzero)
+- [Rezzzero](https://github.com/Rezzzero)
 
 ## License
 This project is licensed under the [MIT License](LICENSE).
