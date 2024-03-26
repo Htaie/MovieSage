@@ -1,4 +1,4 @@
-# MovieSage 🎬
+__# MovieSage 🎬
 
 ## Description
 MovieSage is an online movie theater web application developed using React, TypeScript, Tailwind CSS, Effector, and Supabase. It enables users to stream movies, rate them, create profiles, and manage lists of watched and planned movies.
@@ -31,8 +31,9 @@ To run this project locally, follow these steps:
 5. Manage your watched and planned movies lists.
 6. Make the most out of MovieSage's features!
 
-## Contributors
+🤓## Contributors
 - [Hte](https://github.com/Htaie)
+- [Rezzzero] (https://github.com/Rezzzero)
 
 ## License
 This project is licensed under the [MIT License](LICENSE).
