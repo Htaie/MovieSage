@@ -7,9 +7,10 @@ interface Props {
   linkPosition: { x: number; y: number };
   setIsHovered: (value: boolean) => void;
   currentLink: number | null;
+  formType: string;
 }
 
-const MovieModal: React.FC<Props> = ({ modalData, isHovered, linkPosition, setIsHovered, currentLink }) => {
+const MovieModal: React.FC<Props> = ({ modalData, isHovered, linkPosition, setIsHovered, currentLink, formType }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isModalHovered, setIsModalHovered] = useState(false);
 
@@ -84,10 +85,14 @@ const MovieModal: React.FC<Props> = ({ modalData, isHovered, linkPosition, setIs
         </div>
       </div>
       <div className='flex justify-between'>
-        <div className='flex text-xl ml-2'>
-          <p className='mr-2'>Просмотрено -</p>
-          <p className='font-bold'>{modalData.clickedRating}/10</p>
-        </div>
+        <button
+          type='button'
+          className={`text-sm text-black w-[158px] h-[32px] mt-2 ml-2 ${
+            formType === 'ratedlist' ? 'bg-[#75A7B7]' : formType === 'planned' ? 'bg-[#599A7B]' : ''
+          }`}
+        >
+          {formType === 'ratedlist' ? `Просмотрено - ${modalData.clickedRating}` : 'Запланировано'}
+        </button>
         <div className='flex text-xl mr-2'>
           <p className='mr-2'>рейтинг:</p>
           <p className='font-bold'>{modalData.rating}</p>

@@ -70,6 +70,7 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
         linkPosition={linkPosition}
         setIsHovered={setIsHovered}
         currentLink={currentLink}
+        formType={formType}
       />
     </div>
   );
