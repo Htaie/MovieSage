@@ -13,6 +13,7 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [currentLink, setCurrentLink] = useState(null as number | null);
   const [linkPosition, setLinkPosition] = useState({ x: 0, y: 0 });
+  const [selectedRating, setSelectedRating] = useState(0);
 
   const handleMouseEnter = (film: ModalDataType, event) => {
     const { id, image, title, clickedRating, type, year, shortDescription, rating, genres } = film;
@@ -22,6 +23,7 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
     } else {
       setModalData({ id, image, title, rating, clickedRating, type, year, shortDescription, genres });
     }
+    setSelectedRating(film.clickedRating || 0);
     setIsHovered(true);
     setLinkPosition({ x: event.clientX, y: event.clientY });
     setCurrentLink(id);
@@ -34,6 +36,15 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
 
   const handleDeleteFilm = (filmId: number) => {
     deleteUserRating(filmId);
+    setSelectedRating(0);
+  };
+
+  const handleRatingChange = (filmId: number, rating: number) => {
+    setSelectedRating(rating);
+    userRatingStore.setState({
+      ...userRatingStore.getState(),
+      [filmId]: { ...userRatingStore.getState()[filmId], clickedRating: rating },
+    });
   };
 
   return (
@@ -54,7 +65,18 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
               <p className='text-xl'>{film.year}</p>
             </div>
             <div className='flex-1 flex justify-end items-center mr-4'>
-              <p className='text-xl mr-4'>{film.clickedRating}/10</p>
+              <select
+                className='text-xl bg-[#45475B] appearance-none px-4 py-2 rounded-md focus:outline-none'
+                value={film.clickedRating}
+                onChange={(event) => handleRatingChange(film.id, parseInt(event.target.value))}
+              >
+                {[...Array(10)].map((_, index) => (
+                  <option key={index} value={index + 1}>
+                    {index + 1}
+                  </option>
+                ))}
+              </select>
+              <p className='text-xl mr-2'>/10</p>
               <p className='text-xl'>{film.type}</p>
               <DeleteForeverIcon
                 onClick={() => handleDeleteFilm(Number(filmId))}
