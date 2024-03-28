@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ModalDataType } from '../../types/ModalDataTypes';
+import ModalButton from '../buttons/ModalButton';
 
 interface Props {
   modalData: ModalDataType;
@@ -85,14 +86,7 @@ const MovieModal: React.FC<Props> = ({ modalData, isHovered, linkPosition, setIs
         </div>
       </div>
       <div className='flex justify-between'>
-        <button
-          type='button'
-          className={`text-sm text-black w-[158px] h-[32px] mt-2 ml-2 ${
-            formType === 'ratedlist' ? 'bg-[#75A7B7]' : formType === 'planned' ? 'bg-[#599A7B]' : ''
-          }`}
-        >
-          {formType === 'ratedlist' ? `Просмотрено - ${modalData.clickedRating}` : 'Запланировано'}
-        </button>
+        <ModalButton modalData={modalData} formType={formType} />
         <div className='flex text-xl mr-2'>
           <p className='mr-2'>рейтинг:</p>
           <p className='font-bold'>{modalData.rating}</p>

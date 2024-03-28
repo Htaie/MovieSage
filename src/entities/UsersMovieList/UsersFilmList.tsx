@@ -66,7 +66,7 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
             </div>
             <div className='flex-1 flex justify-end items-center mr-4'>
               <select
-                className='text-xl bg-[#45475B] appearance-none px-4 py-2 rounded-md focus:outline-none'
+                className='text-xl bg-[#45475B] appearance-none px-2 py-2 focus:outline-none'
                 value={film.clickedRating}
                 onChange={(event) => handleRatingChange(film.id, parseInt(event.target.value))}
               >
