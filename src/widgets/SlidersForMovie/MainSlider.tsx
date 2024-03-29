@@ -5,7 +5,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css';
 import { Link } from 'react-router-dom';
-import { FormatingName, RatingRounding } from '../../shared/utils/textUtils';
+import { RatingRounding } from '../../shared/utils/textUtils';
 import { TOKEN, API_URL } from '../../shared/constants/constants';
 import { MovieType } from '../../shared/types/MoviesTypes';
 import GenreLink from '../../features/GenreLink/GenreLink';
@@ -17,16 +17,12 @@ const MainSlider: React.FC = () => {
     boxShadow: '0px 0px 70px 120px rgba(0, 0, 0, 1)',
   };
 
-  const customShadowStyle = {
-    filter: 'drop-shadow(20px 20px 6px rgba(0, 0, 0, 0.7))',
-  };
-
   const [data, setData] = useState<MovieType[]>([]);
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       try {
-        const response = await fetch(API_URL + 'movie?page=1&limit=20', {
+        const response = await fetch(API_URL + 'movie?page=1&limit=10', {
           method: 'GET',
           headers: {
             Accept: 'application/json',
@@ -40,7 +36,6 @@ const MainSlider: React.FC = () => {
 
         const responseData = await response.json();
         setData(responseData.docs as MovieType[]);
-        console.log(responseData.docs);
       } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
       }
@@ -48,69 +43,36 @@ const MainSlider: React.FC = () => {
     void fetchData();
   }, []);
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const swiperElement = document.querySelector('.swiper');
-      const nextArrow = swiperElement?.querySelector('.swiper-button-next');
-      const prevArrow = swiperElement?.querySelector('.swiper-button-prev');
-      const rect = swiperElement?.getBoundingClientRect();
-      const mouseX = e.clientX - (rect?.left ?? 0);
 
-      if (
-        swiperElement !== null &&
-        nextArrow !== null &&
-        prevArrow !== undefined &&
-        prevArrow !== null &&
-        nextArrow !== undefined &&
-        rect !== undefined
-      ) {
-        if (mouseX < (rect.width ?? 0) / 2) {
-          nextArrow.classList?.remove('show');
-          prevArrow.classList?.add('show');
-        } else {
-          nextArrow.classList?.add('show');
-          prevArrow.classList?.remove('show');
-        }
-      }
-    };
-
-    document.addEventListener('mousemove', handleMouseMove);
-
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, []);
 
   return (
     <Swiper
-      slidesPerView={1}
-      spaceBetween={30}
       loop={true}
       // autoplay={{
       //   delay: 2500,
       //   disableOnInteraction: false,
       // }}
+      slidesPerView={'auto'}
       pagination={{
         clickable: true,
       }}
       navigation={true}
-      modules={[Pagination, Navigation, Autoplay]}
-      className='h-[70%] w-[70%] bg-[#1C3334] mt-20 swiper-navigation-color swiper-pagination-color rounded-3xl'
+      modules={[Pagination, Autoplay]}
+      className=' container  w-[100%]  bg-[#1C3334] mt-20  swiper-navigation-color swiper-pagination-color rounded-3xl'
     >
-      {data.map(
+      {data.slice(0, 5).map(
         (movie: MovieType) =>
           movie.logo.url !== null && (
             <SwiperSlide key={movie.id}>
               <div className='relative'>
-                <img className='w h-full w-full object-cover' src={movie.backdrop.url} alt='backdropMovie' />
-
-                <div className='absolute bottom-12 left-0 ml-40 font-bold h-[700px] text-white z-10'>
-                  <img
+                <img className='h-full w-full object-cover' src={movie.backdrop.url}  loading='lazy' alt='backdropMovie' />
+                <div className='absolute bottom-12 left-0 ml-40 font-bold  text-white z-10'>
+                  {/* <img
                     className='h-[120px] w-[50%] ml-2 main-slider'
                     src={movie.logo.url}
                     alt={movie.name}
                     style={customShadowStyle}
-                  />
+                  /> */}
                   <div className='flex items-center space-x-2 mt-[170px] ml-2 mb-2'>
                     <p>{movie.rating.imdb} IMDB</p>
                     <p>{RatingRounding(movie.rating.kp)} KINOPOISK</p>
@@ -123,7 +85,6 @@ const MainSlider: React.FC = () => {
                     Перейти к фильму
                   </Link>
                 </div>
-
                 <div
                   className='absolute w-[700px] h-[450px] bottom-0 left-12 bg-black opacity-50 rounded-full'
                   style={divStyle}
