@@ -54,8 +54,8 @@ export const FilmByGenreSlider = ({ genre }: { genre: string }): JSX.Element => 
         style={{
           width: '100%',
         }}
-        slidesPerView={5}
-        spaceBetween={30}
+        slidesPerView={4}
+        spaceBetween={25}
         slidesPerGroup={5}
         pagination={{
           clickable: true,

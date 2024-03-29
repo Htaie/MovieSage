@@ -28,14 +28,12 @@ const NavBar = () => {
 
   const handleScroll = () => {
     const currentScrollPos = window.scrollY;
-
     setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
     setPrevScrollPos(currentScrollPos);
   };
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
-
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -50,14 +48,9 @@ const NavBar = () => {
     setOpen(!open);
   };
 
-  // const gradientBackground = {
-  //   background:
-  //     'linear-gradient(180deg, rgba(0,0,0,.6), rgba(0,0,0,.595) 6.67%, rgba(0,0,0,.579) 13.33%, rgba(0,0,0,.551) 20%, rgba(0,0,0,.512) 26.67%, rgba(0,0,0,.461) 33.33%, rgba(0,0,0,.401) 40%, rgba(0,0,0,.334) 46.67%, rgba(0,0,0,.266) 53.33%, rgba(0,0,0,.199) 60%, rgba(0,0,0,.139) 66.67%, rgba(0,0,0,.088) 73.33%, rgba(0,0,0,.049) 80%, rgba(0,0,0,.021) 86.67%, rgba(0,0,0,.005) 93.33%, transparent)',
-  // };
   return (
     <div
       className={`w-screen bg-[#212124] fixed z-30 transition-all duration-300 ${visible ? 'top-0' : '-top-20'}`}
-      // style={gradientBackground}
     >
       <div className='container mx-auto my-0 flex h-20 items-center justify-between text-white'>
         <Link to={'/'} className='flex space-x-3 items-center text-3xl'>

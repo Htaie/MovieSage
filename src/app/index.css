@@ -1,6 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+body{
+  background-color: #212124;
+}
 .swiper-pagination-bullet-active {
   width: 11px;
   height: 11px;
@@ -9,14 +12,6 @@
 .swiper-button-next::after,
 .swiper-button-prev::after {
   color: transparent;
-}
-
-.swiper-button-next.show::after,
-.swiper-button-prev.show::after {
-  color: #fff;
-  box-shadow:
-    inset 0px 0px 50px 10px rgba(0, 0, 0, 0.7),
-    0px 0px 70px 60px rgba(0, 0, 0, 0.7);
 }
 
 .box-shadow-card {
