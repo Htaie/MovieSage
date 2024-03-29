@@ -59,7 +59,7 @@ export const EditUserData: React.FC = () => {
   };
 
   return (
-    <div className='text-white bg-[#45475B] h-[100%] w-[80%] pb-[400px] mx-auto flex'>
+    <div className='text-white bg-[#45475B] h-[100%] w-[80%] pb-[400px] mx-auto mt-[30px] flex'>
       <div className='w-1/2'>
         <ChangeUserPhoto />
       </div>

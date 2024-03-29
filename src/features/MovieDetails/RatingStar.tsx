@@ -3,7 +3,7 @@ import { MainBtn } from '../../shared/UI/buttons/MainBtn';
 import { RatingRounding } from '../../shared/utils/textUtils';
 import { MovieType } from '../../shared/types/MoviesTypes';
 import { useState } from 'react';
-import { createStore } from 'effector';
+import { createEvent, createStore } from 'effector';
 
 interface RaitingInfoProps {
   data: MovieType;
@@ -19,10 +19,40 @@ interface RatedData {
     rating: number;
     shortDescription: string;
     genres: string[];
+    id: number;
   };
 }
 
 export const userRatingStore = createStore<RatedData>({});
+export const userPlanListStore = createStore<RatedData>({});
+
+export const deleteUserRating = createEvent<number>();
+export const deleteFromRatedList = createEvent<number>();
+export const deleteFromPlannedList = createEvent<number>();
+
+userRatingStore.on(deleteUserRating, (state, id) => {
+  const newState = { ...state };
+  delete newState[id];
+  return newState;
+});
+
+userPlanListStore.on(deleteUserRating, (state, id) => {
+  const newState = { ...state };
+  delete newState[id];
+  return newState;
+});
+
+userRatingStore.on(deleteFromRatedList, (state, id) => {
+  const newState = { ...state };
+  delete newState[id];
+  return newState;
+});
+
+userPlanListStore.on(deleteFromPlannedList, (state, id) => {
+  const newState = { ...state };
+  delete newState[id];
+  return newState;
+});
 
 export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
   const [userRating, setUserRating] = useState<number | null>(null);
@@ -39,6 +69,7 @@ export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
     const RatedData = {
       ...userRatingStore.getState(),
       [id]: {
+        id: id,
         clickedRating,
         title: name,
         year,
@@ -50,6 +81,24 @@ export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
       },
     };
     userRatingStore.setState(RatedData);
+  };
+
+  const handleAddToPlanList = () => {
+    const { id, name, year, poster, type } = data;
+    const RatedData = {
+      ...userPlanListStore.getState(),
+      [id]: {
+        clickedRating: 0,
+        title: name,
+        year,
+        image: poster.url,
+        type,
+        rating: data.rating.kp,
+        shortDescription: data.shortDescription,
+        genres: data.genres,
+      },
+    };
+    userPlanListStore.setState(RatedData);
   };
 
   return (
@@ -83,9 +132,9 @@ export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
               </div>
             ) : null}
             <MainBtn
-              text={'Оценить фильм'}
+              text={'Добавить в запланированные'}
               onClick={() => {
-                console.log('Liked');
+                handleAddToPlanList();
               }}
               style={{ marginBottom: '20px' }}
             />

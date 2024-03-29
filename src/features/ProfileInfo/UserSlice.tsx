@@ -16,7 +16,7 @@ export const UserSlice = () => {
         <Link to='#' onClick={() => handleLinkClick('ratedlist')} className='text-white'>
           Просмотренные
         </Link>
-        <Link to='#' onClick={() => handleLinkClick('ratedlist')} className='text-white'>
+        <Link to='#' onClick={() => handleLinkClick('planned')} className='text-white'>
           Смотреть позже
         </Link>
         <Link to='#' onClick={() => handleLinkClick('settings')} className='text-white'>
