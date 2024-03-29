@@ -9,9 +9,20 @@ interface Props {
   setIsHovered: (value: boolean) => void;
   currentLink: number | null;
   formType: string;
+  addToPlanList: (filmId: number) => void;
+  addToRatedList: (filmId: number) => void;
 }
 
-const MovieModal: React.FC<Props> = ({ modalData, isHovered, linkPosition, setIsHovered, currentLink, formType }) => {
+const MovieModal: React.FC<Props> = ({
+  modalData,
+  isHovered,
+  linkPosition,
+  setIsHovered,
+  currentLink,
+  formType,
+  addToPlanList,
+  addToRatedList,
+}) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isModalHovered, setIsModalHovered] = useState(false);
 
@@ -51,7 +62,7 @@ const MovieModal: React.FC<Props> = ({ modalData, isHovered, linkPosition, setIs
 
   return (
     <div
-      className='absolute bg-[#45475B] w-[510px] h-[300px]'
+      className='absolute bg-[#45475B] w-[510px] h-[300px] rounded-lg'
       style={{ top: linkPosition.y - 10, left: linkPosition.x + 40, ...shadowStyle }}
       onMouseEnter={handleModalEnter}
       onMouseLeave={handleModalLeave}
@@ -86,7 +97,12 @@ const MovieModal: React.FC<Props> = ({ modalData, isHovered, linkPosition, setIs
         </div>
       </div>
       <div className='flex justify-between'>
-        <ModalButton modalData={modalData} formType={formType} />
+        <ModalButton
+          modalData={modalData}
+          formType={formType}
+          addToPlanList={addToPlanList}
+          addToRatedList={addToRatedList}
+        />
         <div className='flex text-xl mr-2'>
           <p className='mr-2'>рейтинг:</p>
           <p className='font-bold'>{modalData.rating}</p>

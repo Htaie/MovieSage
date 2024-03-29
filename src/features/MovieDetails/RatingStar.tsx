@@ -27,6 +27,8 @@ export const userRatingStore = createStore<RatedData>({});
 export const userPlanListStore = createStore<RatedData>({});
 
 export const deleteUserRating = createEvent<number>();
+export const deleteFromRatedList = createEvent<number>();
+export const deleteFromPlannedList = createEvent<number>();
 
 userRatingStore.on(deleteUserRating, (state, id) => {
   const newState = { ...state };
@@ -35,6 +37,18 @@ userRatingStore.on(deleteUserRating, (state, id) => {
 });
 
 userPlanListStore.on(deleteUserRating, (state, id) => {
+  const newState = { ...state };
+  delete newState[id];
+  return newState;
+});
+
+userRatingStore.on(deleteFromRatedList, (state, id) => {
+  const newState = { ...state };
+  delete newState[id];
+  return newState;
+});
+
+userPlanListStore.on(deleteFromPlannedList, (state, id) => {
   const newState = { ...state };
   delete newState[id];
   return newState;

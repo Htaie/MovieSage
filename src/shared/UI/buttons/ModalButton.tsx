@@ -4,13 +4,28 @@ import { ModalDataType } from '../../types/ModalDataTypes';
 interface Props {
   modalData: ModalDataType;
   formType: string;
+  addToPlanList: (id: number) => void;
+  addToRatedList: (id: number) => void;
 }
 
-const ModalButton: React.FC<Props> = ({ modalData, formType }) => {
+const ModalButton: React.FC<Props> = ({ modalData, formType, addToPlanList, addToRatedList }) => {
   const [open, setOpen] = useState(false);
 
   const toggleButton = () => {
     setOpen(!open);
+  };
+
+  const handleButtonClick = () => {
+    if (formType === 'ratedlist') {
+      if (modalData.id !== null) {
+        addToPlanList(modalData.id);
+      }
+    } else if (formType === 'planned') {
+      if (modalData.id !== null) {
+        addToRatedList(modalData.id);
+      }
+    }
+    setOpen(false);
   };
 
   return (
@@ -27,7 +42,7 @@ const ModalButton: React.FC<Props> = ({ modalData, formType }) => {
       {open && (
         <button
           type='button'
-          onClick={toggleButton}
+          onClick={handleButtonClick}
           className={`text-sm text-black w-[158px] h-[32px] ml-2 ${
             formType === 'ratedlist' ? 'bg-[#599A7B]' : formType === 'planned' ? 'bg-[#75A7B7]' : ''
           }`}

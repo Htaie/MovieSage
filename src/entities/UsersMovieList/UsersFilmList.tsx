@@ -1,6 +1,12 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { userRatingStore, userPlanListStore, deleteUserRating } from '../../features/MovieDetails/RatingStar';
+import {
+  userRatingStore,
+  userPlanListStore,
+  deleteUserRating,
+  deleteFromRatedList,
+  deleteFromPlannedList,
+} from '../../features/MovieDetails/RatingStar';
 import { useStore } from 'effector-react';
 import { RatingRounding } from '../../shared/utils/textUtils';
 import { ModalDataType } from '../../shared/types/ModalDataTypes';
@@ -45,6 +51,44 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
       ...userRatingStore.getState(),
       [filmId]: { ...userRatingStore.getState()[filmId], clickedRating: rating },
     });
+  };
+
+  const handleAddToPlanList = (filmData: ModalDataType) => {
+    const { id, title, year, image, type, rating, shortDescription, genres } = filmData;
+    userPlanListStore.setState({
+      ...userPlanListStore.getState(),
+      [String(id)]: {
+        clickedRating: 0,
+        id,
+        title,
+        year,
+        image,
+        type,
+        rating,
+        shortDescription,
+        genres,
+      },
+    });
+    deleteFromRatedList(Number(id));
+  };
+
+  const handleAddToRatedList = (filmData: ModalDataType) => {
+    const { id, title, year, image, type, rating, shortDescription, genres } = filmData;
+    userRatingStore.setState({
+      ...userRatingStore.getState(),
+      [String(id)]: {
+        clickedRating: 0,
+        id,
+        title,
+        year,
+        image,
+        type,
+        rating,
+        shortDescription,
+        genres,
+      },
+    });
+    deleteFromPlannedList(Number(id));
   };
 
   return (
@@ -93,6 +137,8 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
         setIsHovered={setIsHovered}
         currentLink={currentLink}
         formType={formType}
+        addToPlanList={() => handleAddToPlanList(modalData)}
+        addToRatedList={() => handleAddToRatedList(modalData)}
       />
     </div>
   );
