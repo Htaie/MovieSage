@@ -1,4 +1,3 @@
-import React from 'react';
 import MovieList from '../widgets/MovieList';
 import { FormatingName } from '../shared/utils/textUtils';
 import { useParams } from 'react-router-dom';

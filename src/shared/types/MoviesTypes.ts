@@ -26,11 +26,11 @@ export interface MovieType {
   };
 
   slug: string;
-  genres: Array<{ name: string, slug: string }>;
+  genres: Array<{ name: string; slug: string }>;
   countries: Array<{ name: string }>;
   year: number;
   shortDescription: string;
   backdrop: {
     url: string;
   };
-};
+}

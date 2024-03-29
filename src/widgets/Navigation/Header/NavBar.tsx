@@ -49,9 +49,7 @@ const NavBar = () => {
   };
 
   return (
-    <div
-      className={`w-screen bg-[#212124] fixed z-30 transition-all duration-300 ${visible ? 'top-0' : '-top-20'}`}
-    >
+    <div className={`w-screen bg-[#212124] fixed z-30 transition-all duration-300 ${visible ? 'top-0' : '-top-20'}`}>
       <div className='container mx-auto my-0 flex h-20 items-center justify-between text-white'>
         <Link to={'/'} className='flex space-x-3 items-center text-3xl'>
           <h1>

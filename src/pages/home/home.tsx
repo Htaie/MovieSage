@@ -6,9 +6,9 @@ export const Home = (): JSX.Element => {
   return (
     <div className='h-full bg-[#212124] '>
       <div className='container mx-auto'>
-      <MainSlider />
-      <GenreBlock />
-    </div>
+        <MainSlider />
+        <GenreBlock />
+      </div>
     </div>
   );
 };

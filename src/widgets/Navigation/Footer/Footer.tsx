@@ -1,15 +1,15 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <div className="w-full bg-gray-800 h-[100px] flex items-center mt-10" >
-      <div className="container mx-auto flex flex-col-reverse md:flex-row text-white justify-between items-center">
-        <div className="flex items-center space-x-3 mb-2 md:mb-0 md:order-2">
-          <Link to={'/'} className="flex items-center">
-          <h1>
-            <span className='text-white'>Movie</span>
-            <span className='text-[#5138E9]'>Sage</span>
-          </h1>
+    <div className='w-full bg-gray-800 h-[100px] flex items-center mt-10'>
+      <div className='container mx-auto flex flex-col-reverse md:flex-row text-white justify-between items-center'>
+        <div className='flex items-center space-x-3 mb-2 md:mb-0 md:order-2'>
+          <Link to={'/'} className='flex items-center'>
+            <h1>
+              <span className='text-white'>Movie</span>
+              <span className='text-[#5138E9]'>Sage</span>
+            </h1>
           </Link>
         </div>
         <div className='flex mx-space-x-1.5 md:order-1'>
@@ -35,7 +35,7 @@ const Footer = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

@@ -1,9 +1,6 @@
-import React from 'react';
-import GenreLink from '../features/GenreLink/GenreLink';
 import { GENRES } from '../shared/constants/constants';
 import GenreLinkSlider from '../features/GenreCarousel/GenreLinkSlider';
 import { FilmByGenreSlider } from '../entities/SlidersForGenres/FilmsByGenreSlider';
-import View from '../features/View';
 
 const GenreBlock = () => {
   console.log(GENRES);

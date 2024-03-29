@@ -1,9 +1,9 @@
-import { Link, type LinkProps } from 'react-router-dom'
-import React from 'react'
+import { Link, type LinkProps } from 'react-router-dom';
+import React from 'react';
 
 interface MainBtnProps extends LinkProps {
-  text: any
-  to?: string | any
+  text: any;
+  to?: string | any;
 }
 
 export const MainBtn: React.FC<MainBtnProps> = ({ text, to, ...props }) => {
@@ -15,5 +15,5 @@ export const MainBtn: React.FC<MainBtnProps> = ({ text, to, ...props }) => {
     >
       <span>{text}</span>
     </Link>
-  )
-}
+  );
+};

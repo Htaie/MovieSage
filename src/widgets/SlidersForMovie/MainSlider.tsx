@@ -43,8 +43,6 @@ const MainSlider: React.FC = () => {
     void fetchData();
   }, []);
 
-
-
   return (
     <Swiper
       loop={true}
@@ -65,7 +63,12 @@ const MainSlider: React.FC = () => {
           movie.logo.url !== null && (
             <SwiperSlide key={movie.id}>
               <div className='relative'>
-                <img className='h-full w-full object-cover' src={movie.backdrop.url}  loading='lazy' alt='backdropMovie' />
+                <img
+                  className='h-full w-full object-cover'
+                  src={movie.backdrop.url}
+                  loading='lazy'
+                  alt='backdropMovie'
+                />
                 <div className='absolute bottom-12 left-0 ml-40 font-bold  text-white z-10'>
                   {/* <img
                     className='h-[120px] w-[50%] ml-2 main-slider'
