@@ -45,3 +45,8 @@ export const GENRES = {
   film_noir: 'фильм-нуар',
   fantasy: 'фэнтези',
 };
+
+export const LISTS = {
+  RATED: 'ratedlist',
+  PLAN: 'planned',
+};
