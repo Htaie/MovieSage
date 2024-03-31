@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide, useSwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -18,9 +18,8 @@ const MainSlider: React.FC = () => {
   };
 
   const [data, setData] = useState<MovieType[]>([]);
+  const [activeSlideIndex, setActiveSlideIndex] = useState<number>(0);
   const [activeMovieId, setActiveMovieId] = useState<number | null>(null);
-  console.log(activeMovieId);
-
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       try {
@@ -44,10 +43,15 @@ const MainSlider: React.FC = () => {
     };
     void fetchData();
   }, []);
+  useEffect(() => {
+    if (data.length > 0) {
+      setActiveMovieId(data[0]?.id);
+    }
+  }, [data]);
 
   return (
     <Swiper
-      loop={false}
+      loop={true}
       // autoplay={{
       //   delay: 2500,
       //   disableOnInteraction: false,
@@ -59,7 +63,10 @@ const MainSlider: React.FC = () => {
       navigation={true}
       modules={[Pagination, Autoplay]}
       className=' container  w-[100%]  bg-[#1C3334] mt-20  swiper-navigation-color swiper-pagination-color rounded-3xl'
-      onSlideChange={(swiper) => setActiveMovieId(data[swiper.activeIndex]?.id || null)}
+      onSlideChangeTransitionEnd={(swiper) => {
+        setActiveSlideIndex(swiper.realIndex);
+        setActiveMovieId(data[swiper.realIndex]?.id);
+      }}
     >
       {data.slice(0, 5).map(
         (movie: MovieType) =>
