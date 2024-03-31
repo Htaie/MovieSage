@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { json, Link } from 'react-router-dom';
 import {
   userRatingStore,
   userPlanListStore,
@@ -14,7 +14,10 @@ import MovieModal from '../../shared/UI/modal/MovieModal';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
-import { LISTS } from '../../shared/constants/constants';
+import { LISTS, SUPABASE_KEY } from '../../shared/constants/constants';
+import { userDataStore } from '../../shared/store/UserStore';
+
+import { supabase } from '../../../backend/apiClient/client.js';
 
 export const UsersFilmsList = ({ formType }: { formType: string }) => {
   const data = formType === LISTS.RATED ? useStore(userRatingStore) : useStore(userPlanListStore);
@@ -23,6 +26,8 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
   const [currentLink, setCurrentLink] = useState(null as number | null);
   const [linkPosition, setLinkPosition] = useState({ x: 0, y: 0 });
   const [selectedRating, setSelectedRating] = useState(0);
+  const [likedList, setLikedList] = useState([]);
+  const user = useStore(userDataStore);
 
   const handleMouseEnter = (film: ModalDataType, event) => {
     const { id, image, title, clickedRating, type, year, shortDescription, rating, genres } = film;
@@ -74,7 +79,30 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
     });
     deleteFromRatedList(Number(id));
   };
+  const MovieList = userRatingStore.getState();
 
+  async function uploadImage() {
+    const { data, error } = await supabase.storage
+      .from('listOfViewed')
+      .upload(`${user?.user?.email}/${user?.user?.id}`, JSON.stringify(MovieList, null, 2), {
+        contentType: 'text/json',
+        upsert: true,
+      });
+
+    if (!error) {
+      console.log('upload');
+    }
+  }
+  async function downloadImage() {
+    const { data, error } = await supabase.storage
+      .from('listOfViewed')
+      .download(`${user?.user?.email}/${user?.user?.id}`);
+
+    data.text().then(function (text) {
+      setLikedList(JSON.parse(text));
+    });
+  }
+  console.log(likedList);
   const handleAddToRatedList = (filmData: ModalDataType) => {
     const { id, title, year, image, type, rating, shortDescription, genres } = filmData;
     userRatingStore.setState({
@@ -108,6 +136,8 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
           const film = data[filmId];
           return (
             <div key={filmId} className='flex bg-[#45475B] h-[50px] items-center mb-2'>
+              <button onClick={() => uploadImage()}>Добавить</button>
+              <button onClick={() => downloadImage()}>Добав12ить</button>
               <div className='flex-1 flex ml-4'>
                 <Link
                   to={`/movie/${filmId}`}

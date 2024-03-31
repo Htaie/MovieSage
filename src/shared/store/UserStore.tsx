@@ -3,7 +3,6 @@ import { UserDataType } from '../types/UserDataTypes';
 
 export const initialUserStore = JSON.parse(localStorage.getItem('userData')) || null;
 
-// Используйте полученные данные при создании хранилища
 export const userDataStore = createStore<UserDataType | any>(initialUserStore);
 
 export const updateUserData = createEvent<UserDataType | any>();
