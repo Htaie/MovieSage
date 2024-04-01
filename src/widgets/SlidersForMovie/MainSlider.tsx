@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Swiper, SwiperSlide, useSwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -9,6 +9,7 @@ import { RatingRounding } from '../../shared/utils/textUtils';
 import { TOKEN, API_URL } from '../../shared/constants/constants';
 import { MovieType } from '../../shared/types/MoviesTypes';
 import GenreLink from '../../features/GenreLink/GenreLink';
+import styles from './MainSliderStyles.module.css';
 
 const MainSlider: React.FC = () => {
   const divStyle = {
@@ -80,7 +81,9 @@ const MainSlider: React.FC = () => {
                   alt='backdropMovie'
                 />
                 {activeMovieId === movie.id && (
-                  <div className='absolute bottom-12 left-0 ml-40 font-bold  text-white z-10'>
+                  <div
+                    className={`${styles['slide-from-left']} absolute bottom-12 left-0 ml-40 font-bold text-white z-10`}
+                  >
                     {/* <img
                     className='h-[120px] w-[50%] ml-2 main-slider'
                     src={movie.logo.url}
