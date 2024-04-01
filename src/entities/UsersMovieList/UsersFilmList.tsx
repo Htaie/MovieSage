@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { MouseEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   userRatingStore,
@@ -15,6 +15,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import { LISTS } from '../../shared/constants/constants';
+import { userDataStore } from '../../shared/store/UserStore';
 
 export const UsersFilmsList = ({ formType }: { formType: string }) => {
   const data = formType === LISTS.RATED ? useStore(userRatingStore) : useStore(userPlanListStore);
@@ -23,14 +24,16 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
   const [currentLink, setCurrentLink] = useState(null as number | null);
   const [linkPosition, setLinkPosition] = useState({ x: 0, y: 0 });
   const [selectedRating, setSelectedRating] = useState(0);
+  const [likedList, setLikedList] = useState([]);
 
-  const handleMouseEnter = (film: ModalDataType, event) => {
+  const handleMouseEnter = (film: ModalDataType, event: MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     const { id, image, title, clickedRating, type, year, shortDescription, rating, genres } = film;
+    if (rating === null) {
+      setModalData({ id, image, title, rating, clickedRating, type, year, shortDescription, genres });
+    }
     if (rating !== null) {
       const roundedRating = RatingRounding(rating);
       setModalData({ id, image, title, rating: roundedRating, clickedRating, type, year, shortDescription, genres });
-    } else {
-      setModalData({ id, image, title, rating, clickedRating, type, year, shortDescription, genres });
     }
     setSelectedRating(film.clickedRating || 0);
     setIsHovered(true);
@@ -112,7 +115,9 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
                 <Link
                   to={`/movie/${filmId}`}
                   className='text-xl mr-4'
-                  onMouseEnter={(event) => handleMouseEnter(film, event)}
+                  onMouseEnter={(event) =>
+                    handleMouseEnter(film, event as unknown as MouseEvent<HTMLAnchorElement, MouseEvent>)
+                  }
                   onMouseLeave={handleMouseLeave}
                 >
                   {film.title}
