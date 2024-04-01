@@ -4,6 +4,7 @@ import { supabase } from '../../../backend/apiClient/client.js';
 import { useStore } from 'effector-react';
 import { updateUserData, userDataStore } from '../../shared/store/UserStore';
 import { ChangeUserPhoto } from './ChangeUserPhoto.tsx';
+import { Padding } from '@mui/icons-material';
 
 export const EditUserData: React.FC = () => {
   const [newUsername, setNewUsername] = useState('');
@@ -53,22 +54,22 @@ export const EditUserData: React.FC = () => {
     backgroundColor: '#1a1c1c',
     width: '400px',
     height: '45px',
-    marginBottom: '4em',
+    marginBottom: '1em',
     borderRadius: '5px',
+    padding: '10px',
     border: '2px solid #6E707A',
   };
 
   return (
-    <div className='text-white bg-[#45475B] h-[100%] w-[80%] pb-[400px] mx-auto mt-[30px] flex'>
+    <div className='text-white border-2 border-solid border-[#5138E9] rounded-lg p-10 h-[670px] w-[80%] pb-[400px] mx-auto mt-[30px] flex'>
       <div className='w-1/2'>
         <ChangeUserPhoto />
       </div>
       <div className='w-1/2'>
         <div className='h-[140px] mb-[10px] rounded-lg'>
-          <p className='text-xl ml-4 pt-3'>Изменить имя</p>
+          <p className='text-xl ml-4 pt-3 mb-3'>Изменить имя</p>
           <div className='ml-4 mr-4'>
             <form onSubmit={handleUsernameSubmit}>
-              <p>Новое имя:</p>
               <input
                 type='text'
                 id='username'
@@ -84,19 +85,9 @@ export const EditUserData: React.FC = () => {
           </div>
         </div>
         <div className='h-[250px] mb-[10px] rounded-lg'>
-          <p className='text-xl ml-4 pt-3'>Изменить пароль</p>
+          <p className='text-xl ml-4 pt-3 mb-3'>Изменить пароль</p>
           <div className='ml-4 mr-4'>
             <form onSubmit={handlePasswordSubmit}>
-              <p>Текущий пароль:</p>
-              <input
-                type='password'
-                id='currentPassword'
-                style={inputStyle}
-                placeholder='Текущий пароль'
-                value={currentPassword}
-                onChange={(e) => setCurrentPassword(e.target.value)}
-              />
-              <p>Новый пароль:</p>
               <input
                 type='password'
                 id='newPassword'
