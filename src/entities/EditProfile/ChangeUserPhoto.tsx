@@ -21,7 +21,6 @@ export const getCroppedImg = async (imageSrc: string, crop: { x: number; y: numb
     }, 'image/jpeg');
   });
 };
-
 export const ChangeUserPhoto = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
@@ -29,10 +28,12 @@ export const ChangeUserPhoto = () => {
   const [zoom, setZoom] = useState<number>(1);
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const [croppedImage, setCroppedImage] = useState<string | null>(null);
+  const [label, setLabel] = useState<boolean>(false);
 
   const onCropComplete = (croppedArea: any, croppedAreaPixels: any) => {
     console.log(croppedArea, croppedAreaPixels);
   };
+  console.log(label);
 
   const handleFinishCrop = async () => {
     if (!crop.width || !crop.height) {
@@ -89,24 +90,20 @@ export const ChangeUserPhoto = () => {
           </div>
         </Modal>
       )}
-      <div className='relative'>
+      <div className='relative' onMouseEnter={() => setLabel(true)} onMouseLeave={() => setLabel(false)}>
         <img
           src={previewImage ? previewImage : 'https://placehold.co/200x200'}
           alt='user avatar'
           className='w-[200px] h-[200px] rounded-full object-cover border-4 border-[#5138E9]'
         />
-        <label
-          htmlFor='file-input'
-          className='absolute bg-[#1a1c1c] rounded-full border-4 border-[#5138E9] inset-0 flex items-center justify-center w-full h-full cursor-pointer'
-          onDragOver={(e) => e.preventDefault()}
-          onDragEnter={(e) => e.preventDefault()}
-          onDrop={(e) => {
-            e.preventDefault();
-            handleFileChange(e);
-          }}
-        >
-          <CloudUploadIcon style={{ fontSize: '170px', color: '#5138E9' }} />
-        </label>
+        {label && (
+          <label
+            htmlFor='file-input'
+            className='absolute bg-[#1a1c1c] rounded-full border-4 border-[#5138E9] inset-0 flex items-center justify-center w-full h-full cursor-pointer'
+          >
+            <CloudUploadIcon style={{ fontSize: '170px', color: '#5138E9' }} />
+          </label>
+        )}
       </div>
       <p className='text-white text-3xl'>Username</p>
       <p className='text-xl ml-4 pt-3 mb-4'>Загрузить аватар</p>
