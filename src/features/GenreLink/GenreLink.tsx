@@ -12,9 +12,7 @@ const GenreLink = (data: Props): JSX.Element => {
       {data.genres.map((item) => (
         <Link
           key={item.name}
-          className={
-            'backdrop-blur-lg bg-white/10 hover:backdrop-blur-xl hover:bg-white/30  px-3 py-2  rounded-3xl text-xl mx-2 my-2'
-          }
+          className={'bg-white/10 hover:backdrop-blur-xl hover:bg-white/30  px-3 py-2  rounded-3xl text-xl mx-2 my-2'}
           to={`/genre/${item.name}`}
         >
           <span>
