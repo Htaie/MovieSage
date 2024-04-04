@@ -2,14 +2,17 @@ import React, { useState } from 'react';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import Modal from 'react-modal';
 import Cropper from 'react-easy-crop';
-// Функция для обрезки изображения
+import { supabase } from '../../../backend/apiClient/client.js';
+import { useStore } from 'effector-react';
+import { userDataStore, updateUserData } from '../../shared/store/UserStore.js';
+
 export const getCroppedImg = async (imageSrc: string, crop: { x: number; y: number }, aspectRatio: number) => {
   const image = new Image();
   image.src = imageSrc;
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d')!;
-  canvas.width = aspectRatio * crop.width!;
-  canvas.height = crop.height!;
+  canvas.width = crop.x = 0 ? aspectRatio * crop.x : 1;
+  canvas.height = crop.y = 0 ? crop.y : 1;
   ctx.drawImage(image, crop.x!, crop.y!, crop.width!, crop.height!, 0, 0, canvas.width, canvas.height);
   return new Promise<string>((resolve, reject) => {
     canvas.toBlob((blob) => {
@@ -21,6 +24,7 @@ export const getCroppedImg = async (imageSrc: string, crop: { x: number; y: numb
     }, 'image/jpeg');
   });
 };
+
 export const ChangeUserPhoto = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
@@ -29,6 +33,31 @@ export const ChangeUserPhoto = () => {
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const [croppedImage, setCroppedImage] = useState<string | null>(null);
   const [label, setLabel] = useState<boolean>(false);
+  const user = useStore(userDataStore);
+
+  const blobToFile = (blob: Blob, fileName: string): File => {
+    const file = new File([blob], fileName, { type: blob.type });
+    return file;
+  };
+
+  const uploadImage = async (croppedImage: string | null, fileName: string) => {
+    if (!croppedImage) return;
+
+    const response = await fetch(croppedImage);
+    const blob = await response.blob();
+    const file = blobToFile(blob, fileName);
+
+    const { data, error } = await supabase.storage
+      .from('images')
+      .upload(`${user?.user?.email}/${user?.user?.id}`, file, {
+        contentType: 'image/png',
+        upsert: true,
+      });
+
+    if (!error) {
+      updateUserData(user);
+    }
+  };
 
   const onCropComplete = (croppedArea: any, croppedAreaPixels: any) => {
     console.log(croppedArea, croppedAreaPixels);
@@ -36,14 +65,14 @@ export const ChangeUserPhoto = () => {
   console.log(label);
 
   const handleFinishCrop = async () => {
-    if (!crop.width || !crop.height) {
+    if (crop.x === undefined || crop.y === undefined) {
       console.error('Invalid crop area');
       return;
     }
     const croppedImage = await getCroppedImg(previewImage, crop, 4 / 3);
     setModalIsOpen(false);
-    console.log(crop);
     setCroppedImage(croppedImage);
+    uploadImage(croppedImage, `${user?.user?.id}.png`);
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,7 +121,7 @@ export const ChangeUserPhoto = () => {
       )}
       <div className='relative' onMouseEnter={() => setLabel(true)} onMouseLeave={() => setLabel(false)}>
         <img
-          src={previewImage ? previewImage : 'https://placehold.co/200x200'}
+          src={croppedImage ? croppedImage : 'https://placehold.co/200x200'}
           alt='user avatar'
           className='w-[200px] h-[200px] rounded-full object-cover border-4 border-[#5138E9]'
         />
