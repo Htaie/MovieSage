@@ -48,7 +48,7 @@ export const FilmByGenreSlider = ({ genre }: { genre: string }): JSX.Element => 
 
   return (
     <>
-      <h1 className='text-3xl text-white ml-12 my-10'>{FormatingName(genre)}</h1>
+      <h1 className='text-3xl text-white ml-2 my-10'>{FormatingName(genre)}</h1>
       <Swiper
         style={{
           width: '100%',

@@ -1,4 +1,4 @@
-import { Link, Routes } from 'react-router-dom';
+import { Link, Routes, useLocation } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -12,6 +12,14 @@ const NavBar = () => {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
   const userData = useStore(userDataStore);
+  const location = useLocation();
+
+  console.log(location.pathname);
+  const isAnimeGenre = location.pathname == `/genre/${encodeURIComponent('аниме')}`;
+  console.log(isAnimeGenre);
+  const linkStyle = {
+    textDecoration: isAnimeGenre ? 'underline' : 'none',
+  };
   const isLoggedIn = userData;
 
   const profileImage = CDNURL + userData?.user?.email + '/' + userData?.user?.id;
@@ -58,9 +66,11 @@ const NavBar = () => {
           </h1>
         </Link>
         <div className='flex space-x-5'>
-          <Link to={'genre/аниме'}>Аниме</Link>
-          <Link to={'/'}>Фильмы</Link>
-          <Link to={'/'}>Сериалы</Link>
+          <Link to={'genre/аниме'} style={linkStyle}>
+            Аниме
+          </Link>
+          <Link to={'genre/комедии'}>Фильмы</Link>
+          <Link to={'genre/писька'}>Сериалы</Link>
         </div>
         <div className='flex space-x-3 items-center'>
           <SearchIcon className='hover:cursor-pointer' />
