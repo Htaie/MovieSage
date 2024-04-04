@@ -3,7 +3,6 @@ import GenreLinkSlider from '../features/GenreCarousel/GenreLinkSlider';
 import { FilmByGenreSlider } from '../entities/SlidersForGenres/FilmsByGenreSlider';
 
 const GenreBlock = () => {
-  console.log(GENRES);
   return (
     <>
       <GenreLinkSlider genre={GENRES} />

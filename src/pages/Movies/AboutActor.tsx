@@ -7,7 +7,6 @@ export const AboutActorPage = (): JSX.Element => {
   moment.locale('ru');
   const [actorData, setActorData] = useState<any>(null);
   const { id } = useParams();
-  console.log(id);
   useEffect(() => {
     const fetchActor = async (): Promise<void> => {
       try {
@@ -20,7 +19,6 @@ export const AboutActorPage = (): JSX.Element => {
         });
         const data = await response.json();
         setActorData(data);
-        console.log(data);
       } catch (e) {
         console.log(JSON.stringify(e));
       }

@@ -33,7 +33,6 @@ export const ChangeUserPhoto = () => {
   const onCropComplete = (croppedArea: any, croppedAreaPixels: any) => {
     console.log(croppedArea, croppedAreaPixels);
   };
-  console.log(label);
 
   const handleFinishCrop = async () => {
     if (!crop.width || !crop.height) {
@@ -42,7 +41,6 @@ export const ChangeUserPhoto = () => {
     }
     const croppedImage = await getCroppedImg(previewImage, crop, 4 / 3);
     setModalIsOpen(false);
-    console.log(crop);
     setCroppedImage(croppedImage);
   };
 

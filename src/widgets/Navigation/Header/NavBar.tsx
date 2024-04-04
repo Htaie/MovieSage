@@ -19,7 +19,7 @@ const NavBar = () => {
   const SignOut = async () => {
     const { error } = await supabase.auth.signOut();
     if (error) {
-      console.log(error);
+      console.error(error);
     } else {
       togglePanel();
       updateUserData(null);
@@ -98,10 +98,10 @@ const NavBar = () => {
             </>
           ) : (
             <>
-              <Link className='border px-3 py-1 rounded-md' to={'/register'}>
+              <Link className='border bg-white text-black px-3 py-1 rounded-md' to={'/register'}>
                 Sign Up
               </Link>
-              <Link className='border border-green-700 bg-green-700 px-3 py-1 rounded-md' to={'/login'}>
+              <Link className='border border-[#5138E9] bg-[#5138E9] px-3 py-1 rounded-md' to={'/login'}>
                 Login
               </Link>
             </>

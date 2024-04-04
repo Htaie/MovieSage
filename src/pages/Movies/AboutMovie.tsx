@@ -93,11 +93,13 @@ const AboutMoviePage = (): JSX.Element => {
             </div>
           </div>
         </div>
-        <div className='mb-[80px]' ref={watchFilmRef}>
-          <p className='font-bold text-3xl mb-[60px]'>Смотреть фильм {data.name} онлайн без регистрации и СМС:</p>
+        <div className='mb-[80px]'>
           <RaitingInfo data={data} />
           <ActorsInMovie data={data} />
           <FilmInfo data={data} />
+          <p className='font-bold text-3xl mb-[60px] mt-[20px]' ref={watchFilmRef}>
+            Смотреть фильм {data.name} онлайн без регистрации и СМС:
+          </p>
           <MoviePlayer id={data.id} />
         </div>
       </div>

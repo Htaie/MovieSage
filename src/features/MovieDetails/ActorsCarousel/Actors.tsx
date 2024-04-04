@@ -10,7 +10,6 @@ interface ActorsProps {
   data: MovieType;
 }
 const ActorsInfo = ({ data }: ActorsProps): JSX.Element => {
-  console.log(data);
   return (
     <>
       <Swiper
