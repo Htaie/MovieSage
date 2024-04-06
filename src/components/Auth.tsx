@@ -7,6 +7,7 @@ import { Route } from '../shared/constants/constants';
 import { motion } from 'framer-motion';
 
 import { saveUserDataToLocalStorage, updateUserData } from '../shared/store/UserStore.js';
+import { CustomInput } from '../shared/components/CustomInput/CustomInput.js';
 
 export const AuthComponent = ({ formType, setToken }: { formType: string; setToken: any }): JSX.Element => {
   const [showPassword, setShowPassword] = useState(false);
@@ -91,40 +92,35 @@ export const AuthComponent = ({ formType, setToken }: { formType: string; setTok
           <button className='w-20 h-12 bg-white text-black border border-[#2b2c2e] rounded-lg ml-[210px]'>Back</button>
         </div>
         {formType === 'register' && (
-          <>
-            <h1 className='ml-[28px] mb-2'>Email</h1>
-            <div className='flex justify-center'>
-              <input
-                className='w-[440px] h-12 bg-black border rounded-lg mb-3 p-2'
-                style={customStyles.input}
-                type='text'
-                placeholder='Please enter your email...'
-                name='email'
-                onChange={handleChange}
-              />
-            </div>
-          </>
+          <div className='flex justify-center'>
+            <CustomInput
+              type='text'
+              label='Email'
+              id='email'
+              value={authData.email}
+              onChange={handleChange}
+              name='email'
+            />
+          </div>
         )}
-        <h1 className='ml-[28px] mb-2'>{formType === 'register' ? 'Username' : 'Email'}</h1>
         <div className='flex justify-center'>
-          <input
-            className='w-[440px] h-12 bg-black border rounded-lg mb-3 p-2'
-            style={customStyles.input}
+          <CustomInput
             type='text'
-            placeholder={formType === 'register' ? 'Username...' : 'Email...'}
-            name={formType === 'register' ? 'username' : 'email'}
+            label={formType === 'register' ? 'Username' : 'Email'}
+            id={formType === 'register' ? 'username' : 'email'}
+            value={authData[formType === 'register' ? 'username' : 'email']}
             onChange={handleChange}
+            name={formType === 'register' ? 'username' : 'email'}
           />
         </div>
-        <h1 className='ml-[28px] mb-2'>Password</h1>
         <div className='relative flex justify-center'>
-          <input
-            className='w-[440px] h-12 bg-black border rounded-lg mb-4 p-2'
-            style={customStyles.input}
+          <CustomInput
             type={showPassword ? 'text' : 'password'}
-            placeholder='Password...'
-            name='password'
+            label='Password'
+            id='password'
+            value={authData.password}
             onChange={handleChange}
+            name='password'
           />
           <div className='absolute top-0 right-8 m-3 cursor-pointer' onClick={togglePasswordVisibility}>
             {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
@@ -132,15 +128,14 @@ export const AuthComponent = ({ formType, setToken }: { formType: string; setTok
         </div>
         {formType === 'register' && (
           <>
-            <h1 className='ml-[28px] mb-2'>Password</h1>
             <div className='relative flex justify-center'>
-              <input
-                className='w-[440px] h-12 bg-black border rounded-lg mb-4 p-2'
-                style={customStyles.input}
+              <CustomInput
                 type={showPassword ? 'text' : 'password'}
-                placeholder='Repeat Password...'
-                name='repeatPassword'
+                label='Repeat Password'
+                id='repeatPassword'
+                value={authData.repeatPassword}
                 onChange={handleChange}
+                name='repeatPassword'
               />
               <div className='absolute top-0 right-8 m-3 cursor-pointer' onClick={togglePasswordVisibility}>
                 {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
