@@ -23,7 +23,7 @@
   position: absolute;
   cursor: text;
   z-index: 2;
-  top: 10px;
+  top: 12px;
   font-size: 12px;
   left: 15px;
   font-weight: bold;
@@ -34,7 +34,7 @@
 }
 
 .input-container:focus-within label,
-.input-container input:focus + label {
+.input-container label.label-up {
   top: -5px;
   background: #212124;
   font-size: 11px;
