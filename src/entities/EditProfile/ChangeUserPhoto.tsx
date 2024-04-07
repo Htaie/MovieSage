@@ -1,102 +1,56 @@
-import React, { useState } from 'react';
+import { useRef, useState } from 'react';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import Modal from 'react-modal';
-import Cropper from 'react-easy-crop';
-// Функция для обрезки изображения
-export const getCroppedImg = async (imageSrc: string, crop: { x: number; y: number }, aspectRatio: number) => {
-  const image = new Image();
-  image.src = imageSrc;
-  const canvas = document.createElement('canvas');
-  const ctx = canvas.getContext('2d')!;
-  canvas.width = aspectRatio * crop.width!;
-  canvas.height = crop.height!;
-  ctx.drawImage(image, crop.x!, crop.y!, crop.width!, crop.height!, 0, 0, canvas.width, canvas.height);
-  return new Promise<string>((resolve, reject) => {
-    canvas.toBlob((blob) => {
-      if (!blob) {
-        reject(new Error('Canvas is empty'));
-        return;
-      }
-      resolve(URL.createObjectURL(blob));
-    }, 'image/jpeg');
-  });
-};
+import ModalUploadPhoto from './ModalUploadPhoto';
+import { useStore } from 'effector-react';
+import { supabase } from '../../../backend/apiClient/client.js';
+import { CDNURL, SUPABASE_KEY } from '../../shared/constants/constants';
+import { userDataStore } from '../../shared/store/UserStore';
+
 export const ChangeUserPhoto = () => {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
-  const [crop, setCrop] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
-  const [zoom, setZoom] = useState<number>(1);
-  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
-  const [croppedImage, setCroppedImage] = useState<string | null>(null);
+  const user = useStore(userDataStore);
+  const profileImage = CDNURL + user.user.email + '/' + user.user.id;
+
+  const selectedFile = useRef('https://avatarfiles.alphacoders.com/161/160002.jpg');
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [label, setLabel] = useState<boolean>(false);
 
-  const onCropComplete = (croppedArea: any, croppedAreaPixels: any) => {
-    console.log(croppedArea, croppedAreaPixels);
+  const updateAvatar = (imgSrc) => {
+    selectedFile.current = imgSrc;
   };
+  console.log(selectedFile.current, 'selectedFile');
+  async function uploadImage() {
+    if (!selectedFile) return;
 
-  const handleFinishCrop = async () => {
-    if (!crop.width || !crop.height) {
-      console.error('Invalid crop area');
-      return;
+    const { data, error } = await supabase.storage
+      .from('images')
+      .upload(`${user?.user?.email}/${user?.user?.id}`, selectedFile.current, {
+        contentType: 'image/png',
+        upsert: true,
+      });
+
+    if (!error) {
+      console.log('File uploaded successfully!');
     }
-    const croppedImage = await getCroppedImg(previewImage, crop, 4 / 3);
-    setModalIsOpen(false);
-    setCroppedImage(croppedImage);
-  };
+  }
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e) => {
     const files = e.target.files;
     if (files && files.length > 0) {
-      setSelectedFile(files[0]);
-      const imageUrl = URL.createObjectURL(files[0]);
-      setPreviewImage(imageUrl);
-      setModalIsOpen(true);
+      selectedFile.current = files[0];
     }
   };
-
-  const handleModalClose = () => {
-    setModalIsOpen(false);
-    setPreviewImage(null);
-  };
-
   return (
     <div className='text-white h-[150px] rounded-lg flex flex-col items-center pt-3'>
-      {previewImage && (
-        <Modal isOpen={modalIsOpen} onRequestClose={handleModalClose} className='bg-white p-4 rounded-lg h-96 w-96'>
-          <Cropper
-            image={previewImage}
-            crop={crop}
-            zoom={zoom}
-            aspect={4 / 3}
-            onCropChange={setCrop}
-            onCropComplete={onCropComplete}
-            onZoomChange={setZoom}
-          />
-          <div className='absolute bottom-0 flex justify-center mt-48'>
-            <button
-              onClick={handleModalClose}
-              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2'
-            >
-              Отмена
-            </button>
-            <button
-              onClick={handleFinishCrop}
-              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
-            >
-              Окей
-            </button>
-          </div>
-        </Modal>
-      )}
       <div className='relative' onMouseEnter={() => setLabel(true)} onMouseLeave={() => setLabel(false)}>
         <img
-          src={previewImage ? previewImage : 'https://placehold.co/200x200'}
+          src={selectedFile.current}
           alt='user avatar'
           className='w-[200px] h-[200px] rounded-full object-cover border-4 border-[#5138E9]'
         />
         {label && (
           <label
             htmlFor='file-input'
+            onClick={() => setModalOpen(true)}
             className='absolute bg-[#1a1c1c] rounded-full border-4 border-[#5138E9] inset-0 flex items-center justify-center w-full h-full cursor-pointer'
           >
             <CloudUploadIcon style={{ fontSize: '170px', color: '#5138E9' }} />
@@ -119,10 +73,12 @@ export const ChangeUserPhoto = () => {
             id='file-input'
             type='file'
             accept='image/png, image/jpeg'
-            onChange={handleFileChange}
+            // onChange={handleFileChange}
             style={{ display: 'none' }}
           />
         </form>
+        <button onClick={() => uploadImage()}>dfgdsfgfhgd</button>
+        {modalOpen && <ModalUploadPhoto updateAvatar={updateAvatar} closeModal={() => setModalOpen(false)} />}
       </div>
     </div>
   );

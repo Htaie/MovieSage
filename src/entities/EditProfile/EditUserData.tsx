@@ -5,7 +5,6 @@ import { useStore } from 'effector-react';
 import { updateUserData, userDataStore } from '../../shared/store/UserStore';
 import { ChangeUserPhoto } from './ChangeUserPhoto.tsx';
 import { CustomInput } from '../../shared/components/CustomInput/CustomInput.tsx';
-import { Padding } from '@mui/icons-material';
 
 export const EditUserData: React.FC = () => {
   const [newUsername, setNewUsername] = useState('');
