@@ -85,11 +85,11 @@ export const AuthComponent = ({ formType, setToken }: { formType: string; setTok
           formType === 'register' ? '620' : '420'
         }px] border border-[#2b2c2e] rounded-lg`}
       >
-        <div className='flex pt-4 ml-[28px] mb-1'>
+        <div className='flex pt-4 ml-[28px] mb-4'>
           <h1 className='text-3xl'>
             Movie<span className='text-[#5138E9]'>Sage</span>
           </h1>
-          <button className='w-20 h-12 bg-white text-black border border-[#2b2c2e] rounded-lg ml-[210px]'>Back</button>
+          <button className='w-20 h-12 bg-white text-black border border-[#2b2c2e] rounded-lg ml-[220px]'>Back</button>
         </div>
         {formType === 'register' && (
           <div className='flex justify-center'>
