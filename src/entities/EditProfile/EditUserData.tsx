@@ -4,6 +4,7 @@ import { supabase } from '../../../backend/apiClient/client.js';
 import { useStore } from 'effector-react';
 import { updateUserData, userDataStore } from '../../shared/store/UserStore';
 import { ChangeUserPhoto } from './ChangeUserPhoto.tsx';
+import { CustomInput } from '../../shared/components/CustomInput/CustomInput.tsx';
 import { Padding } from '@mui/icons-material';
 
 export const EditUserData: React.FC = () => {
@@ -50,16 +51,6 @@ export const EditUserData: React.FC = () => {
     updateUserData(user);
   };
 
-  const inputStyle = {
-    backgroundColor: '#1a1c1c',
-    width: '400px',
-    height: '45px',
-    marginBottom: '1em',
-    borderRadius: '5px',
-    padding: '10px',
-    border: '2px solid #6E707A',
-  };
-
   return (
     <div className='text-white border-2 border-solid border-[#5138E9] rounded-lg p-10 h-[670px] w-[80%] pb-[400px] mx-auto mt-[30px] flex'>
       <div className='w-1/2'>
@@ -70,11 +61,10 @@ export const EditUserData: React.FC = () => {
           <p className='text-xl ml-4 pt-3 mb-3'>Изменить имя</p>
           <div className='ml-4 mr-4'>
             <form onSubmit={handleUsernameSubmit}>
-              <input
+              <CustomInput
                 type='text'
                 id='username'
-                placeholder='Новое имя'
-                style={inputStyle}
+                label='Username'
                 value={newUsername}
                 onChange={(e) => setNewUsername(e.target.value)}
               />
@@ -88,19 +78,17 @@ export const EditUserData: React.FC = () => {
           <p className='text-xl ml-4 pt-3 mb-3'>Изменить пароль</p>
           <div className='ml-4 mr-4'>
             <form onSubmit={handlePasswordSubmit}>
-              <input
+              <CustomInput
                 type='password'
                 id='newPassword'
-                style={inputStyle}
-                placeholder='Новый пароль'
+                label='Password'
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
               />
-              <input
+              <CustomInput
                 type='password'
                 id='confirmNewPassword'
-                style={inputStyle}
-                placeholder='Подтвердите новый пароль'
+                label='Confirm Password'
                 value={confirmNewPassword}
                 onChange={(e) => setConfirmNewPassword(e.target.value)}
               />
