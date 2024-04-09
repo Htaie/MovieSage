@@ -9,13 +9,14 @@ import { userDataStore, updateUserData } from '../../shared/store/UserStore.js';
 export const ChangeUserPhoto = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
-  const [crop, setCrop] = useState<{ x: number; y: number; width: number; height: number }>({
-    x: 0,
-    y: 0,
+  const [crop, setCrop] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState<number>(1);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState<{ width: number; height: number; x: number; y: number }>({
     width: 0,
     height: 0,
+    x: 0,
+    y: 0,
   });
-  const [zoom, setZoom] = useState<number>(1);
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const [croppedImage, setCroppedImage] = useState<string | null>(null);
   const [label, setLabel] = useState<boolean>(false);
@@ -45,40 +46,32 @@ export const ChangeUserPhoto = () => {
     }
   };
 
-  const onCropComplete = (croppedArea: any, croppedAreaPixels: any) => {
-    if (!croppedArea || !croppedAreaPixels || isNaN(croppedArea.x) || isNaN(croppedArea.y)) {
-      console.error('Invalid cropped Area');
-      setCrop({
-        x: 0,
-        y: 0,
-        width: 0,
-        height: 0,
-      });
-      return;
-    }
-    setCrop({
-      x: croppedArea.x,
-      y: croppedArea.y,
-      height: croppedAreaPixels.height,
-      width: croppedAreaPixels.width,
-    });
+  const onCropComplete = (_: any, croppedAreaPixels: any) => {
+    setCroppedAreaPixels(croppedAreaPixels);
   };
-
-  console.log(label);
 
   const getCroppedImg = async (
     imageSrc: string,
-    crop: { x: number; y: number; height: number; width: number },
-    aspectRatio: number
+    croppedAreaPixels: { width: number; height: number; x: number; y: number }
   ) => {
     console.log(crop);
     const image = new Image();
     image.src = imageSrc;
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d')!;
-    canvas.width = crop.width;
-    canvas.height = crop.height;
-    ctx.drawImage(image, crop.x, crop.y, crop.width, crop.height, 0, 0, canvas.width, canvas.height);
+    canvas.width = croppedAreaPixels.width;
+    canvas.height = croppedAreaPixels.height;
+    ctx.drawImage(
+      image,
+      croppedAreaPixels.x,
+      croppedAreaPixels.y,
+      croppedAreaPixels.width,
+      croppedAreaPixels.height,
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
     return new Promise<string>((resolve, reject) => {
       canvas.toBlob((blob) => {
         if (!blob) {
@@ -95,8 +88,7 @@ export const ChangeUserPhoto = () => {
       console.error('Invalid crop area');
       return;
     }
-    console.log('то что лезет в функцию', previewImage, crop, 4 / 3);
-    const croppedImage = await getCroppedImg(previewImage, crop, 4 / 3);
+    const croppedImage = await getCroppedImg(previewImage, croppedAreaPixels);
     setModalIsOpen(false);
     setCroppedImage(croppedImage);
     uploadImage(croppedImage, `${user?.user?.id}.png`);
@@ -116,8 +108,6 @@ export const ChangeUserPhoto = () => {
     setModalIsOpen(false);
     setPreviewImage(null);
   };
-
-  console.log('croppedImage', croppedImage);
 
   return (
     <div className='text-white h-[150px] rounded-lg flex flex-col items-center pt-3'>
