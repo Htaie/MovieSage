@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ProfileComponent } from '../../components/ProfileComponent';
-import { LISTS, Route } from '../../shared/constants/constants';
+import { PROFILE_ROUTE, Route } from '../../shared/constants/constants';
 import { Link, useLocation } from 'react-router-dom';
 
 export const UserSlice = () => {
@@ -8,12 +8,12 @@ export const UserSlice = () => {
   const location = useLocation();
 
   useEffect(() => {
-    if (location.pathname === '/profile/ratedlist') {
-      setFormType(LISTS.RATED);
-    } else if (location.pathname === '/profile/planlist') {
-      setFormType(LISTS.PLAN);
-    } else if (location.pathname === '/profile/settings') {
-      setFormType('settings');
+    if (location.pathname === Route.RATED) {
+      setFormType(PROFILE_ROUTE.RATED);
+    } else if (location.pathname === Route.PLAN) {
+      setFormType(PROFILE_ROUTE.PLAN);
+    } else if (location.pathname === Route.SETTINGS) {
+      setFormType(PROFILE_ROUTE.SETTINGS);
     } else {
       setFormType('');
     }
@@ -27,22 +27,22 @@ export const UserSlice = () => {
     <div className='bg-[#212124] h-[200px] pt-[100px] pb-[50%]'>
       <div className='flex space-x-5 text-2xl ml-[195px]'>
         <Link
-          to='/profile/ratedlist'
-          style={formType === LISTS.RATED ? { ...linkStyle, textDecoration: 'underline' } : linkStyle}
+          to={Route.RATED}
+          style={formType === PROFILE_ROUTE.RATED ? { ...linkStyle, textDecoration: 'underline' } : linkStyle}
           className='text-white'
         >
           Просмотренные
         </Link>
         <Link
-          to='/profile/planlist'
-          style={formType === LISTS.PLAN ? { ...linkStyle, textDecoration: 'underline' } : linkStyle}
+          to={Route.PLAN}
+          style={formType === PROFILE_ROUTE.PLAN ? { ...linkStyle, textDecoration: 'underline' } : linkStyle}
           className='text-white'
         >
           Смотреть позже
         </Link>
         <Link
-          to='/profile/settings'
-          style={formType === 'settings' ? { ...linkStyle, textDecoration: 'underline' } : linkStyle}
+          to={Route.SETTINGS}
+          style={formType === PROFILE_ROUTE.SETTINGS ? { ...linkStyle, textDecoration: 'underline' } : linkStyle}
           className='text-white'
         >
           Настройки

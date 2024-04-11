@@ -1,13 +1,13 @@
 import { UsersFilmsPage } from '../pages/UserPages/UsersFilmsPage';
 import { ProfileSettingPage } from '../pages/UserPages/ProfileSettingPage';
-import { LISTS } from '../shared/constants/constants';
+import { PROFILE_ROUTE } from '../shared/constants/constants';
 
 export const ProfileComponent = ({ formType }: { formType: string }) => {
   return (
     <div>
-      {formType === LISTS.RATED && <UsersFilmsPage formType={LISTS.RATED} />}
-      {formType === 'settings' && <ProfileSettingPage />}
-      {formType === LISTS.PLAN && <UsersFilmsPage formType={LISTS.PLAN} />}
+      {formType === PROFILE_ROUTE.RATED && <UsersFilmsPage formType={PROFILE_ROUTE.RATED} />}
+      {formType === PROFILE_ROUTE.SETTINGS && <ProfileSettingPage />}
+      {formType === PROFILE_ROUTE.PLAN && <UsersFilmsPage formType={PROFILE_ROUTE.PLAN} />}
     </div>
   );
 };
