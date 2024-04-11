@@ -9,7 +9,7 @@ export const Route = {
   HOME: '/',
   LOGIN: '/login',
   REGISTER: '/register',
-  PROFILE: '/profile',
+  PROFILE: '/profile/:id',
   SETTINGS: '/settings',
   RATED: '/ratedlist',
   GENRE: '/genre/:name',

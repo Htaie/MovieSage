@@ -77,7 +77,7 @@ const NavBar = () => {
           {isLoggedIn ? (
             <>
               <NotificationsNoneIcon />
-              <Link to={'/profile'}>
+              <Link to={Route.PROFILE}>
                 <img
                   className='w-10 h-10 rounded-full'
                   src={
