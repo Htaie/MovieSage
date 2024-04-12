@@ -14,11 +14,11 @@ import MovieModal from '../../shared/UI/modal/MovieModal';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
-import { LISTS } from '../../shared/constants/constants';
+import { PROFILE_ROUTE } from '../../shared/constants/constants';
 import { userDataStore } from '../../shared/store/UserStore';
 
 export const UsersFilmsList = ({ formType }: { formType: string }) => {
-  const data = formType === LISTS.RATED ? useStore(userRatingStore) : useStore(userPlanListStore);
+  const data = formType === PROFILE_ROUTE.RATED ? useStore(userRatingStore) : useStore(userPlanListStore);
   const [modalData, setModalData] = useState({} as ModalDataType);
   const [isHovered, setIsHovered] = useState(false);
   const [currentLink, setCurrentLink] = useState(null as number | null);

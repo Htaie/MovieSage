@@ -9,9 +9,10 @@ export const Route = {
   HOME: '/',
   LOGIN: '/login',
   REGISTER: '/register',
-  PROFILE: '/profile',
-  SETTINGS: '/settings',
-  RATED: '/ratedlist',
+  PROFILE: '/profile/:id',
+  SETTINGS: '/profile/settings',
+  RATED: '/profile/ratedlist',
+  PLAN: '/profile/planned',
   GENRE: '/genre/:name',
   MOVIE: '/movie/:id',
   ACTOR: '/actor/:id',
@@ -46,7 +47,8 @@ export const GENRES = {
   fantasy: 'фэнтези',
 };
 
-export const LISTS = {
+export const PROFILE_ROUTE = {
   RATED: 'ratedlist',
   PLAN: 'planned',
+  SETTINGS: 'settings',
 };
