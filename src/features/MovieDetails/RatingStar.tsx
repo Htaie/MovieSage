@@ -2,9 +2,12 @@ import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
 import { MainBtn } from '../../shared/UI/buttons/MainBtn';
 import { RatingRounding } from '../../shared/utils/textUtils';
 import { MovieType } from '../../shared/types/MoviesTypes';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createEvent, createStore } from 'effector';
-
+import { supabase } from '../../../backend/apiClient/client.js';
+import { userDataStore } from '../../shared/store/UserStore';
+import { useStore } from 'effector-react';
+import { ModalDataType } from '../../shared/types/ModalDataTypes.js';
 interface RaitingInfoProps {
   data: MovieType;
 }
@@ -55,7 +58,10 @@ userPlanListStore.on(deleteFromPlannedList, (state, id) => {
 });
 
 export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
+  const userData = useStore(userDataStore);
+  const dataUserId = userData.user.id;
   const [userRating, setUserRating] = useState<number | null>(null);
+  const [plannedList, setPlannedList] = useState<any[]>([]);
 
   const stars = Array.from({ length: 10 }, (_, index) => (
     <StarOutlinedIcon key={index} style={{ fontSize: '3em', color: '#a0a0a0' }} />
@@ -83,23 +89,60 @@ export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
     userRatingStore.setState(RatedData);
   };
 
-  const handleAddToPlanList = () => {
-    const { id, name, year, poster, type } = data;
-    const RatedData = {
-      ...userPlanListStore.getState(),
-      [id]: {
-        clickedRating: 0,
+  const handleAddToPlanList = async () => {
+    const { id, name, genres, type, year, poster, shortDescription, rating } = data;
+
+    const userId = dataUserId;
+
+    // Добавляем фильм в planned_list
+    const { data: addedMovie, error } = await supabase.from('planned_list').insert([
+      {
+        id: userId,
         title: name,
-        year,
+        genres: genres,
+        movie_id: id,
         image: poster.url,
-        type,
-        rating: data.rating.kp,
-        shortDescription: data.shortDescription,
-        genres: data.genres,
+        rating: rating.kp,
+        short_description: shortDescription,
+        type: type,
+        year: year,
+        clicked_rating: 0,
       },
-    };
-    userPlanListStore.setState(RatedData);
+    ]);
+
+    const plannedListData = await fetchPlannedList();
+    console.log('Fetched planned list data:', plannedListData);
+
+    if (error) {
+      console.error('Error adding movie to planned_list:', error);
+      return;
+    }
+    if (addedMovie) {
+      console.log('Added movie', addedMovie);
+    }
   };
+
+  const fetchPlannedList = async () => {
+    const { data: dataList, error } = await supabase.from('planned_list').select('*').eq('id', dataUserId);
+
+    if (error) {
+      console.error('Error fetching planned list:', error);
+      return null;
+    }
+
+    return dataList;
+  };
+
+  useEffect(() => {
+    const fetchPlannedListData = async () => {
+      const dataList = await fetchPlannedList();
+      if (dataList) {
+        setPlannedList(dataList);
+      }
+    };
+
+    fetchPlannedListData();
+  }, [userData.user.id]);
 
   return (
     <>
