@@ -7,7 +7,7 @@ import { createEvent, createStore } from 'effector';
 import { supabase } from '../../../backend/apiClient/client.js';
 import { userDataStore } from '../../shared/store/UserStore';
 import { useStore } from 'effector-react';
-import { ModalDataType } from '../../shared/types/ModalDataTypes.js';
+import { v4 as uuidv4 } from 'uuid';
 interface RaitingInfoProps {
   data: MovieType;
 }
@@ -93,8 +93,8 @@ export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
     const { id, name, genres, type, year, poster, shortDescription, rating } = data;
 
     const userId = dataUserId;
+    const uniqueId = uuidv4();
 
-    // Добавляем фильм в planned_list
     const { data: addedMovie, error } = await supabase.from('planned_list').insert([
       {
         id: userId,
@@ -107,6 +107,7 @@ export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
         type: type,
         year: year,
         clicked_rating: 0,
+        movie_unique_id: uniqueId,
       },
     ]);
 
