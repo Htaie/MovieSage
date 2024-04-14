@@ -95,7 +95,7 @@ export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
     const userId = dataUserId;
     const uniqueId = uuidv4();
 
-    const { data: addedMovie, error } = await supabase.from('planned_list').insert([
+    const { data: plannedData, error } = await supabase.from('planned_list').insert([
       {
         id: userId,
         title: name,
@@ -111,15 +111,15 @@ export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
       },
     ]);
 
-    const plannedListData = await fetchPlannedList();
-    console.log('Fetched planned list data:', plannedListData);
-
     if (error) {
       console.error('Error adding movie to planned_list:', error);
       return;
     }
-    if (addedMovie) {
-      console.log('Added movie', addedMovie);
+
+    const plannedListData = await fetchPlannedList();
+
+    if (plannedListData) {
+      userPlanListStore.setState(plannedListData);
     }
   };
 
@@ -142,8 +142,16 @@ export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
       }
     };
 
+    const unsubscribe = userPlanListStore.watch(() => {
+      fetchPlannedListData();
+    });
+
     fetchPlannedListData();
-  }, [userData.user.id]);
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   return (
     <>

@@ -75,7 +75,7 @@ const MovieModal: React.FC<Props> = ({
         />
         <div className='text-xl'>
           <p className='font-bold mb-2'>{modalData.title}</p>
-          <p className='text-sm mb-2'>{modalData.shortDescription}</p>
+          <p className='text-sm mb-2'>{modalData.short_description}</p>
           <div className='flex'>
             <p className='font-bold mr-2'>Тип:</p>
             <span>{modalData.type}</span>

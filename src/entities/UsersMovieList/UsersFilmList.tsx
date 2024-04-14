@@ -16,9 +16,12 @@ import EditIcon from '@mui/icons-material/Edit';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import { PROFILE_ROUTE } from '../../shared/constants/constants';
 import { userDataStore } from '../../shared/store/UserStore';
+import { supabase } from '../../../backend/apiClient/client.js';
 
 export const UsersFilmsList = ({ formType }: { formType: string }) => {
   const data = formType === PROFILE_ROUTE.RATED ? useStore(userRatingStore) : useStore(userPlanListStore);
+  const userData = useStore(userDataStore);
+  const dataUserId = userData.user.id;
   const [modalData, setModalData] = useState({} as ModalDataType);
   const [isHovered, setIsHovered] = useState(false);
   const [currentLink, setCurrentLink] = useState(null as number | null);
@@ -27,13 +30,24 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
   const [likedList, setLikedList] = useState([]);
 
   const handleMouseEnter = (film: ModalDataType, event: MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-    const { id, image, title, clickedRating, type, year, shortDescription, rating, genres } = film;
+    const { id, image, title, clickedRating, type, year, short_description, rating, genres, movie_id } = film;
     if (rating === null) {
-      setModalData({ id, image, title, rating, clickedRating, type, year, shortDescription, genres });
+      setModalData({ id, image, title, rating, clickedRating, type, year, short_description, genres, movie_id });
     }
     if (rating !== null) {
       const roundedRating = RatingRounding(rating);
-      setModalData({ id, image, title, rating: roundedRating, clickedRating, type, year, shortDescription, genres });
+      setModalData({
+        id,
+        image,
+        title,
+        rating: roundedRating,
+        clickedRating,
+        type,
+        year,
+        short_description,
+        genres,
+        movie_id,
+      });
     }
     setSelectedRating(film.clickedRating || 0);
     setIsHovered(true);
@@ -46,8 +60,15 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
     setCurrentLink(null);
   };
 
-  const handleDeleteFilm = (filmId: number) => {
-    deleteUserRating(filmId);
+  const handleDeleteFilm = async (movieId: number, movieIndex: number) => {
+    const { error } = await supabase.from('planned_list').delete().eq('movie_id', movieId).eq('id', dataUserId);
+
+    if (error) {
+      console.error('Error deleting film from Supabase:', error);
+      return;
+    }
+
+    deleteUserRating(movieIndex);
     setSelectedRating(0);
   };
 
@@ -60,7 +81,7 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
   };
 
   const handleAddToPlanList = (filmData: ModalDataType) => {
-    const { id, title, year, image, type, rating, shortDescription, genres } = filmData;
+    const { id, title, year, image, type, rating, short_description, genres, movie_id } = filmData;
     userPlanListStore.setState({
       ...userPlanListStore.getState(),
       [String(id)]: {
@@ -71,15 +92,16 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
         image,
         type,
         rating,
-        shortDescription,
+        short_description,
         genres,
+        movie_id,
       },
     });
     deleteFromRatedList(Number(id));
   };
 
   const handleAddToRatedList = (filmData: ModalDataType) => {
-    const { id, title, year, image, type, rating, shortDescription, genres } = filmData;
+    const { id, title, year, image, type, rating, short_description, genres, movie_id } = filmData;
     userRatingStore.setState({
       ...userRatingStore.getState(),
       [String(id)]: {
@@ -90,8 +112,9 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
         image,
         type,
         rating,
-        shortDescription,
+        short_description,
         genres,
+        movie_id,
       },
     });
     deleteFromPlannedList(Number(id));
@@ -107,13 +130,13 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
           </div>
         </div>
       ) : (
-        Object.keys(data).map((filmId) => {
-          const film = data[filmId];
+        Object.keys(data).map((movie_id, index) => {
+          const film = data[movie_id];
           return (
-            <div key={filmId} className='flex bg-[#45475B] h-[50px] items-center mb-2'>
+            <div key={movie_id} className='flex bg-[#45475B] h-[50px] items-center mb-2'>
               <div className='flex-1 flex ml-4'>
                 <Link
-                  to={`/movie/${filmId}`}
+                  to={`/movie/${film.movie_id}`}
                   className='text-xl mr-4'
                   onMouseEnter={(event) =>
                     handleMouseEnter(film, event as unknown as MouseEvent<HTMLAnchorElement, MouseEvent>)
@@ -139,7 +162,9 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
                 </select>
                 <p className='text-xl'>{film.type}</p>
                 <DeleteForeverIcon
-                  onClick={() => handleDeleteFilm(Number(filmId))}
+                  onClick={() => {
+                    handleDeleteFilm(film.movie_id, index);
+                  }}
                   className='text-3xl ml-4 cursor-pointer hover:text-red-500'
                 ></DeleteForeverIcon>
               </div>
