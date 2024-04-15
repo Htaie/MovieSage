@@ -5,6 +5,7 @@ import Cropper from 'react-easy-crop';
 import { supabase } from '../../../backend/apiClient/client.js';
 import { useStore } from 'effector-react';
 import { userDataStore, updateUserData } from '../../shared/store/UserStore.js';
+import { CDNURL } from '../../shared/constants/constants.js';
 
 export const ChangeUserPhoto = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -21,6 +22,7 @@ export const ChangeUserPhoto = () => {
   const [croppedImage, setCroppedImage] = useState<string | null>(null);
   const [label, setLabel] = useState<boolean>(false);
   const user = useStore(userDataStore);
+  const profileImage = CDNURL + user?.user?.email + '/' + user?.user?.id;
 
   const blobToFile = (blob: Blob, fileName: string): File => {
     const file = new File([blob], fileName, { type: blob.type });
@@ -140,7 +142,7 @@ export const ChangeUserPhoto = () => {
       )}
       <div className='relative' onMouseEnter={() => setLabel(true)} onMouseLeave={() => setLabel(false)}>
         <img
-          src={croppedImage ? croppedImage : 'https://placehold.co/200x200'}
+          src={croppedImage ? croppedImage : profileImage ? profileImage : 'https://placehold.co/200x200'}
           alt='user avatar'
           className='w-[200px] h-[200px] rounded-full object-cover border-4 border-[#5138E9]'
         />

@@ -14,9 +14,7 @@ const NavBar = () => {
   const userData = useStore(userDataStore);
   const location = useLocation();
 
-  console.log(location.pathname);
   const isAnimeGenre = location.pathname == `/genre/${encodeURIComponent('аниме')}`;
-  console.log(isAnimeGenre);
   const linkStyle = {
     textDecoration: isAnimeGenre ? 'underline' : 'none',
   };
