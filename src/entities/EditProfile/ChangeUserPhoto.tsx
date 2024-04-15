@@ -22,7 +22,8 @@ export const ChangeUserPhoto = () => {
   const [croppedImage, setCroppedImage] = useState<string | null>(null);
   const [label, setLabel] = useState<boolean>(false);
   const user = useStore(userDataStore);
-  const profileImage = CDNURL + user?.user?.email + '/' + user?.user?.id;
+  const timestamp = Date.now();
+  const profileImage = `${CDNURL}${user?.user?.email}/${user?.user?.id}?t=${timestamp}`;
 
   const blobToFile = (blob: Blob, fileName: string): File => {
     const file = new File([blob], fileName, { type: blob.type });

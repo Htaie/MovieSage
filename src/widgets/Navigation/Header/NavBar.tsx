@@ -11,6 +11,7 @@ const NavBar = () => {
   const [open, setOpen] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
+  const [updatedProfileImage, setUpdatedProfileImage] = useState('');
   const userData = useStore(userDataStore);
   const location = useLocation();
 
@@ -19,8 +20,26 @@ const NavBar = () => {
     textDecoration: isAnimeGenre ? 'underline' : 'none',
   };
   const isLoggedIn = userData;
+  const timestamp = Date.now();
+  const profileImage = `${CDNURL}${userData?.user?.email}/${userData?.user?.id}?t=${timestamp}`;
 
-  const profileImage = CDNURL + userData?.user?.email + '/' + userData?.user?.id;
+  const getNewProfileImage = () => {
+    const timestamp = Date.now();
+    return `${CDNURL}${userData?.user?.email}/${userData?.user?.id}?t=${timestamp}`;
+  };
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const newProfileImage = getNewProfileImage();
+      if (newProfileImage !== updatedProfileImage) {
+        setUpdatedProfileImage(newProfileImage);
+      }
+    }, 2000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [updatedProfileImage]);
 
   const SignOut = async () => {
     const { error } = await supabase.auth.signOut();
@@ -79,9 +98,11 @@ const NavBar = () => {
                 <img
                   className='w-10 h-10 rounded-full'
                   src={
-                    profileImage
-                      ? profileImage
-                      : 'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80'
+                    updatedProfileImage
+                      ? updatedProfileImage
+                      : profileImage
+                        ? profileImage
+                        : 'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80'
                   }
                   alt='Profile Img'
                 />
