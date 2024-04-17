@@ -91,7 +91,7 @@ export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
       },
     ]);
     if (error) {
-      console.error('Error adding movie to planned_list:', error);
+      console.error('Error adding movie to liked_list:', error);
       return;
     }
 
