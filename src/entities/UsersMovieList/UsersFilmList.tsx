@@ -61,7 +61,13 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
   };
 
   const handleDeleteFilm = async (movieId: number, movieIndex: number) => {
-    const { error } = await supabase.from('planned_list').delete().eq('movie_id', movieId).eq('id', dataUserId);
+    let table = '';
+    if (formType === PROFILE_ROUTE.RATED) {
+      table = 'rated_list';
+    } else {
+      table = 'planned_list';
+    }
+    const { error } = await supabase.from(table).delete().eq('movie_id', movieId).eq('id', dataUserId);
 
     if (error) {
       console.error('Error deleting film from Supabase:', error);

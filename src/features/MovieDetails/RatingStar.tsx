@@ -62,6 +62,9 @@ export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
   const dataUserId = userData.user.id;
   const [userRating, setUserRating] = useState<number | null>(null);
   const [plannedList, setPlannedList] = useState<any[]>([]);
+  const [ratedList, setRatedList] = useState<any[]>([]);
+  const userId = dataUserId;
+  const uniqueId = uuidv4();
 
   const stars = Array.from({ length: 10 }, (_, index) => (
     <StarOutlinedIcon key={index} style={{ fontSize: '3em', color: '#a0a0a0' }} />
@@ -69,31 +72,38 @@ export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
 
   const ratingScore = RatingRounding(data.rating.kp, 1);
 
-  const handleStarClick = (clickedRating: number) => {
+  const handleStarClick = async (clickedRating: number) => {
     setUserRating(clickedRating);
-    const { id, name, year, poster, type } = data;
-    const RatedData = {
-      ...userRatingStore.getState(),
-      [id]: {
-        id: id,
-        clickedRating,
+    const { id, name, genres, type, year, poster, shortDescription, rating } = data;
+    const { data: RatedData, error } = await supabase.from('liked_list').insert([
+      {
+        id: userId,
         title: name,
-        year,
+        genres: genres,
+        movie_id: id,
         image: poster.url,
-        type,
-        rating: data.rating.kp,
-        shortDescription: data.shortDescription,
-        genres: data.genres,
+        rating: rating.kp,
+        short_description: shortDescription,
+        type: type,
+        year: year,
+        clicked_rating: clickedRating,
+        movie_unique_id: uniqueId,
       },
-    };
-    userRatingStore.setState(RatedData);
+    ]);
+    if (error) {
+      console.error('Error adding movie to planned_list:', error);
+      return;
+    }
+
+    const ratedListData = await fetchRatedList();
+
+    if (ratedListData) {
+      userRatingStore.setState(ratedListData);
+    }
   };
 
   const handleAddToPlanList = async () => {
     const { id, name, genres, type, year, poster, shortDescription, rating } = data;
-
-    const userId = dataUserId;
-    const uniqueId = uuidv4();
 
     const { data: plannedData, error } = await supabase.from('planned_list').insert([
       {
@@ -122,6 +132,36 @@ export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
       userPlanListStore.setState(plannedListData);
     }
   };
+
+  const fetchRatedList = async () => {
+    const { data: dataList, error } = await supabase.from('liked_list').select('*').eq('id', dataUserId);
+
+    if (error) {
+      console.error('Error fetching rated list:', error);
+      return null;
+    }
+
+    return dataList;
+  };
+
+  useEffect(() => {
+    const fetchRatedListData = async () => {
+      const dataList = await fetchRatedList();
+      if (dataList) {
+        setRatedList(dataList);
+      }
+    };
+
+    const unsubscribe = userRatingStore.watch(() => {
+      fetchRatedListData();
+    });
+
+    fetchRatedListData();
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   const fetchPlannedList = async () => {
     const { data: dataList, error } = await supabase.from('planned_list').select('*').eq('id', dataUserId);
