@@ -63,7 +63,7 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
   const handleDeleteFilm = async (movieId: number, movieIndex: number) => {
     let table = '';
     if (formType === PROFILE_ROUTE.RATED) {
-      table = 'rated_list';
+      table = 'liked_list';
     } else {
       table = 'planned_list';
     }
@@ -132,7 +132,7 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
         let endpoint = '';
 
         if (formType === PROFILE_ROUTE.RATED) {
-          endpoint = 'rated_list';
+          endpoint = 'liked_list';
         } else {
           endpoint = 'planned_list';
         }
