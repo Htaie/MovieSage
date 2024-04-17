@@ -6,7 +6,7 @@ export interface ModalDataType {
   short_description: string | null;
   type: string | null;
   year: number | null;
-  clickedRating: number | null;
+  clicked_rating: number | null;
   genres: string[] | null;
   movie_id: number | null;
 }

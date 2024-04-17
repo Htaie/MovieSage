@@ -29,6 +29,8 @@ const ModalButton: React.FC<Props> = ({ modalData, formType, addToPlanList, addT
     setOpen(false);
   };
 
+  console.log(modalData);
+
   return (
     <div className='flex flex-col'>
       <button
@@ -38,7 +40,7 @@ const ModalButton: React.FC<Props> = ({ modalData, formType, addToPlanList, addT
           formType === PROFILE_ROUTE.RATED ? 'bg-[#75A7B7]' : formType === PROFILE_ROUTE.PLAN ? 'bg-[#599A7B]' : ''
         }`}
       >
-        {formType === PROFILE_ROUTE.RATED ? `Просмотрено - ${modalData.clickedRating}` : 'Запланировано'}
+        {formType === PROFILE_ROUTE.RATED ? `Просмотрено - ${modalData.clicked_rating}` : 'Запланировано'}
       </button>
       {open && (
         <button
@@ -48,7 +50,7 @@ const ModalButton: React.FC<Props> = ({ modalData, formType, addToPlanList, addT
             formType === PROFILE_ROUTE.RATED ? 'bg-[#599A7B]' : formType === PROFILE_ROUTE.PLAN ? 'bg-[#75A7B7]' : ''
           }`}
         >
-          {formType === PROFILE_ROUTE.RATED ? `Запланировано` : `Просмотрено - ${modalData.clickedRating}`}
+          {formType === PROFILE_ROUTE.RATED ? `Запланировано` : `Просмотрено - ${modalData.clicked_rating}`}
         </button>
       )}
     </div>
