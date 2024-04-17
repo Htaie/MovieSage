@@ -1,4 +1,4 @@
-import { MouseEvent, useState } from 'react';
+import { MouseEvent, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
   userRatingStore,
@@ -119,6 +119,39 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
     });
     deleteFromPlannedList(Number(id));
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        let endpoint = '';
+
+        if (formType === PROFILE_ROUTE.RATED) {
+          endpoint = 'rated_list';
+        } else {
+          endpoint = 'planned_list';
+        }
+
+        const { data, error } = await supabase.from(endpoint).select('*').eq('id', dataUserId);
+
+        if (error) {
+          console.error(`Error fetching ${formType} list:`, error);
+          return;
+        }
+
+        if (data) {
+          if (formType === PROFILE_ROUTE.RATED) {
+            userRatingStore.setState(data);
+          } else {
+            userPlanListStore.setState(data);
+          }
+        }
+      } catch (error) {
+        console.error(`Error fetching ${formType} list:`, error);
+      }
+    };
+
+    fetchData();
+  }, [formType, dataUserId]);
 
   return (
     <div className='text-white border-2 border-solid border-[#5138E9] rounded-lg h-[100%] w-[80%] pb-[400px] mx-auto mt-[30px]'>
