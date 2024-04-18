@@ -78,14 +78,14 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
     setSelectedRating(0);
   };
 
-  const handleRatingChange = async (filmId: number, rating: number) => {
+  const handleRatingChange = async (movieId: number, rating: number, movieIndex: number) => {
     setSelectedRating(rating);
 
     try {
       const { error } = await supabase
         .from('liked_list')
         .update({ clicked_rating: rating })
-        .eq('movie_id', filmId)
+        .eq('movie_id', movieId)
         .eq('id', dataUserId);
 
       if (error) {
@@ -93,11 +93,11 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
         return;
       }
 
-      const currentFilmRating = userRatingStore.getState()[filmId];
+      const currentFilmRating = userRatingStore.getState()[movieIndex];
       if (currentFilmRating) {
         userRatingStore.setState({
           ...userRatingStore.getState(),
-          [filmId]: { ...currentFilmRating, clicked_rating: rating },
+          [movieIndex]: { ...currentFilmRating, clicked_rating: rating },
         });
       }
     } catch (error) {
@@ -210,7 +210,7 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
                 <select
                   className='text-xl bg-[#45475B] appearance-none pl-[10px] w-[40px] py-2 mr-2 focus:outline-none'
                   value={film.clicked_rating}
-                  onChange={(event) => handleRatingChange(film.movie_id, parseInt(event.target.value))}
+                  onChange={(event) => handleRatingChange(film.movie_id, parseInt(event.target.value), index)}
                 >
                   {[...Array(10)].map((_, index) => (
                     <option key={index} value={index + 1}>
