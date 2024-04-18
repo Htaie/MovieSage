@@ -29,8 +29,6 @@ const ModalButton: React.FC<Props> = ({ modalData, formType, addToPlanList, addT
     setOpen(false);
   };
 
-  console.log(modalData);
-
   return (
     <div className='flex flex-col'>
       <button
