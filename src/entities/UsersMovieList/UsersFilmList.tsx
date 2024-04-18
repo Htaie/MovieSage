@@ -78,12 +78,31 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
     setSelectedRating(0);
   };
 
-  const handleRatingChange = (filmId: number, rating: number) => {
+  const handleRatingChange = async (filmId: number, rating: number) => {
     setSelectedRating(rating);
-    userRatingStore.setState({
-      ...userRatingStore.getState(),
-      [filmId]: { ...userRatingStore.getState()[filmId], clickedRating: rating },
-    });
+
+    try {
+      const { error } = await supabase
+        .from('liked_list')
+        .update({ clicked_rating: rating })
+        .eq('movie_id', filmId)
+        .eq('id', dataUserId);
+
+      if (error) {
+        console.error('Error updating film rating in Supabase:', error);
+        return;
+      }
+
+      const currentFilmRating = userRatingStore.getState()[filmId];
+      if (currentFilmRating) {
+        userRatingStore.setState({
+          ...userRatingStore.getState(),
+          [filmId]: { ...currentFilmRating, clicked_rating: rating },
+        });
+      }
+    } catch (error) {
+      console.error('Error updating film rating:', error);
+    }
   };
 
   const handleAddToPlanList = (filmData: ModalDataType) => {
@@ -159,8 +178,6 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
     fetchData();
   }, [formType, dataUserId]);
 
-  console.log(data);
-
   return (
     <div className='text-white border-2 border-solid border-[#5138E9] rounded-lg h-[100%] w-[80%] pb-[400px] mx-auto mt-[30px]'>
       {Object.keys(data).length === 0 ? (
@@ -193,7 +210,7 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
                 <select
                   className='text-xl bg-[#45475B] appearance-none pl-[10px] w-[40px] py-2 mr-2 focus:outline-none'
                   value={film.clicked_rating}
-                  onChange={(event) => handleRatingChange(film.id, parseInt(event.target.value))}
+                  onChange={(event) => handleRatingChange(film.movie_id, parseInt(event.target.value))}
                 >
                   {[...Array(10)].map((_, index) => (
                     <option key={index} value={index + 1}>
