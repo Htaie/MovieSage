@@ -9,4 +9,5 @@ export interface ModalDataType {
   clicked_rating: number | null;
   genres: string[] | null;
   movie_id: number | null;
+  movie_unique_id: string | null;
 }

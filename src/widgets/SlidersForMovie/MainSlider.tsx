@@ -71,7 +71,7 @@ const MainSlider: React.FC = () => {
     >
       {data.slice(0, 5).map(
         (movie: MovieType) =>
-          movie.logo.url !== null && (
+          movie.backdrop.url !== null && ( //чмошники на kinopoisk.dev не приходит лого поэтому я пока поставил backdrop :(
             <SwiperSlide key={movie.id}>
               <div className='relative'>
                 <img

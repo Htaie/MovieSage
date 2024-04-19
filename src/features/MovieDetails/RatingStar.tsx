@@ -45,15 +45,25 @@ userPlanListStore.on(deleteUserRating, (state, id) => {
   return newState;
 });
 
-userRatingStore.on(deleteFromRatedList, (state, id) => {
+userRatingStore.on(deleteFromRatedList, (state, movieId) => {
   const newState = { ...state };
-  delete newState[id];
+  for (const id in newState) {
+    if (newState[id].movie_id === movieId) {
+      delete newState[id];
+      break;
+    }
+  }
   return newState;
 });
 
-userPlanListStore.on(deleteFromPlannedList, (state, id) => {
+userPlanListStore.on(deleteFromPlannedList, (state, movieId) => {
   const newState = { ...state };
-  delete newState[id];
+  for (const id in newState) {
+    if (newState[id].movie_id === movieId) {
+      delete newState[id];
+      break;
+    }
+  }
   return newState;
 });
 

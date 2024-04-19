@@ -5,8 +5,8 @@ import { PROFILE_ROUTE } from '../../constants/constants';
 interface Props {
   modalData: ModalDataType;
   formType: string;
-  addToPlanList: (id: number) => void;
-  addToRatedList: (id: number) => void;
+  addToPlanList: (id: number | null) => void;
+  addToRatedList: (id: number | null) => void;
 }
 
 const ModalButton: React.FC<Props> = ({ modalData, formType, addToPlanList, addToRatedList }) => {

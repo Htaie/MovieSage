@@ -9,8 +9,8 @@ interface Props {
   setIsHovered: (value: boolean) => void;
   currentLink: number | null;
   formType: string;
-  addToPlanList: (filmId: number) => void;
-  addToRatedList: (filmId: number) => void;
+  addToPlanList: (filmId: number | null) => void;
+  addToRatedList: (filmId: number | null) => void;
 }
 
 const MovieModal: React.FC<Props> = ({
