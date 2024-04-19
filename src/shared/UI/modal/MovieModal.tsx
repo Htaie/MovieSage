@@ -102,6 +102,7 @@ const MovieModal: React.FC<Props> = ({
           formType={formType}
           addToPlanList={addToPlanList}
           addToRatedList={addToRatedList}
+          closeModal={() => setIsVisible(false)}
         />
         <div className='flex text-xl mr-2'>
           <p className='mr-2'>рейтинг:</p>

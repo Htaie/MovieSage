@@ -7,9 +7,10 @@ interface Props {
   formType: string;
   addToPlanList: (id: number | null) => void;
   addToRatedList: (id: number | null) => void;
+  closeModal: () => void;
 }
 
-const ModalButton: React.FC<Props> = ({ modalData, formType, addToPlanList, addToRatedList }) => {
+const ModalButton: React.FC<Props> = ({ modalData, formType, addToPlanList, addToRatedList, closeModal }) => {
   const [open, setOpen] = useState(false);
 
   const toggleButton = () => {
@@ -27,6 +28,7 @@ const ModalButton: React.FC<Props> = ({ modalData, formType, addToPlanList, addT
       }
     }
     setOpen(false);
+    closeModal();
   };
 
   return (
