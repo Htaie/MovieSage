@@ -57,7 +57,6 @@ export const ChangeUserPhoto = () => {
     imageSrc: string,
     croppedAreaPixels: { width: number; height: number; x: number; y: number }
   ) => {
-    console.log(crop);
     const image = new Image();
     image.src = imageSrc;
     const canvas = document.createElement('canvas');

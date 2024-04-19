@@ -30,7 +30,6 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
   const [likedList, setLikedList] = useState([]);
 
   const handleMouseEnter = (film: ModalDataType, event: MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-    console.log('modal data film:', film);
     const {
       id,
       image,
@@ -133,7 +132,6 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
 
   const handleAddToPlanList = async (filmData: ModalDataType) => {
     const { movie_id } = filmData;
-    console.log('filmData', filmData);
 
     try {
       const deleteFromRatedResult = await supabase
@@ -162,7 +160,6 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
 
   const handleAddToRatedList = async (filmData: ModalDataType) => {
     const { movie_id } = filmData;
-    console.log('filmData', filmData);
 
     try {
       const deleteFromPlannedResult = await supabase
