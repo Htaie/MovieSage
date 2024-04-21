@@ -124,65 +124,48 @@ export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
     }
   };
 
-  const fetchRatedList = async () => {
-    const { data: dataList, error } = await supabase.from('liked_list').select('*').eq('id', dataUserId);
+  const fetchUserList = async (listName: string) => {
+    const { data: dataList, error } = await supabase.from(listName).select('*').eq('id', dataUserId);
 
     if (error) {
-      console.error('Error fetching rated list:', error);
+      console.error(`Error fetching ${listName}:`, error);
       return null;
     }
 
     return dataList;
   };
 
-  useEffect(() => {
-    const fetchRatedListData = async () => {
-      const dataList = await fetchRatedList();
-      if (dataList) {
-        setRatedList(dataList);
-      }
-    };
-
-    const unsubscribe = userRatingStore.watch(() => {
-      fetchRatedListData();
-    });
-
-    fetchRatedListData();
-
-    return () => {
-      unsubscribe();
-    };
-  }, []);
+  const fetchRatedList = async () => {
+    return await fetchUserList('liked_list');
+  };
 
   const fetchPlannedList = async () => {
-    const { data: dataList, error } = await supabase.from('planned_list').select('*').eq('id', dataUserId);
-
-    if (error) {
-      console.error('Error fetching planned list:', error);
-      return null;
-    }
-
-    return dataList;
+    return await fetchUserList('planned_list');
   };
 
-  useEffect(() => {
-    const fetchPlannedListData = async () => {
-      const dataList = await fetchPlannedList();
-      if (dataList) {
-        setPlannedList(dataList);
-      }
-    };
+  const useFetchListEffect = (fetchFunction: () => Promise<any>, store: any, setFunction: React.Dispatch<any>) => {
+    useEffect(() => {
+      const fetchData = async () => {
+        const dataList = await fetchFunction();
+        if (dataList) {
+          setFunction(dataList);
+        }
+      };
 
-    const unsubscribe = userPlanListStore.watch(() => {
-      fetchPlannedListData();
-    });
+      const unsubscribe = store.watch(() => {
+        fetchData();
+      });
 
-    fetchPlannedListData();
+      fetchData();
 
-    return () => {
-      unsubscribe();
-    };
-  }, []);
+      return () => {
+        unsubscribe();
+      };
+    }, []);
+  };
+
+  useFetchListEffect(fetchRatedList, userRatingStore, setRatedList);
+  useFetchListEffect(fetchPlannedList, userPlanListStore, setPlannedList);
 
   return (
     <>
