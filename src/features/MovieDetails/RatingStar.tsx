@@ -22,7 +22,7 @@ interface RatedData {
     rating: number;
     shortDescription: string;
     genres: string[];
-    id: number;
+    movie_id: number;
   };
 }
 
@@ -82,10 +82,9 @@ export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
 
   const ratingScore = RatingRounding(data.rating.kp, 1);
 
-  const handleStarClick = async (clickedRating: number) => {
-    setUserRating(clickedRating);
-    const { id, name, genres, type, year, poster, shortDescription, rating } = data;
-    const { data: RatedData, error } = await supabase.from('liked_list').insert([
+  const insertMovieToList = async (listName: string, movieData: any, clickedRating: number = 0) => {
+    const { id, name, genres, type, year, poster, shortDescription, rating } = movieData;
+    const { data, error } = await supabase.from(listName).insert([
       {
         id: userId,
         title: name,
@@ -101,41 +100,23 @@ export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
       },
     ]);
     if (error) {
-      console.error('Error adding movie to liked_list:', error);
+      console.error(`Error adding movie to ${listName}:`, error);
       return;
     }
+  };
 
+  const handleStarClick = async (clickedRating: number) => {
+    setUserRating(clickedRating);
+
+    const rated = await insertMovieToList('liked_list', data, clickedRating);
     const ratedListData = await fetchRatedList();
-
     if (ratedListData) {
       userRatingStore.setState(ratedListData);
     }
   };
 
   const handleAddToPlanList = async () => {
-    const { id, name, genres, type, year, poster, shortDescription, rating } = data;
-
-    const { data: plannedData, error } = await supabase.from('planned_list').insert([
-      {
-        id: userId,
-        title: name,
-        genres: genres,
-        movie_id: id,
-        image: poster.url,
-        rating: rating.kp,
-        short_description: shortDescription,
-        type: type,
-        year: year,
-        clicked_rating: 0,
-        movie_unique_id: uniqueId,
-      },
-    ]);
-
-    if (error) {
-      console.error('Error adding movie to planned_list:', error);
-      return;
-    }
-
+    const planned = await insertMovieToList('planned_list', data);
     const plannedListData = await fetchPlannedList();
 
     if (plannedListData) {
