@@ -29,8 +29,8 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
   const [selectedRating, setSelectedRating] = useState(0);
   const [likedList, setLikedList] = useState([]);
 
-  const handleMouseEnter = (film: ModalDataType, event: MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-    const {
+  const handleMouseEnter = (
+    {
       id,
       image,
       title,
@@ -42,39 +42,26 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
       genres,
       movie_id,
       movie_unique_id,
-    } = film;
-    if (rating === null) {
-      setModalData({
-        id,
-        image,
-        title,
-        rating,
-        clicked_rating,
-        type,
-        year,
-        short_description,
-        genres,
-        movie_id,
-        movie_unique_id,
-      });
-    }
-    if (rating !== null) {
-      const roundedRating = RatingRounding(rating);
-      setModalData({
-        id,
-        image,
-        title,
-        rating: roundedRating,
-        clicked_rating,
-        type,
-        year,
-        short_description,
-        genres,
-        movie_id,
-        movie_unique_id,
-      });
-    }
-    setSelectedRating(film.clicked_rating || 0);
+    }: ModalDataType,
+    event: MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
+    const roundedRating = rating !== null ? RatingRounding(rating) : null;
+
+    setModalData({
+      id,
+      image,
+      title,
+      rating: roundedRating,
+      clicked_rating,
+      type,
+      year,
+      short_description,
+      genres,
+      movie_id,
+      movie_unique_id,
+    });
+
+    setSelectedRating(clicked_rating || 0);
     setIsHovered(true);
     setLinkPosition({ x: event.clientX, y: event.clientY });
     setCurrentLink(id);
@@ -130,60 +117,42 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
     }
   };
 
-  const handleAddToPlanList = async (filmData: ModalDataType) => {
+  const handleListChange = async (filmData: ModalDataType, sourceList: string, targetList: string) => {
     const { movie_id } = filmData;
 
     try {
-      const deleteFromRatedResult = await supabase
-        .from('liked_list')
-        .delete()
-        .eq('movie_id', movie_id)
-        .eq('id', dataUserId);
+      const deleteResult = await supabase.from(sourceList).delete().eq('movie_id', movie_id).eq('id', dataUserId);
 
-      if (deleteFromRatedResult.error) {
-        console.error('Error deleting from rated list:', deleteFromRatedResult.error);
+      if (deleteResult.error) {
+        console.error(`Error deleting from ${sourceList}:`, deleteResult.error);
         return;
       }
-      const addToPlannedResult = await supabase.from('planned_list').insert({
+
+      const addResult = await supabase.from(targetList).insert({
         ...filmData,
       });
 
-      if (addToPlannedResult.error) {
-        console.error('Error adding to planned list:', addToPlannedResult.error);
+      if (addResult.error) {
+        console.error(`Error adding to ${targetList}:`, addResult.error);
         return;
       }
-      deleteFromRatedList(Number(movie_id));
+
+      if (sourceList === 'liked_list') {
+        deleteFromRatedList(Number(movie_id));
+      } else {
+        deleteFromPlannedList(Number(movie_id));
+      }
     } catch (error) {
       console.error('Error updating lists:', error);
     }
   };
 
-  const handleAddToRatedList = async (filmData: ModalDataType) => {
-    const { movie_id } = filmData;
+  const handleAddToPlanList = (filmData: ModalDataType) => {
+    handleListChange(filmData, 'liked_list', 'planned_list');
+  };
 
-    try {
-      const deleteFromPlannedResult = await supabase
-        .from('planned_list')
-        .delete()
-        .eq('movie_id', movie_id)
-        .eq('id', dataUserId);
-
-      if (deleteFromPlannedResult.error) {
-        console.error('Error deleting from planned list:', deleteFromPlannedResult.error);
-        return;
-      }
-      const addToRatedResult = await supabase.from('liked_list').insert({
-        ...filmData,
-      });
-
-      if (addToRatedResult.error) {
-        console.error('Error adding to rated list:', addToRatedResult.error);
-        return;
-      }
-      deleteFromPlannedList(Number(movie_id));
-    } catch (error) {
-      console.error('Error updating lists:', error);
-    }
+  const handleAddToRatedList = (filmData: ModalDataType) => {
+    handleListChange(filmData, 'planned_list', 'liked_list');
   };
 
   useEffect(() => {
