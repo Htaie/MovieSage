@@ -9,8 +9,8 @@ interface Props {
   setIsHovered: (value: boolean) => void;
   currentLink: number | null;
   formType: string;
-  addToPlanList: (filmId: number) => void;
-  addToRatedList: (filmId: number) => void;
+  addToPlanList: (filmId: number | null) => void;
+  addToRatedList: (filmId: number | null) => void;
 }
 
 const MovieModal: React.FC<Props> = ({
@@ -75,7 +75,7 @@ const MovieModal: React.FC<Props> = ({
         />
         <div className='text-xl'>
           <p className='font-bold mb-2'>{modalData.title}</p>
-          <p className='text-sm mb-2'>{modalData.shortDescription}</p>
+          <p className='text-sm mb-2'>{modalData.short_description}</p>
           <div className='flex'>
             <p className='font-bold mr-2'>Тип:</p>
             <span>{modalData.type}</span>
@@ -102,6 +102,7 @@ const MovieModal: React.FC<Props> = ({
           formType={formType}
           addToPlanList={addToPlanList}
           addToRatedList={addToRatedList}
+          closeModal={() => setIsVisible(false)}
         />
         <div className='flex text-xl mr-2'>
           <p className='mr-2'>рейтинг:</p>

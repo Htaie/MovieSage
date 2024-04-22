@@ -2,9 +2,12 @@ import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
 import { MainBtn } from '../../shared/UI/buttons/MainBtn';
 import { RatingRounding } from '../../shared/utils/textUtils';
 import { MovieType } from '../../shared/types/MoviesTypes';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createEvent, createStore } from 'effector';
-
+import { supabase } from '../../../backend/apiClient/client.js';
+import { userDataStore } from '../../shared/store/UserStore';
+import { useStore } from 'effector-react';
+import { v4 as uuidv4 } from 'uuid';
 interface RaitingInfoProps {
   data: MovieType;
 }
@@ -19,7 +22,7 @@ interface RatedData {
     rating: number;
     shortDescription: string;
     genres: string[];
-    id: number;
+    movie_id: number;
   };
 }
 
@@ -42,20 +45,36 @@ userPlanListStore.on(deleteUserRating, (state, id) => {
   return newState;
 });
 
-userRatingStore.on(deleteFromRatedList, (state, id) => {
+userRatingStore.on(deleteFromRatedList, (state, movieId) => {
   const newState = { ...state };
-  delete newState[id];
+  for (const id in newState) {
+    if (newState[id].movie_id === movieId) {
+      delete newState[id];
+      break;
+    }
+  }
   return newState;
 });
 
-userPlanListStore.on(deleteFromPlannedList, (state, id) => {
+userPlanListStore.on(deleteFromPlannedList, (state, movieId) => {
   const newState = { ...state };
-  delete newState[id];
+  for (const id in newState) {
+    if (newState[id].movie_id === movieId) {
+      delete newState[id];
+      break;
+    }
+  }
   return newState;
 });
 
 export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
+  const userData = useStore(userDataStore);
+  const dataUserId = userData.user.id;
   const [userRating, setUserRating] = useState<number | null>(null);
+  const [plannedList, setPlannedList] = useState<any[]>([]);
+  const [ratedList, setRatedList] = useState<any[]>([]);
+  const userId = dataUserId;
+  const uniqueId = uuidv4();
 
   const stars = Array.from({ length: 10 }, (_, index) => (
     <StarOutlinedIcon key={index} style={{ fontSize: '3em', color: '#a0a0a0' }} />
@@ -63,43 +82,90 @@ export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
 
   const ratingScore = RatingRounding(data.rating.kp, 1);
 
-  const handleStarClick = (clickedRating: number) => {
-    setUserRating(clickedRating);
-    const { id, name, year, poster, type } = data;
-    const RatedData = {
-      ...userRatingStore.getState(),
-      [id]: {
-        id: id,
-        clickedRating,
+  const insertMovieToList = async (listName: string, movieData: any, clickedRating: number = 0) => {
+    const { id, name, genres, type, year, poster, shortDescription, rating } = movieData;
+    const { data, error } = await supabase.from(listName).insert([
+      {
+        id: userId,
         title: name,
-        year,
+        genres: genres,
+        movie_id: id,
         image: poster.url,
-        type,
-        rating: data.rating.kp,
-        shortDescription: data.shortDescription,
-        genres: data.genres,
+        rating: rating.kp,
+        short_description: shortDescription,
+        type: type,
+        year: year,
+        clicked_rating: clickedRating,
+        movie_unique_id: uniqueId,
       },
-    };
-    userRatingStore.setState(RatedData);
+    ]);
+    if (error) {
+      console.error(`Error adding movie to ${listName}:`, error);
+      return;
+    }
   };
 
-  const handleAddToPlanList = () => {
-    const { id, name, year, poster, type } = data;
-    const RatedData = {
-      ...userPlanListStore.getState(),
-      [id]: {
-        clickedRating: 0,
-        title: name,
-        year,
-        image: poster.url,
-        type,
-        rating: data.rating.kp,
-        shortDescription: data.shortDescription,
-        genres: data.genres,
-      },
-    };
-    userPlanListStore.setState(RatedData);
+  const handleStarClick = async (clickedRating: number) => {
+    setUserRating(clickedRating);
+
+    const rated = await insertMovieToList('liked_list', data, clickedRating);
+    const ratedListData = await fetchRatedList();
+    if (ratedListData) {
+      userRatingStore.setState(ratedListData);
+    }
   };
+
+  const handleAddToPlanList = async () => {
+    const planned = await insertMovieToList('planned_list', data);
+    const plannedListData = await fetchPlannedList();
+
+    if (plannedListData) {
+      userPlanListStore.setState(plannedListData);
+    }
+  };
+
+  const fetchUserList = async (listName: string) => {
+    const { data: dataList, error } = await supabase.from(listName).select('*').eq('id', dataUserId);
+
+    if (error) {
+      console.error(`Error fetching ${listName}:`, error);
+      return null;
+    }
+
+    return dataList;
+  };
+
+  const fetchRatedList = async () => {
+    return await fetchUserList('liked_list');
+  };
+
+  const fetchPlannedList = async () => {
+    return await fetchUserList('planned_list');
+  };
+
+  const useFetchListEffect = (fetchFunction: () => Promise<any>, store: any, setFunction: React.Dispatch<any>) => {
+    useEffect(() => {
+      const fetchData = async () => {
+        const dataList = await fetchFunction();
+        if (dataList) {
+          setFunction(dataList);
+        }
+      };
+
+      const unsubscribe = store.watch(() => {
+        fetchData();
+      });
+
+      fetchData();
+
+      return () => {
+        unsubscribe();
+      };
+    }, []);
+  };
+
+  useFetchListEffect(fetchRatedList, userRatingStore, setRatedList);
+  useFetchListEffect(fetchPlannedList, userPlanListStore, setPlannedList);
 
   return (
     <>

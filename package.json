@@ -29,7 +29,8 @@
     "react-image-crop": "^11.0.5",
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.21.3",
-    "swiper": "^11.0.5"
+    "swiper": "^11.0.5",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",

@@ -5,11 +5,12 @@ import { PROFILE_ROUTE } from '../../constants/constants';
 interface Props {
   modalData: ModalDataType;
   formType: string;
-  addToPlanList: (id: number) => void;
-  addToRatedList: (id: number) => void;
+  addToPlanList: (id: number | null) => void;
+  addToRatedList: (id: number | null) => void;
+  closeModal: () => void;
 }
 
-const ModalButton: React.FC<Props> = ({ modalData, formType, addToPlanList, addToRatedList }) => {
+const ModalButton: React.FC<Props> = ({ modalData, formType, addToPlanList, addToRatedList, closeModal }) => {
   const [open, setOpen] = useState(false);
 
   const toggleButton = () => {
@@ -27,6 +28,7 @@ const ModalButton: React.FC<Props> = ({ modalData, formType, addToPlanList, addT
       }
     }
     setOpen(false);
+    closeModal();
   };
 
   return (
@@ -38,7 +40,7 @@ const ModalButton: React.FC<Props> = ({ modalData, formType, addToPlanList, addT
           formType === PROFILE_ROUTE.RATED ? 'bg-[#75A7B7]' : formType === PROFILE_ROUTE.PLAN ? 'bg-[#599A7B]' : ''
         }`}
       >
-        {formType === PROFILE_ROUTE.RATED ? `Просмотрено - ${modalData.clickedRating}` : 'Запланировано'}
+        {formType === PROFILE_ROUTE.RATED ? `Просмотрено - ${modalData.clicked_rating}` : 'Запланировано'}
       </button>
       {open && (
         <button
@@ -48,7 +50,7 @@ const ModalButton: React.FC<Props> = ({ modalData, formType, addToPlanList, addT
             formType === PROFILE_ROUTE.RATED ? 'bg-[#599A7B]' : formType === PROFILE_ROUTE.PLAN ? 'bg-[#75A7B7]' : ''
           }`}
         >
-          {formType === PROFILE_ROUTE.RATED ? `Запланировано` : `Просмотрено - ${modalData.clickedRating}`}
+          {formType === PROFILE_ROUTE.RATED ? `Запланировано` : `Просмотрено - ${modalData.clicked_rating}`}
         </button>
       )}
     </div>
