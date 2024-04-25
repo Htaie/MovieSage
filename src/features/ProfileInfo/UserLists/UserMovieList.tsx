@@ -27,7 +27,6 @@ export const UserMovieList = ({ formType }: { formType: string }) => {
       }
 
       if (data) {
-        console.log('Received data:', data);
         if (formType === PROFILE_ROUTE.RATED) {
           userRatingStore.setState(data);
         } else {
@@ -38,7 +37,6 @@ export const UserMovieList = ({ formType }: { formType: string }) => {
       }
     };
 
-    console.log('Starting fetchData');
     fetchData();
   }, [dataUserId, formType]);
 
@@ -51,7 +49,7 @@ export const UserMovieList = ({ formType }: { formType: string }) => {
   useEffect(() => {
     const intervalId = setInterval(() => {
       setRandomMovie(getRandomMovie(data));
-    }, 5000); // 5 seconds
+    }, 5000);
 
     return () => {
       clearInterval(intervalId);
