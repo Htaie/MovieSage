@@ -42,6 +42,7 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
       genres,
       movie_id,
       movie_unique_id,
+      added_at,
     }: ModalDataType,
     event: MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
@@ -59,6 +60,7 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
       genres,
       movie_id,
       movie_unique_id,
+      added_at,
     });
 
     setSelectedRating(clicked_rating || 0);

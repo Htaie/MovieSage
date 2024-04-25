@@ -10,4 +10,5 @@ export interface ModalDataType {
   genres: string[] | null;
   movie_id: number | null;
   movie_unique_id: string | null;
+  added_at: string | null;
 }
