@@ -21,6 +21,7 @@
     "effector": "^23.2.0",
     "effector-react": "^23.2.0",
     "eslint-config-prettier": "^9.1.0",
+    "framer-motion": "^11.1.7",
     "lint-staged": "^15.2.2",
     "moment": "^2.30.1",
     "react": "^18.2.0",

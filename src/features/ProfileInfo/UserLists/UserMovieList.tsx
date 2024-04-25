@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { PROFILE_ROUTE, Route } from '../../../shared/constants/constants.js';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
+import { motion } from 'framer-motion';
 
 export const UserMovieList = ({ formType }: { formType: string }) => {
   const data = formType === PROFILE_ROUTE.RATED ? useStore(userRatingStore) : useStore(userPlanListStore);
@@ -46,6 +47,11 @@ export const UserMovieList = ({ formType }: { formType: string }) => {
 
   const randomMovie = getRandomMovie(data);
 
+  const movieVariants = {
+    initial: { opacity: 0, scale: 0.9 },
+    animate: { opacity: 1, scale: 1 },
+  };
+
   return (
     <div className='text-white bg-[#212124] h-[300px] mt-[100px] ml-2'>
       {!data || Object.keys(data).length === 0 ? (
@@ -65,7 +71,14 @@ export const UserMovieList = ({ formType }: { formType: string }) => {
           </p>
           <div className='flex items-center'>
             {randomMovie && (
-              <div key={randomMovie.movie_id} className='relative bg-[#45475B] w-[525px] h-[240px] rounded-lg mr-4'>
+              <motion.div
+                key={randomMovie.movie_id}
+                variants={movieVariants}
+                initial='initial'
+                animate='animate'
+                transition={{ duration: 1 }}
+                className='relative bg-[#45475B] w-[525px] h-[240px] rounded-lg mr-4'
+              >
                 <div className='flex flex-row'>
                   <img
                     src={randomMovie.image || 'https://via.placeholder.com/180x280'}
@@ -79,7 +92,7 @@ export const UserMovieList = ({ formType }: { formType: string }) => {
                     <p className='text-sm'>Добавлено: {randomMovie.added_at}</p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             )}
             <Link to={formType === PROFILE_ROUTE.RATED ? Route.RATED : Route.PLAN}>
               <ArrowForwardIosIcon className='text-white' />
