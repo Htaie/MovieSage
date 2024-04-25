@@ -1,6 +1,6 @@
 import { useStore } from 'effector-react';
 import { userPlanListStore, userRatingStore } from '../../MovieDetails/RatingStar.js';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { supabase } from '../../../../backend/apiClient/client.js';
 import { userDataStore } from '../../../shared/store/UserStore.js';
 import { Link } from 'react-router-dom';
@@ -13,6 +13,7 @@ export const UserMovieList = ({ formType }: { formType: string }) => {
   const data = formType === PROFILE_ROUTE.RATED ? useStore(userRatingStore) : useStore(userPlanListStore);
   const userData = useStore(userDataStore);
   const dataUserId = userData.user.id;
+  const [randomMovie, setRandomMovie] = useState<any>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,6 +33,8 @@ export const UserMovieList = ({ formType }: { formType: string }) => {
         } else {
           userPlanListStore.setState(data);
         }
+
+        setRandomMovie(getRandomMovie(data));
       }
     };
 
@@ -45,7 +48,15 @@ export const UserMovieList = ({ formType }: { formType: string }) => {
     return movies[randomKey];
   };
 
-  const randomMovie = getRandomMovie(data);
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setRandomMovie(getRandomMovie(data));
+    }, 5000); // 5 seconds
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [data]);
 
   const movieVariants = {
     initial: { opacity: 0, scale: 0.9 },
