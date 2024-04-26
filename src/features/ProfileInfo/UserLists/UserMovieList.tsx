@@ -57,7 +57,7 @@ export const UserMovieList = ({ formType }: { formType: string }) => {
   }, [data]);
 
   const movieVariants = {
-    initial: { opacity: 0, scale: 0.9 },
+    initial: { opacity: 0, scale: 1 },
     animate: { opacity: 1, scale: 1 },
   };
 
@@ -80,28 +80,29 @@ export const UserMovieList = ({ formType }: { formType: string }) => {
           </p>
           <div className='flex items-center'>
             {randomMovie && (
-              <motion.div
-                key={randomMovie.movie_id}
-                variants={movieVariants}
-                initial='initial'
-                animate='animate'
-                transition={{ duration: 1 }}
-                className='relative bg-[#45475B] w-[525px] h-[240px] rounded-lg mr-4'
-              >
-                <div className='flex flex-row'>
-                  <img
-                    src={randomMovie.image || 'https://via.placeholder.com/180x280'}
-                    alt='Movie Poster'
-                    className='w-[144px] h-[210px] mt-2 ml-2 mr-2'
-                  />
-                  <div className='text-xl'>
-                    <Link to={`/movie/${randomMovie.movie_id}`} className='font-bold mb-2'>
-                      {randomMovie.title}
-                    </Link>
-                    <p className='text-sm'>Добавлено: {randomMovie.added_at}</p>
-                  </div>
+              <Link to={`/movie/${randomMovie.movie_id}`}>
+                <div key={randomMovie.movie_id} className='relative bg-[#45475B] w-[525px] h-[240px] rounded-lg mr-4'>
+                  <motion.div
+                    variants={movieVariants}
+                    initial='initial'
+                    animate='animate'
+                    transition={{ duration: 1 }}
+                    className='flex flex-row'
+                  >
+                    <img
+                      src={randomMovie.image || 'https://via.placeholder.com/180x280'}
+                      alt='Movie Poster'
+                      className='w-[144px] h-[210px] mt-2 ml-2 mr-2'
+                    />
+                    <div className='text-xl'>
+                      <Link to={`/movie/${randomMovie.movie_id}`} className='font-bold mb-2'>
+                        {randomMovie.title}
+                      </Link>
+                      <p className='text-sm'>Добавлено: {randomMovie.added_at}</p>
+                    </div>
+                  </motion.div>
                 </div>
-              </motion.div>
+              </Link>
             )}
             <Link to={formType === PROFILE_ROUTE.RATED ? Route.RATED : Route.PLAN}>
               <ArrowForwardIosIcon className='text-white' />
