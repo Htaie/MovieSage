@@ -6,8 +6,8 @@ import { userDataStore } from '../../../shared/store/UserStore.js';
 import { Link } from 'react-router-dom';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { PROFILE_ROUTE, Route } from '../../../shared/constants/constants.js';
-import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import { motion } from 'framer-motion';
+import PlaceholderLoading from 'react-placeholder-loading';
 
 export const UserMovieList = ({ formType }: { formType: string }) => {
   const data = formType === PROFILE_ROUTE.RATED ? useStore(userRatingStore) : useStore(userPlanListStore);
@@ -64,14 +64,11 @@ export const UserMovieList = ({ formType }: { formType: string }) => {
   return (
     <div className='text-white bg-[#212124] h-[300px] mt-[100px] ml-2'>
       {!data || Object.keys(data).length === 0 ? (
-        <div className='flex items-center mb-2'>
-          <div className='flex-1 flex flex-col items-center'>
-            <SentimentDissatisfiedIcon style={{ fontSize: 140 }} />
-            <p className='text-sm ml-2'>
-              Брадочек,у тебя нет фильмов в списке{' '}
-              {formType === PROFILE_ROUTE.RATED ? 'понравившихся' : 'запланированных'}
-            </p>
-          </div>
+        <div>
+          <p className='text-3xl text-white mb-2'>
+            Ваши {formType === PROFILE_ROUTE.RATED ? 'понравившиеся' : 'запланированные'} фильмы
+          </p>
+          <PlaceholderLoading shape='rect' width={525} height={240} colorEnd='#45475B' colorStart='#212124' />
         </div>
       ) : (
         <div>
