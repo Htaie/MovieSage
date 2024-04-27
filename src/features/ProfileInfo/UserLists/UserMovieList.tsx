@@ -14,6 +14,7 @@ export const UserMovieList = ({ formType }: { formType: string }) => {
   const userData = useStore(userDataStore);
   const dataUserId = userData.user.id;
   const [randomMovie, setRandomMovie] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,6 +35,7 @@ export const UserMovieList = ({ formType }: { formType: string }) => {
         }
 
         setRandomMovie(getRandomMovie(data));
+        setLoading(false);
       }
     };
 
@@ -63,12 +65,18 @@ export const UserMovieList = ({ formType }: { formType: string }) => {
 
   return (
     <div className='text-white bg-[#212124] h-[300px] mt-[100px] ml-2'>
-      {!data || Object.keys(data).length === 0 ? (
+      {loading ? (
         <div>
           <p className='text-3xl text-white mb-2'>
             Ваши {formType === PROFILE_ROUTE.RATED ? 'понравившиеся' : 'запланированные'} фильмы
           </p>
           <PlaceholderLoading shape='rect' width={525} height={240} colorEnd='#45475B' colorStart='#212124' />
+        </div>
+      ) : Object.keys(data).length === 0 ? (
+        <div>
+          <p className='text-3xl text-white mb-2'>
+            Нет {formType === PROFILE_ROUTE.RATED ? 'понравившихся' : 'запланированных'} фильмов
+          </p>
         </div>
       ) : (
         <div>
