@@ -51,61 +51,68 @@ export const UserMovieList = ({ formType }: { formType: string }) => {
   useEffect(() => {
     const intervalId = setInterval(() => {
       setRandomMovie(getRandomMovie(data));
-    }, 5000);
+    }, 4000);
 
     return () => {
       clearInterval(intervalId);
     };
   }, [data]);
 
-  const movieVariants = {
-    initial: { opacity: 0, scale: 1 },
-    animate: { opacity: 1, scale: 1 },
+  const imageVariants = {
+    hidden: { opacity: 0, x: -100 },
+    visible: { opacity: 1, x: 0, transition: { duration: 1 } },
+  };
+
+  const titleVariants = {
+    hidden: { opacity: 0, x: -100 },
+    visible: { opacity: 1, x: 0, transition: { duration: 2 } },
+  };
+
+  const descVariants = {
+    hidden: { opacity: 0, x: -100 },
+    visible: { opacity: 1, x: 0, transition: { duration: 3 } },
   };
 
   return (
     <div className='text-white bg-[#212124] h-[300px] mt-[100px] ml-2'>
       {loading ? (
-        <div>
+        <>
           <p className='text-3xl text-white mb-2'>
             Ваши {formType === PROFILE_ROUTE.RATED ? 'понравившиеся' : 'запланированные'} фильмы
           </p>
           <PlaceholderLoading shape='rect' width={525} height={240} colorEnd='#45475B' colorStart='#212124' />
-        </div>
-      ) : Object.keys(data).length === 0 ? (
-        <div>
-          <p className='text-3xl text-white mb-2'>
-            Нет {formType === PROFILE_ROUTE.RATED ? 'понравившихся' : 'запланированных'} фильмов
-          </p>
-        </div>
-      ) : (
-        <div>
+        </>
+      ) : Object.keys(data).length === 0 ? null : (
+        <>
           <p className='text-3xl text-white mb-2'>
             Ваши {formType === PROFILE_ROUTE.RATED ? 'понравившиеся' : 'запланированные'} фильмы
           </p>
           <div className='flex items-center'>
             {randomMovie && (
               <Link to={`/movie/${randomMovie.movie_id}`}>
-                <div key={randomMovie.movie_id} className='relative bg-[#45475B] w-[525px] h-[240px] rounded-lg mr-4'>
-                  <motion.div
-                    variants={movieVariants}
-                    initial='initial'
-                    animate='animate'
-                    transition={{ duration: 1 }}
-                    className='flex flex-row'
-                  >
-                    <img
-                      src={randomMovie.image || 'https://via.placeholder.com/180x280'}
-                      alt='Movie Poster'
-                      className='w-[144px] h-[210px] mt-2 ml-2 mr-2'
-                    />
-                    <div className='text-xl'>
+                <div
+                  key={randomMovie.movie_id}
+                  className='flex relative bg-[#45475B] w-[525px] h-[240px] rounded-lg mr-4'
+                  style={{ overflow: 'hidden' }}
+                >
+                  <motion.img
+                    variants={imageVariants}
+                    initial='hidden'
+                    animate='visible'
+                    src={randomMovie.image || 'https://via.placeholder.com/180x280'}
+                    alt='Movie Poster'
+                    className='w-[144px] h-[210px] mt-2 ml-2 mr-2'
+                  />
+                  <div style={{ overflow: 'hidden' }}>
+                    <motion.div variants={titleVariants} initial='hidden' animate='visible' className='text-xl'>
                       <Link to={`/movie/${randomMovie.movie_id}`} className='font-bold mb-2'>
                         {randomMovie.title}
                       </Link>
-                      <p className='text-sm'>Добавлено: {randomMovie.added_at}</p>
-                    </div>
-                  </motion.div>
+                    </motion.div>
+                    <motion.p variants={descVariants} initial='hidden' animate='visible' className='text-sm'>
+                      Добавлено: {randomMovie.added_at}
+                    </motion.p>
+                  </div>
                 </div>
               </Link>
             )}
@@ -113,7 +120,7 @@ export const UserMovieList = ({ formType }: { formType: string }) => {
               <ArrowForwardIosIcon className='text-white' />
             </Link>
           </div>
-        </div>
+        </>
       )}
     </div>
   );
