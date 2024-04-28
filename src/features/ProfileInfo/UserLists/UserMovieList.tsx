@@ -51,7 +51,7 @@ export const UserMovieList = ({ formType }: { formType: string }) => {
   useEffect(() => {
     const intervalId = setInterval(() => {
       setRandomMovie(getRandomMovie(data));
-    }, 4000);
+    }, 15000);
 
     return () => {
       clearInterval(intervalId);
@@ -70,7 +70,7 @@ export const UserMovieList = ({ formType }: { formType: string }) => {
 
   const descVariants = {
     hidden: { opacity: 0, x: -100 },
-    visible: { opacity: 1, x: 0, transition: { duration: 3 } },
+    visible: { opacity: 1, x: 0, transition: { duration: 4 } },
   };
 
   return (
