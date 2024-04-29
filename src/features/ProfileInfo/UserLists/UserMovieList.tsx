@@ -94,10 +94,13 @@ export const UserMovieList = ({ formType }: { formType: string }) => {
                     className='w-[144px] h-[210px] my-[10px] mx-2 rounded'
                   />
                   <div style={{ overflow: 'hidden' }}>
-                    <motion.div variants={animationVariants} initial='hidden' animate='visible' className='text-xl'>
-                      <Link to={`/movie/${randomMovie.movie_id}`} className='font-bold mb-2'>
-                        {randomMovie.title}
-                      </Link>
+                    <motion.div
+                      variants={animationVariants}
+                      initial='hidden'
+                      animate='visible'
+                      className='text-xl font-bold mt-[3px]'
+                    >
+                      <Link to={`/movie/${randomMovie.movie_id}`}>{randomMovie.title}</Link>
                     </motion.div>
                     <motion.p variants={animationVariants} initial='hidden' animate='visible' className='text-sm'>
                       Добавлено: {randomMovie.added_at}
