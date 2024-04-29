@@ -58,17 +58,7 @@ export const UserMovieList = ({ formType }: { formType: string }) => {
     };
   }, [data]);
 
-  const imageVariants = {
-    hidden: { opacity: 0, x: -100 },
-    visible: { opacity: 1, x: 0, transition: { duration: 1 } },
-  };
-
-  const titleVariants = {
-    hidden: { opacity: 0, x: -100 },
-    visible: { opacity: 1, x: 0, transition: { duration: 1 } },
-  };
-
-  const descVariants = {
+  const animationVariants = {
     hidden: { opacity: 0, x: -100 },
     visible: { opacity: 1, x: 0, transition: { duration: 1 } },
   };
@@ -96,7 +86,7 @@ export const UserMovieList = ({ formType }: { formType: string }) => {
                   style={{ overflow: 'hidden' }}
                 >
                   <motion.img
-                    variants={imageVariants}
+                    variants={animationVariants}
                     initial='hidden'
                     animate='visible'
                     src={randomMovie.image || 'https://via.placeholder.com/180x280'}
@@ -104,12 +94,12 @@ export const UserMovieList = ({ formType }: { formType: string }) => {
                     className='w-[144px] h-[210px] my-[10px] mx-2 rounded'
                   />
                   <div style={{ overflow: 'hidden' }}>
-                    <motion.div variants={titleVariants} initial='hidden' animate='visible' className='text-xl'>
+                    <motion.div variants={animationVariants} initial='hidden' animate='visible' className='text-xl'>
                       <Link to={`/movie/${randomMovie.movie_id}`} className='font-bold mb-2'>
                         {randomMovie.title}
                       </Link>
                     </motion.div>
-                    <motion.p variants={descVariants} initial='hidden' animate='visible' className='text-sm'>
+                    <motion.p variants={animationVariants} initial='hidden' animate='visible' className='text-sm'>
                       Добавлено: {randomMovie.added_at}
                     </motion.p>
                   </div>
