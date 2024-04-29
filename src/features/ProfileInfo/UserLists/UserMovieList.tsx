@@ -65,24 +65,24 @@ export const UserMovieList = ({ formType }: { formType: string }) => {
 
   const titleVariants = {
     hidden: { opacity: 0, x: -100 },
-    visible: { opacity: 1, x: 0, transition: { duration: 2 } },
+    visible: { opacity: 1, x: 0, transition: { duration: 1 } },
   };
 
   const descVariants = {
     hidden: { opacity: 0, x: -100 },
-    visible: { opacity: 1, x: 0, transition: { duration: 4 } },
+    visible: { opacity: 1, x: 0, transition: { duration: 1 } },
   };
 
   return (
     <div className='text-white bg-[#212124] h-[300px] mt-[100px] ml-2'>
-      {loading ? (
+      {Object.keys(data).length === 0 ? null : loading ? (
         <>
           <p className='text-3xl text-white mb-2'>
             Ваши {formType === PROFILE_ROUTE.RATED ? 'понравившиеся' : 'запланированные'} фильмы
           </p>
           <PlaceholderLoading shape='rect' width={525} height={240} colorEnd='#45475B' colorStart='#212124' />
         </>
-      ) : Object.keys(data).length === 0 ? null : (
+      ) : (
         <>
           <p className='text-3xl text-white mb-2'>
             Ваши {formType === PROFILE_ROUTE.RATED ? 'понравившиеся' : 'запланированные'} фильмы
