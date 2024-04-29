@@ -92,7 +92,7 @@ export const UserMovieList = ({ formType }: { formType: string }) => {
               <Link to={`/movie/${randomMovie.movie_id}`}>
                 <div
                   key={randomMovie.movie_id}
-                  className='flex relative bg-[#45475B] w-[525px] h-[240px] rounded-lg mr-4'
+                  className='flex relative bg-[#45475B] w-[525px] h-[230px] rounded-lg mr-4'
                   style={{ overflow: 'hidden' }}
                 >
                   <motion.img
@@ -101,7 +101,7 @@ export const UserMovieList = ({ formType }: { formType: string }) => {
                     animate='visible'
                     src={randomMovie.image || 'https://via.placeholder.com/180x280'}
                     alt='Movie Poster'
-                    className='w-[144px] h-[210px] mt-2 ml-2 mr-2'
+                    className='w-[144px] h-[210px] my-[10px] mx-2 rounded'
                   />
                   <div style={{ overflow: 'hidden' }}>
                     <motion.div variants={titleVariants} initial='hidden' animate='visible' className='text-xl'>
