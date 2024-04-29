@@ -32,5 +32,6 @@ export interface MovieType {
   shortDescription: string;
   backdrop: {
     url: string;
+    previewUrl: string;
   };
 }
