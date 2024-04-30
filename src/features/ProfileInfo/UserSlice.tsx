@@ -20,7 +20,7 @@ export const UserSlice = () => {
   }, [location.pathname]);
 
   const linkStyle = {
-    textDecoration: 'none',
+    borderBottom: 'none',
   };
 
   return (
@@ -28,21 +28,21 @@ export const UserSlice = () => {
       <div className='flex space-x-5 text-2xl ml-[195px]'>
         <Link
           to={Route.RATED}
-          style={formType === PROFILE_ROUTE.RATED ? { ...linkStyle, textDecoration: 'underline' } : linkStyle}
+          style={formType === PROFILE_ROUTE.RATED ? { ...linkStyle, borderBottom: '2px solid white' } : linkStyle}
           className='text-white'
         >
           Просмотренные
         </Link>
         <Link
           to={Route.PLAN}
-          style={formType === PROFILE_ROUTE.PLAN ? { ...linkStyle, textDecoration: 'underline' } : linkStyle}
+          style={formType === PROFILE_ROUTE.PLAN ? { ...linkStyle, borderBottom: '2px solid white' } : linkStyle}
           className='text-white'
         >
           Смотреть позже
         </Link>
         <Link
           to={Route.SETTINGS}
-          style={formType === PROFILE_ROUTE.SETTINGS ? { ...linkStyle, textDecoration: 'underline' } : linkStyle}
+          style={formType === PROFILE_ROUTE.SETTINGS ? { ...linkStyle, borderBottom: '2px solid white' } : linkStyle}
           className='text-white'
         >
           Настройки
