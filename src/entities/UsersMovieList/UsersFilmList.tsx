@@ -213,7 +213,7 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
           currentItems.map((movie_id, index) => {
             const film = data[movie_id];
             return (
-              <div key={movie_id} className='flex bg-[#45475B] h-[50px] items-center my-[7px]'>
+              <div key={movie_id} className='flex bg-[#45475B] h-[50px] items-center my-[7px] mx-[7px]'>
                 <div className='flex-1 flex ml-4'>
                   <Link
                     to={`/movie/${film.movie_id}`}
