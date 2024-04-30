@@ -201,7 +201,7 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
 
   return (
     <div className='flex flex-col'>
-      <div className='text-white border-2 border-solid border-[#5138E9] rounded-lg h-[585px] w-[80%] pb-[400px] mx-auto mt-[30px] mb-[30px]'>
+      <div className='text-white border-2 border-solid border-[#5138E9] rounded-lg h-[582px] w-[80%] pb-[400px] mx-auto mt-[30px] mb-[30px]'>
         {Object.keys(data).length === 0 ? (
           <div className='flex items-center mb-2'>
             <div className='flex-1 flex flex-col items-center'>
@@ -213,7 +213,7 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
           currentItems.map((movie_id, index) => {
             const film = data[movie_id];
             return (
-              <div key={movie_id} className='flex bg-[#45475B] h-[50px] items-center mb-2'>
+              <div key={movie_id} className='flex bg-[#45475B] h-[50px] items-center my-[7px]'>
                 <div className='flex-1 flex ml-4'>
                   <Link
                     to={`/movie/${film.movie_id}`}
