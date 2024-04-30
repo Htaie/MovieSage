@@ -114,29 +114,48 @@ export const ChangeUserPhoto = () => {
   return (
     <div className='text-white h-[150px] rounded-lg flex flex-col items-center pt-3'>
       {previewImage && (
-        <Modal isOpen={modalIsOpen} onRequestClose={handleModalClose} className='bg-white p-4 rounded-lg h-96 w-96'>
-          <Cropper
-            image={previewImage}
-            crop={crop}
-            zoom={zoom}
-            aspect={4 / 3}
-            onCropChange={setCrop}
-            onCropComplete={onCropComplete}
-            onZoomChange={setZoom}
-          />
-          <div className='absolute bottom-0 flex justify-center mt-48'>
-            <button
-              onClick={handleModalClose}
-              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2'
-            >
-              Отмена
-            </button>
-            <button
-              onClick={handleFinishCrop}
-              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
-            >
-              Окей
-            </button>
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={handleModalClose}
+          className='flex items-center justify-center'
+          overlayClassName='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'
+        >
+          <div className='bg-[#212124] w-[720px] h-[440px] rounded-lg relative'>
+            <div className='bg-white w-[670px] h-[350px] relative mx-auto mt-4'>
+              <Cropper
+                image={previewImage}
+                crop={crop}
+                zoom={zoom}
+                aspect={4 / 3}
+                onCropChange={setCrop}
+                onCropComplete={onCropComplete}
+                onZoomChange={setZoom}
+                style={{
+                  containerStyle: {
+                    width: '100%',
+                    height: '100%',
+                  },
+                  mediaStyle: {
+                    maxWidth: '100%',
+                    maxHeight: '100%',
+                  },
+                }}
+              />
+            </div>
+            <div className='absolute bottom-0 flex justify-center mt-48 ml-[25px] mb-5'>
+              <button
+                onClick={handleModalClose}
+                className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2'
+              >
+                Отмена
+              </button>
+              <button
+                onClick={handleFinishCrop}
+                className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+              >
+                Окей
+              </button>
+            </div>
           </div>
         </Modal>
       )}
