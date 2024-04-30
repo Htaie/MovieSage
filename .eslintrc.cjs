@@ -2,33 +2,24 @@ module.exports = {
   env: {
     browser: true,
     es2021: true,
-    node: true,
   },
-  extends: ['standard', 'plugin:react/recommended', 'prettier'],
-  parser: '@typescript-eslint/parser',
+  extends: ['standard-with-typescript', 'plugin:react/recommended', 'plugin:prettier/recommended'],
   overrides: [
     {
-      files: ['.eslintrc.{js,cjs}'],
       env: {
         node: true,
       },
+      files: ['.eslintrc.{js,cjs}'],
       parserOptions: {
         sourceType: 'script',
       },
     },
-    {
-      files: ['*.tsx'],
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
-        },
-        ecmaVersion: 'latest',
-        sourceType: 'module',
-        jsx: 'react-jsx',
-      },
-    },
   ],
-  plugins: ['react', 'prettier', '@typescript-eslint'],
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+  },
+  ignorePatterns: ['.eslintrc.cjs', 'tailwind.config.js', 'postcss.config.js', 'vite.config.ts', 'tsconfig.node.json'],
   settings: {
     react: {
       createClass: 'createReactClass',
@@ -53,9 +44,19 @@ module.exports = {
     linkComponents: ['Hyperlink', { name: 'Link', linkAttribute: 'to' }],
   },
   rules: {
+    '@typescript-eslint/consistent-type-imports': 'off',
+    indent: 'off',
+    '@typescript-eslint/indent': 'off',
+    '@typescript-eslint/member-delimiter-style': 'off',
+    semi: 'off',
+    '@typescript-eslint/semi': 'off',
+    'comma-dangle': 'off',
+    '@typescript-eslint/comma-dangle': 'off',
     'react/jsx-uses-react': 'error',
     'react/jsx-uses-vars': 'error',
     'react/react-in-jsx-scope': 'off',
     'react/react-in-tsx-scope': 'off',
+    'multiline-ternary ': 'off',
+    '@typescript-eslint/prefer-nullish-coalescing': 'off',
   },
 };

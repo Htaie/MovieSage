@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+body {
+  background-color: #212124;
+}
+.swiper-pagination-bullet-active {
+  width: 11px;
+  height: 11px;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  color: transparent;
+}
+
+.box-shadow-card {
+  -webkit-box-shadow: 0px -82px 65px -15px rgba(6, 6, 6, 0.33) inset;
+  -moz-box-shadow: 0px -82px 65px -15px rgba(6, 6, 6, 0.33) inset;
+  box-shadow: 0px -82px 65px -15px rgba(6, 6, 6, 0.33) inset;
+}
+
+@layer utilities {
+  .swiper-navigation-color {
+    --swiper-navigation-color: #fff;
+  }
+
+  .swiper-pagination-color {
+    --swiper-pagination-color: #fff;
+  }
+}
