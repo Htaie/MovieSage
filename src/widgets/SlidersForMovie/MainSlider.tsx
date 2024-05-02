@@ -50,8 +50,6 @@ const MainSlider: React.FC = () => {
     }
   }, [data]);
 
-  console.log('data from main slider', data);
-
   return (
     <Swiper
       loop={true}
