@@ -71,12 +71,12 @@ const MainSlider: React.FC = () => {
     >
       {data.slice(0, 5).map(
         (movie: MovieType) =>
-          movie.backdrop.url !== null && ( //чмошники на kinopoisk.dev не приходит лого поэтому я пока поставил backdrop :(
+          movie.backdrop.previewUrl !== null && ( //чмошники на kinopoisk.dev не приходит лого поэтому я пока поставил backdrop :(
             <SwiperSlide key={movie.id}>
               <div className='relative'>
                 <img
                   className='h-full w-full object-cover'
-                  src={movie.backdrop.url}
+                  src={'https://placehold.co/1000x500' || movie.backdrop.previewUrl}
                   loading='lazy'
                   alt='backdropMovie'
                 />

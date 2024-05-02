@@ -23,6 +23,7 @@ interface RatedData {
     shortDescription: string;
     genres: string[];
     movie_id: number;
+    added_at: string;
   };
 }
 
@@ -82,8 +83,18 @@ export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
 
   const ratingScore = RatingRounding(data.rating.kp, 1);
 
+  const formatDate = (date: Date): string => {
+    const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'long', year: 'numeric' };
+    return new Intl.DateTimeFormat('ru-RU', options).format(date);
+  };
+
   const insertMovieToList = async (listName: string, movieData: any, clickedRating: number = 0) => {
     const { id, name, genres, type, year, poster, shortDescription, rating } = movieData;
+
+    const currentDate = new Date();
+
+    const formattedDate = formatDate(currentDate);
+
     const { data, error } = await supabase.from(listName).insert([
       {
         id: userId,
@@ -97,6 +108,7 @@ export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
         year: year,
         clicked_rating: clickedRating,
         movie_unique_id: uniqueId,
+        added_at: formattedDate,
       },
     ]);
     if (error) {
