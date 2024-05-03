@@ -12,10 +12,17 @@ import ActorsInMovie from '../../widgets/MovieDescription/ActorsInMovie.tsx';
 import FilmInfo from '../../features/MovieDetails/FilmDesc/FilmInfo.tsx';
 import { MovieDataFetcher, movieDataStore } from '../../entities/MovieDataFetcher/MovieDataFetcher.tsx';
 import { useStore } from 'effector-react';
+import { motion, useScroll, useSpring } from 'framer-motion';
 
 const AboutMoviePage = (): JSX.Element => {
   const [openModal, setOpenModal] = useState(false);
   const { id } = useParams();
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
   useEffect(() => {
     MovieDataFetcher(id);
   }, [id]); //у меня ощущения будто это не совсем то что нужно но если честно то я вообще чет не смог ничего больше сделать рабочего с этим вонючим effector'ом
@@ -34,12 +41,16 @@ const AboutMoviePage = (): JSX.Element => {
   }
 
   return (
-    <div className='bg-[#212124]'>
+    <div>
+      <motion.div
+        className='fixed h-[10px] top-0 left-0 right-0 bg-[#5138E9]'
+        style={{ scaleX, transformOrigin: 'left', zIndex: 101 }}
+      />
       <div className='container mx-auto text-white pt-[100px] pb-[100px]'>
         {openModal && (
-          <div className='w-full h-full absolute overflow-hidden'>
+          <div className='w-[90%] h-full'>
             <div
-              className=' bg-black opacity-75 absolute z-40  w-full h-full'
+              className='bg-black opacity-75 z-40 absolute top-0 left-0 right-0 bottom-0'
               onClick={() => {
                 setOpenModal(false);
               }}
@@ -52,7 +63,7 @@ const AboutMoviePage = (): JSX.Element => {
                 style={{ fontSize: '50px' }}
               />
             </div>
-            <div className='absolute top-1/2 left-1/2  z-50 transform -translate-x-1/2 -translate-y-1/2'>
+            <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50'>
               <TrailerModal trailer={data.videos.trailers[0].url} />
             </div>
           </div>
