@@ -5,7 +5,6 @@ import { useStore } from 'effector-react';
 import { updateUserData, userDataStore } from '../../shared/store/UserStore';
 import { ChangeUserPhoto } from './ChangeUserPhoto.tsx';
 import { CustomInput } from '../../shared/components/CustomInput/CustomInput.tsx';
-import { Padding } from '@mui/icons-material';
 
 export const EditUserData: React.FC = () => {
   const [newUsername, setNewUsername] = useState('');
@@ -26,7 +25,7 @@ export const EditUserData: React.FC = () => {
         ...user,
         user: { ...user?.user, user_metadata: { ...user?.user?.user_metadata, username: newUsername } },
       });
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error updating username:', error.message);
       alert('An error occurred while updating username. Please try again later.');
     }
@@ -44,7 +43,7 @@ export const EditUserData: React.FC = () => {
       } else {
         throw new Error('New password and confirm password do not match.');
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error updating password:', error.message);
       alert('An error occurred while updating password. Please try again later.');
     }

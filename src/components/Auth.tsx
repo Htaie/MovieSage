@@ -4,15 +4,12 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { supabase } from '../../backend/apiClient/client.js';
 import { Route } from '../shared/constants/constants';
-import { motion } from 'framer-motion';
-
 import { saveUserDataToLocalStorage, updateUserData } from '../shared/store/UserStore.js';
 import { CustomInput } from '../shared/components/CustomInput/CustomInput.js';
 
 export const AuthComponent = ({ formType, setToken }: { formType: string; setToken: any }): JSX.Element => {
   const [showPassword, setShowPassword] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
-  const [continueButtonColor, setContinueButtonColor] = useState('white');
   const navigate = useNavigate();
   const [authData, setAuthData] = useState({
     email: '',
@@ -20,15 +17,6 @@ export const AuthComponent = ({ formType, setToken }: { formType: string; setTok
     password: '',
     repeatPassword: '',
   });
-
-  const customStyles = {
-    input: {
-      backgroundColor: 'black',
-      border: '2px solid #2b2c2e',
-      borderRadius: '5px',
-      color: 'white',
-    },
-  };
 
   function handleChange(event: any) {
     setAuthData({ ...authData, [event.target.name]: event.target.value });
@@ -64,7 +52,7 @@ export const AuthComponent = ({ formType, setToken }: { formType: string; setTok
         if (error) throw error;
         alert('Check your email for the login link!');
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Auth error:', error.message);
     }
   };
@@ -75,7 +63,6 @@ export const AuthComponent = ({ formType, setToken }: { formType: string; setTok
 
   const handleCheckboxChange: React.MouseEventHandler<HTMLDivElement> = () => {
     setIsChecked(!isChecked);
-    setContinueButtonColor(isChecked ? 'white' : 'green');
   };
 
   return (
