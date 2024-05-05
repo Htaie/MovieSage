@@ -175,26 +175,6 @@ export const ChangeUserPhoto = () => {
         )}
       </div>
       <p className='text-white text-3xl'>Username</p>
-      <p className='text-xl ml-4 pt-3 mb-4'>Загрузить аватар</p>
-      <div className='ml-4 mr-4'>
-        <form>
-          <div className='flex'>
-            <label htmlFor='file-input'>
-              <div className='border-dashed border-4 border-[#6E707A] w-[550px] h-[250px] text-center cursor-pointer mb-4 mr-4'>
-                <CloudUploadIcon style={{ fontSize: '30px' }} />
-                <p className='text-xl'>Нажмите или перетащите изображение для загрузки</p>
-              </div>
-            </label>
-          </div>
-          <input
-            id='file-input'
-            type='file'
-            accept='image/png, image/jpeg'
-            onChange={handleFileChange}
-            style={{ display: 'none' }}
-          />
-        </form>
-      </div>
     </div>
   );
 };
