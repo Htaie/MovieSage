@@ -18,24 +18,26 @@ export const UserMovieList = ({ formType }: { formType: string }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const endpoint = formType === PROFILE_ROUTE.RATED ? 'liked_list' : 'planned_list';
+      if (dataUserId !== undefined) {
+        const endpoint = formType === PROFILE_ROUTE.RATED ? 'liked_list' : 'planned_list';
 
-      const { data, error } = await supabase.from(endpoint).select('*').eq('id', dataUserId);
+        const { data, error } = await supabase.from(endpoint).select('*').eq('id', dataUserId);
 
-      if (error) {
-        console.error('Error fetching movie lists:', error);
-        return;
-      }
-
-      if (data) {
-        if (formType === PROFILE_ROUTE.RATED) {
-          userRatingStore.setState(data);
-        } else {
-          userPlanListStore.setState(data);
+        if (error) {
+          console.error('Error fetching movie lists:', error);
+          return;
         }
 
-        setRandomMovie(getRandomMovie(data));
-        setLoading(false);
+        if (data) {
+          if (formType === PROFILE_ROUTE.RATED) {
+            userRatingStore.setState(data);
+          } else {
+            userPlanListStore.setState(data);
+          }
+
+          setRandomMovie(getRandomMovie(data));
+          setLoading(false);
+        }
       }
     };
 

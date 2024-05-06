@@ -1,5 +1,4 @@
-import { Link, Routes, useLocation } from 'react-router-dom';
-import SearchIcon from '@mui/icons-material/Search';
+import { Link, useLocation } from 'react-router-dom';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useEffect, useState } from 'react';
@@ -7,6 +6,7 @@ import { supabase } from '../../../../backend/apiClient/client.js';
 import { userDataStore, updateUserData } from '../../../shared/store/UserStore.js';
 import { CDNURL, Route } from '../../../shared/constants/constants.js';
 import { useStore } from 'effector-react';
+import { SearchComponent } from '../../../features/Search/SearchComponent.js';
 const NavBar = () => {
   const [open, setOpen] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -90,7 +90,7 @@ const NavBar = () => {
           <Link to={'genre/писька'}>Сериалы</Link>
         </div>
         <div className='flex space-x-3 items-center'>
-          <SearchIcon className='hover:cursor-pointer' />
+          <SearchComponent />
           {isLoggedIn ? (
             <>
               <NotificationsNoneIcon />
@@ -109,17 +109,17 @@ const NavBar = () => {
               </Link>
               <KeyboardArrowDownIcon onClick={togglePanel} />
               {open && (
-                <div className='absolute flex flex-col bg-[#212124] mt-[275px] text-xl w-[160px] h-[220px] rounded-lg'>
-                  <p className='text-2xl py-3 ml-2'>
+                <div className='absolute flex flex-col bg-[#212124] mt-[270px] text-xl w-[160px] h-[190px] border-2 border-[#5138E9] rounded-lg right-40'>
+                  <p className='text-2xl py-3 pl-2'>
                     {userData ? userData.user.user_metadata.username : 'No user data available'}
                   </p>
-                  <Link to={Route.PROFILE} onClick={togglePanel} className='py-3 ml-2'>
+                  <Link to={Route.PROFILE} onClick={togglePanel} className='py-2 pl-2 hover:bg-[#5138E9]'>
                     Profile
                   </Link>
-                  <Link to={Route.SETTINGS} onClick={togglePanel} className='py-3 ml-2'>
+                  <Link to={Route.SETTINGS} onClick={togglePanel} className='py-2 pl-2 hover:bg-[#5138E9]'>
                     Settings
                   </Link>
-                  <Link to={Route.HOME} onClick={SignOut} className='py-3 ml-2'>
+                  <Link to={Route.HOME} onClick={SignOut} className='py-2 pl-2 rounded-b-lg hover:bg-[#5138E9]'>
                     Sign Out
                   </Link>
                 </div>
