@@ -12,7 +12,7 @@ import PlaceholderLoading from 'react-placeholder-loading';
 export const UserMovieList = ({ formType }: { formType: string }) => {
   const data = formType === PROFILE_ROUTE.RATED ? useStore(userRatingStore) : useStore(userPlanListStore);
   const userData = useStore(userDataStore);
-  const dataUserId = userData.user.id;
+  const dataUserId = userData?.user?.id;
   const [randomMovie, setRandomMovie] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 

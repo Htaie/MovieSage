@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import { Autoplay, Pagination } from 'swiper/modules';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css';
@@ -24,13 +24,16 @@ const MainSlider: React.FC = () => {
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       try {
-        const response = await fetch(API_URL + 'movie?page=1&limit=10', {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-            'X-API-KEY': TOKEN,
-          },
-        });
+        const response = await fetch(
+          API_URL + 'movie?page=1&limit=10&sortField=votes.imdb&sortType=1&votes.imdb=1900000-3900000',
+          {
+            method: 'GET',
+            headers: {
+              Accept: 'application/json',
+              'X-API-KEY': TOKEN,
+            },
+          }
+        );
 
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -71,12 +74,12 @@ const MainSlider: React.FC = () => {
     >
       {data.slice(0, 5).map(
         (movie: MovieType) =>
-          movie.backdrop.previewUrl !== null && ( //чмошники на kinopoisk.dev не приходит лого поэтому я пока поставил backdrop :(
+          movie.backdrop.url && ( //чмошники на kinopoisk.dev не приходит лого поэтому я пока поставил backdrop :(
             <SwiperSlide key={movie.id}>
               <div className='relative'>
                 <img
                   className='h-full w-full object-cover'
-                  src={'https://placehold.co/1000x500' || movie.backdrop.previewUrl}
+                  src={movie.backdrop.url || 'https://placehold.co/1000x500'}
                   loading='lazy'
                   alt='backdropMovie'
                 />
