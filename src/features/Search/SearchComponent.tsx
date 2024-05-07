@@ -25,7 +25,7 @@ export const SearchComponent = () => {
 
   return (
     <div className='flex'>
-      <div className='flex items-center justify-start relative w-[330px]' style={{ overflow: 'hidden' }}>
+      <div className='flex items-center relative w-[330px]' style={{ overflow: 'hidden' }}>
         <motion.div
           animate={showSearchInput ? 'open' : 'closed'}
           variants={inputVariants}
