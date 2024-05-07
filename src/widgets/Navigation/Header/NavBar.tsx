@@ -107,16 +107,16 @@ const NavBar = () => {
                   alt='Profile Img'
                 />
               </Link>
-              <KeyboardArrowDownIcon onClick={togglePanel} />
+              <KeyboardArrowDownIcon onClick={() => togglePanel()} />
               {open && (
                 <div className='absolute flex flex-col bg-[#212124] mt-[270px] text-xl w-[160px] h-[190px] border-2 border-[#5138E9] rounded-lg right-40'>
                   <p className='text-2xl py-3 pl-2'>
                     {userData ? userData.user.user_metadata.username : 'No user data available'}
                   </p>
-                  <Link to={Route.PROFILE} onClick={togglePanel} className='py-2 pl-2 hover:bg-[#5138E9]'>
+                  <Link to={Route.PROFILE} onClick={() => togglePanel()} className='py-2 pl-2 hover:bg-[#5138E9]'>
                     Profile
                   </Link>
-                  <Link to={Route.SETTINGS} onClick={togglePanel} className='py-2 pl-2 hover:bg-[#5138E9]'>
+                  <Link to={Route.SETTINGS} onClick={() => togglePanel()} className='py-2 pl-2 hover:bg-[#5138E9]'>
                     Settings
                   </Link>
                   <Link to={Route.HOME} onClick={SignOut} className='py-2 pl-2 rounded-b-lg hover:bg-[#5138E9]'>
