@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useEffect, useState } from 'react';
@@ -13,12 +13,7 @@ const NavBar = () => {
   const [visible, setVisible] = useState(true);
   const [updatedProfileImage, setUpdatedProfileImage] = useState('');
   const userData = useStore(userDataStore);
-  const location = useLocation();
 
-  const isAnimeGenre = location.pathname == `/genre/${encodeURIComponent('аниме')}`;
-  const linkStyle = {
-    textDecoration: isAnimeGenre ? 'underline' : 'none',
-  };
   const isLoggedIn = userData;
   const timestamp = Date.now();
   const profileImage = `${CDNURL}${userData?.user?.email}/${userData?.user?.id}?t=${timestamp}`;
@@ -82,15 +77,10 @@ const NavBar = () => {
             <span className='text-[#5138E9]'>Sage</span>
           </h1>
         </Link>
-        <div className='flex space-x-5'>
-          <Link to={'genre/аниме'} style={linkStyle}>
-            Аниме
-          </Link>
-          <Link to={'genre/комедии'}>Фильмы</Link>
-          <Link to={'genre/писька'}>Сериалы</Link>
+        <div>
+          <SearchComponent />
         </div>
         <div className='flex space-x-3 items-center'>
-          <SearchComponent />
           {isLoggedIn ? (
             <>
               <NotificationsNoneIcon />
