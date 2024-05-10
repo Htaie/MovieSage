@@ -1,6 +1,6 @@
 import SearchIcon from '@mui/icons-material/Search';
 import { SearchResults } from './SearchResults';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { createStore, createEvent } from 'effector';
 import { API_URL, SECOND_TOKEN } from '../../shared/constants/constants';
@@ -17,11 +17,36 @@ export const SearchComponent = () => {
   const [searchValue, setSearchValue] = useState('');
   const [showSearchResults, setShowSearchResults] = useState(false);
   const location = useLocation();
+  const searchContainerRef = useRef<HTMLDivElement>(null);
 
   const isAnimeGenre = location.pathname == `/genre/${encodeURIComponent('аниме')}`;
   const linkStyle = {
     textDecoration: isAnimeGenre ? 'underline' : 'none',
   };
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (searchContainerRef.current && !searchContainerRef.current.contains(event.target as Node | null)) {
+      setShowSearchInput(false);
+      setSearchValue('');
+    }
+  };
+
+  const handleWheel = (event: WheelEvent) => {
+    if (searchContainerRef.current && !searchContainerRef.current.contains(event.target as Node | null)) {
+      setShowSearchInput(false);
+      setSearchValue('');
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('wheel', handleWheel);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('wheel', handleWheel);
+    };
+  }, []);
 
   useEffect(() => {
     const unsubscribe = searchResultsStore.watch((results) => {
@@ -59,6 +84,7 @@ export const SearchComponent = () => {
 
   const toggleSearchInput = () => {
     setShowSearchInput(!showSearchInput);
+    setSearchValue('');
   };
 
   const handleInputChange = (event: any) => {
@@ -67,11 +93,6 @@ export const SearchComponent = () => {
     setShowSearchResults(value.length > 0);
   };
 
-  // const inputVariants = {
-  //   open: { opacity: 1, x: 0 },
-  //   closed: { opacity: 0, x: '200%' },
-  // };
-
   const inputVariants = {
     open: { opacity: 1, scale: 1 },
     closed: { opacity: 0, scale: 0 },
@@ -79,7 +100,10 @@ export const SearchComponent = () => {
 
   return (
     <>
-      <div className={`${showSearchInput ? 'hidden' : ''} ml-[135px] absolute flex space-x-5 z-10`}>
+      <div
+        ref={searchContainerRef}
+        className={`${showSearchInput ? 'hidden' : ''} ml-[135px] absolute flex space-x-5 z-10`}
+      >
         <Link to={'genre/аниме'} style={linkStyle}>
           Аниме
         </Link>
@@ -87,7 +111,7 @@ export const SearchComponent = () => {
         <Link to={'genre/писька'}>Сериалы</Link>
         <SearchIcon className='ml-5 hover:cursor-pointer hover:text-[#5138E9]' onClick={toggleSearchInput} />
       </div>
-      <div className='flex'>
+      <div ref={searchContainerRef} className='flex'>
         <div className='flex items-center relative w-[530px]' style={{ overflow: 'hidden' }}>
           <motion.div
             animate={showSearchInput ? 'open' : 'closed'}
