@@ -13,7 +13,7 @@ export const SearchResults = () => {
   return (
     <div className='mt-[35px] absolute' style={{ overflow: 'hidden', overflowY: 'auto', maxHeight: '330px' }}>
       <motion.div initial={{ opacity: 0, scale: 1 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5 }}>
-        <div className='bg-[#242424] text-white w-[530px] h-[350px] rounded-b-xl'>
+        <div className='bg-[#242424] text-white w-[512px] h-[350px] rounded-b-xl'>
           {searchResults.map((result, index) => (
             <div key={index} className='flex flex-row bg-[#242424]'>
               <img
