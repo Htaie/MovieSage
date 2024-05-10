@@ -17,9 +17,9 @@ export const SearchResults = () => {
           {searchResults.map((result, index) => (
             <div key={index} className='flex flex-row bg-[#242424]'>
               <img
-                src={result.poster.url || 'https://via.placeholder.com/100x120'}
+                src={result.poster.url || 'https://via.placeholder.com/50x70'}
                 alt='movie poster image'
-                className='max-w-[70px] max-h-[90px] rounded-2xl mt-3 ml-3'
+                className='max-w-[50px] max-h-[70px] rounded-2xl mt-3 ml-3'
               ></img>
               <div className='text-2xl mt-4 ml-3'>
                 <Link to={`/movie/${result.id}`} className='hover:text-[#5138E9]'>
