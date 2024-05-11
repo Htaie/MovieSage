@@ -2,15 +2,9 @@ import SearchIcon from '@mui/icons-material/Search';
 import { SearchResults } from './SearchResults';
 import { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { createStore, createEvent } from 'effector';
-import { API_URL, SECOND_TOKEN } from '../../shared/constants/constants';
-import { MovieType } from '../../shared/types/MoviesTypes';
 import { Link, useLocation } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
-
-export const updateSearchResults = createEvent<MovieType[]>('update search results');
-
-export const searchResultsStore = createStore<MovieType[]>([]).on(updateSearchResults, (_, results) => results);
+import useSearch from './SearchHooks';
 
 export const SearchComponent = () => {
   const [showSearchInput, setShowSearchInput] = useState(false);
@@ -18,6 +12,7 @@ export const SearchComponent = () => {
   const [showSearchResults, setShowSearchResults] = useState(false);
   const location = useLocation();
   const searchContainerRef = useRef<HTMLDivElement>(null);
+  const searchResults = useSearch(searchValue);
 
   const isAnimeGenre = location.pathname == `/genre/${encodeURIComponent('аниме')}`;
   const linkStyle = {
@@ -27,6 +22,7 @@ export const SearchComponent = () => {
   const handleClickOutside = (event: MouseEvent) => {
     if (searchContainerRef.current && !searchContainerRef.current.contains(event.target as Node | null)) {
       setShowSearchInput(false);
+      setShowSearchResults(false);
       setSearchValue('');
     }
   };
@@ -34,6 +30,7 @@ export const SearchComponent = () => {
   const handleWheel = (event: WheelEvent) => {
     if (searchContainerRef.current && !searchContainerRef.current.contains(event.target as Node | null)) {
       setShowSearchInput(false);
+      setShowSearchResults(false);
       setSearchValue('');
     }
   };
@@ -48,42 +45,9 @@ export const SearchComponent = () => {
     };
   }, []);
 
-  useEffect(() => {
-    const unsubscribe = searchResultsStore.watch((results) => {
-      if (Array.isArray(results)) {
-        setShowSearchResults(results.length > 0);
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (searchValue.length > 1) {
-          const response = await fetch(`${API_URL}movie/search?page=1&limit=10&query=${searchValue}`, {
-            method: 'GET',
-            headers: {
-              Accept: 'application/json',
-              'X-API-KEY': SECOND_TOKEN,
-            },
-          });
-          const data = await response.json();
-          updateSearchResults(data.docs as MovieType[]);
-        } else {
-          updateSearchResults([]);
-        }
-      } catch (error) {
-        console.error('Error fetching search results:', error);
-      }
-    };
-
-    fetchData();
-  }, [searchValue]);
-
   const toggleSearchInput = () => {
     setShowSearchInput(!showSearchInput);
+    setShowSearchResults(false);
     setSearchValue('');
   };
 
@@ -134,7 +98,7 @@ export const SearchComponent = () => {
             />
           )}
         </div>
-        {showSearchResults && <SearchResults />}
+        {showSearchResults && <SearchResults searchResults={searchResults} searchValue={searchValue} />}
       </div>
     </>
   );

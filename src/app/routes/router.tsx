@@ -31,14 +31,6 @@ export const router = createBrowserRouter([
         path: Route.PROFILE,
         element: <ProfilePage />,
       },
-      // {
-      //   path: Route.SETTINGS,
-      //   element: <ProfileSettingPage />,
-      // },
-      // {
-      //   path: Route.RATED,
-      //   element: <RatedFilmsPage />,
-      // },
       {
         path: Route.GENRE,
         element: <MoviePage />,
