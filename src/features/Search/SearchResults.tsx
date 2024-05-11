@@ -33,6 +33,11 @@ export const SearchResults = () => {
               </div>
             </div>
           ))}
+          <div className='flex justify-center mx-auto bg-[#242424] text-[#5138E9] hover:bg-[#5138E9] hover:text-white w-[512px] h-[40px]'>
+            <Link to={'#'} className='mt-2'>
+              Ещё Результаты
+            </Link>
+          </div>
         </div>
       </motion.div>
     </div>
