@@ -98,7 +98,13 @@ export const SearchComponent = () => {
             />
           )}
         </div>
-        {showSearchResults && <SearchResults searchResults={searchResults} searchValue={searchValue} />}
+        {showSearchResults && (
+          <SearchResults
+            searchResults={searchResults}
+            searchValue={searchValue}
+            closeSearchResults={toggleSearchInput}
+          />
+        )}
       </div>
     </>
   );

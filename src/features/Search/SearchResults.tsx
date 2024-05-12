@@ -5,7 +5,15 @@ import { createStore } from 'effector';
 
 export const searchValueStore = createStore<string>('');
 
-export const SearchResults = ({ searchResults, searchValue }: { searchResults: MovieType[]; searchValue: string }) => {
+export const SearchResults = ({
+  searchResults,
+  searchValue,
+  closeSearchResults,
+}: {
+  searchResults: MovieType[];
+  searchValue: string;
+  closeSearchResults: () => void;
+}) => {
   const data = searchResults;
 
   if (!data) {
@@ -14,6 +22,7 @@ export const SearchResults = ({ searchResults, searchValue }: { searchResults: M
 
   const handleSaveSearchValue = () => {
     searchValueStore.setState(searchValue);
+    closeSearchResults();
   };
 
   return (
