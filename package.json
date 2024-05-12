@@ -31,6 +31,7 @@
     "react-modal": "^3.16.1",
     "react-placeholder-loading": "^0.5.30",
     "react-router-dom": "^6.21.3",
+    "react-scrollbars-custom": "^4.1.1",
     "swiper": "^11.0.5",
     "uuid": "^9.0.1"
   },
