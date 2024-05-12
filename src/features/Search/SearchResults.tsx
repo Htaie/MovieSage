@@ -37,7 +37,7 @@ export const SearchResults = ({
                 className='max-w-[50px] max-h-[70px] rounded-2xl mt-3 ml-3'
               ></img>
               <div className='text-2xl mt-4 ml-3'>
-                <Link to={`/movie/${result.id}`} className='hover:text-[#5138E9]'>
+                <Link to={`/movie/${result.id}`} onClick={handleSaveSearchValue} className='hover:text-[#5138E9]'>
                   {result.name}
                 </Link>
                 {result.genres && result.genres.length > 0 && (
@@ -48,11 +48,13 @@ export const SearchResults = ({
               </div>
             </div>
           ))}
-          <div className='flex justify-center mx-auto bg-[#242424] text-[#5138E9] hover:bg-[#5138E9] hover:text-white w-[512px] h-[40px]'>
-            <Link to={`/genre/${searchValue}`} onClick={handleSaveSearchValue} className='mt-2'>
-              Ещё Результаты
-            </Link>
-          </div>
+          {data.length > 10 && (
+            <div className='flex justify-center mx-auto bg-[#242424] text-[#5138E9] hover:bg-[#5138E9] hover:text-white w-[512px] h-[40px]'>
+              <Link to={`/genre/${searchValue}`} onClick={handleSaveSearchValue} className='mt-2'>
+                Ещё Результаты
+              </Link>
+            </div>
+          )}
         </div>
       </motion.div>
     </div>
