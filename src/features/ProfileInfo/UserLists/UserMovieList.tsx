@@ -12,31 +12,27 @@ import PlaceholderLoading from 'react-placeholder-loading';
 export const UserMovieList = ({ formType }: { formType: string }) => {
   const data = formType === PROFILE_ROUTE.RATED ? useStore(userRatingStore) : useStore(userPlanListStore);
   const userData = useStore(userDataStore);
-  const dataUserId = userData.user.id;
+  const dataUserId = userData?.user?.id;
   const [randomMovie, setRandomMovie] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!dataUserId) return;
       const endpoint = formType === PROFILE_ROUTE.RATED ? 'liked_list' : 'planned_list';
 
       const { data, error } = await supabase.from(endpoint).select('*').eq('id', dataUserId);
 
-      if (error) {
-        console.error('Error fetching movie lists:', error);
-        return;
+      if (error || !data) return;
+
+      if (formType === PROFILE_ROUTE.RATED) {
+        userRatingStore.setState(data);
+      } else {
+        userPlanListStore.setState(data);
       }
 
-      if (data) {
-        if (formType === PROFILE_ROUTE.RATED) {
-          userRatingStore.setState(data);
-        } else {
-          userPlanListStore.setState(data);
-        }
-
-        setRandomMovie(getRandomMovie(data));
-        setLoading(false);
-      }
+      setRandomMovie(getRandomMovie(data));
+      setLoading(false);
     };
 
     fetchData();

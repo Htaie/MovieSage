@@ -3,12 +3,15 @@ import { useParams } from 'react-router-dom';
 import { API_URL, TOKEN } from '../shared/constants/constants';
 import MovieCard from '../features/MovieCard';
 import MainLoader from '../shared/loader/MainLoader';
+import { useStore } from 'effector-react';
+import { searchValueStore } from '../features/Search/SearchResults';
 
 const MovieList = ({ name }: { name: string }): JSX.Element => {
   const [data, setData] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
   const [maxPages, setMaxPages] = useState(1);
   const [loading, setLoading] = useState(false);
+  const searchValue = useStore(searchValueStore);
   useEffect(() => {
     scrollTo(0, 0);
   }, []);
@@ -17,7 +20,13 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
       try {
         setLoading(true);
 
-        const url = `${API_URL}movie?page=${pageNumber}&limit=50&genres.name=${name}&notNullFields=poster.url`;
+        let url = '';
+
+        if (searchValue) {
+          url = `${API_URL}movie/search?page=${pageNumber}&limit=50&query=${searchValue}&notNullFields=poster.url`;
+        } else {
+          url = `${API_URL}movie?page=${pageNumber}&limit=50&genres.name=${name}&notNullFields=poster.url`;
+        }
         const response = await fetch(url, {
           method: 'GET',
           headers: {

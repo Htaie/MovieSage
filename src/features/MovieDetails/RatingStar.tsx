@@ -74,7 +74,7 @@ userPlanListStore.on(deleteFromPlannedList, (state, movieId) => {
 
 export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
   const userData = useStore(userDataStore);
-  const dataUserId = userData.user.id;
+  const dataUserId = userData?.user?.id;
   const [userRating, setUserRating] = useState<number | null>(null);
   const [plannedList, setPlannedList] = useState<any[]>([]);
   const [ratedList, setRatedList] = useState<any[]>([]);
@@ -103,7 +103,7 @@ export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
 
   const insertMovieToList = async (listName: string, movieData: any, clickedRating: number = 0) => {
     const { id, name, genres, type, year, poster, shortDescription, rating } = movieData;
-    
+
     const currentDate = new Date();
 
     const formattedDate = formatDate(currentDate);
@@ -113,7 +113,7 @@ export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
       .select('*')
       .eq('id', userId)
       .eq('movie_id', id);
-    
+
     if (error) {
       console.error(`Error fetching existing movies from ${listName}:`, error);
       return;
