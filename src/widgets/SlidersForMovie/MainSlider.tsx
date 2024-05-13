@@ -7,7 +7,6 @@ import { RatingRounding } from '../../shared/utils/textUtils';
 import { TOKEN, API_URL } from '../../shared/constants/constants';
 import { MovieType } from '../../shared/types/MoviesTypes';
 import GenreLink from '../../features/GenreLink/GenreLink';
-import styles from './MainSliderStyles.module.css';
 import { motion } from 'framer-motion';
 
 const MainSlider: React.FC = () => {
@@ -67,8 +66,6 @@ const MainSlider: React.FC = () => {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { duration: 3 } },
   };
-
-  console.log(randomMovie);
 
   return (
     <>
