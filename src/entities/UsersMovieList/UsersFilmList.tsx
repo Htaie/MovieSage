@@ -14,11 +14,13 @@ import MovieModal from '../../shared/UI/modal/MovieModal';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
+import AddRoundedIcon from '@mui/icons-material/AddRounded';
+import CloseIcon from '@mui/icons-material/Close';
 import { PROFILE_ROUTE } from '../../shared/constants/constants';
 import { userDataStore } from '../../shared/store/UserStore';
 import { supabase } from '../../../backend/apiClient/client.js';
 import { CustomPagination } from '../../features/Pagination/CustomPagination.js';
-import AddRoundedIcon from '@mui/icons-material/AddRounded';
+import { SearchModal } from '../../shared/UI/modal/SearchModal.js';
 
 export const UsersFilmsList = ({ formType }: { formType: string }) => {
   const data = formType === PROFILE_ROUTE.RATED ? useStore(userRatingStore) : useStore(userPlanListStore);
@@ -216,6 +218,27 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
         >
           <p>Добавить просмотренные фильмы</p>
           <AddRoundedIcon />
+        </div>
+      )}
+      {searchModal && (
+        <div className='w-[90%] h-full'>
+          <div
+            className='bg-black opacity-75 z-40 absolute top-0 left-0 right-0 bottom-0'
+            onClick={() => {
+              setSearchModal(false);
+            }}
+          >
+            <CloseIcon
+              onClick={() => {
+                setSearchModal(false);
+              }}
+              className='text-white absolute right-3 top-3 cursor-pointer'
+              style={{ fontSize: '50px' }}
+            />
+          </div>
+          <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50'>
+            <SearchModal />
+          </div>
         </div>
       )}
       <div className='flex flex-col'>
