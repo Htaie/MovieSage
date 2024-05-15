@@ -103,6 +103,7 @@ export const SearchComponent = () => {
             searchResults={searchResults}
             searchValue={searchValue}
             closeSearchResults={toggleSearchInput}
+            hideMargin={false}
           />
         )}
       </div>

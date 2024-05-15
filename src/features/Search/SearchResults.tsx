@@ -10,10 +10,12 @@ export const SearchResults = ({
   searchResults,
   searchValue,
   closeSearchResults,
+  hideMargin,
 }: {
   searchResults: MovieType[];
   searchValue: string;
   closeSearchResults: () => void;
+  hideMargin: boolean;
 }) => {
   const data = searchResults;
 
@@ -27,7 +29,7 @@ export const SearchResults = ({
   };
 
   return (
-    <div className='mt-[35px] absolute' style={{ overflow: 'hidden' }}>
+    <div className={hideMargin ? '' : 'mt-[35px] absolute'} style={{ overflow: 'hidden' }}>
       <motion.div initial={{ opacity: 0, scale: 1 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5 }}>
         <div className='bg-[#242424] text-white w-[530px] h-[350px] rounded-b-xl'>
           <Scrollbar style={{ width: 530, height: 310 }} thumbYProps={{ style: { backgroundColor: '#5138E9' } }}>
