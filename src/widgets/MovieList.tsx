@@ -12,6 +12,8 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
   const [maxPages, setMaxPages] = useState(1);
   const [loading, setLoading] = useState(false);
   const searchValue = useStore(searchValueStore);
+  const validTypes = ['anime', 'movie', 'tv-series'];
+  const typeList = validTypes.includes(name);
   useEffect(() => {
     scrollTo(0, 0);
   }, []);
@@ -24,6 +26,8 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
 
         if (searchValue) {
           url = `${API_URL}movie/search?page=${pageNumber}&limit=50&query=${searchValue}&notNullFields=poster.url`;
+        } else if (typeList) {
+          url = `${API_URL}movie?page=${pageNumber}&limit=10&type=${name}&notNullFields=poster.url`;
         } else {
           url = `${API_URL}movie?page=${pageNumber}&limit=50&genres.name=${name}&notNullFields=poster.url`;
         }

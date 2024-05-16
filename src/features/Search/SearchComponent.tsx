@@ -68,11 +68,11 @@ export const SearchComponent = () => {
         ref={searchContainerRef}
         className={`${showSearchInput ? 'hidden' : ''} ml-[135px] absolute flex space-x-5 z-10`}
       >
-        <Link to={'genre/аниме'} style={linkStyle}>
+        <Link to={'genre/anime'} style={linkStyle}>
           Аниме
         </Link>
-        <Link to={'genre/комедии'}>Фильмы</Link>
-        <Link to={'genre/писька'}>Сериалы</Link>
+        <Link to={'genre/movie'}>Фильмы</Link>
+        <Link to={'genre/tv-series'}>Сериалы</Link>
         <SearchIcon className='ml-5 hover:cursor-pointer hover:text-[#5138E9]' onClick={toggleSearchInput} />
       </div>
       <div ref={searchContainerRef} className='flex'>
