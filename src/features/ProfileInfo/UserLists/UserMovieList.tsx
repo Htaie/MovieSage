@@ -3,7 +3,7 @@ import { userPlanListStore, userRatingStore } from '../../MovieDetails/RatingSta
 import { useEffect, useState } from 'react';
 import { supabase } from '../../../../backend/apiClient/client.js';
 import { userDataStore } from '../../../shared/store/UserStore.js';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { PROFILE_ROUTE, Route } from '../../../shared/constants/constants.js';
 import { motion } from 'framer-motion';
@@ -15,6 +15,7 @@ export const UserMovieList = ({ formType }: { formType: string }) => {
   const dataUserId = userData?.user?.id;
   const [randomMovie, setRandomMovie] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,6 +55,10 @@ export const UserMovieList = ({ formType }: { formType: string }) => {
     };
   }, [data]);
 
+  const divNavigate = () => {
+    navigate(`/movie/${randomMovie.movie_id}`);
+  };
+
   const animationVariants = {
     hidden: { opacity: 0, x: -100 },
     visible: { opacity: 1, x: 0, transition: { duration: 1 } },
@@ -75,7 +80,7 @@ export const UserMovieList = ({ formType }: { formType: string }) => {
           </p>
           <div className='flex items-center'>
             {randomMovie && (
-              <Link to={`/movie/${randomMovie.movie_id}`}>
+              <div onClick={divNavigate}>
                 <div
                   key={randomMovie.movie_id}
                   className='flex relative bg-[#212124] hover:bg-[#313136] transition-transform duration-700 ease-in-out transform hover:scale-105 w-[525px] h-[230px] border-2 border-[#5138E9] rounded-lg mr-4'
@@ -111,7 +116,7 @@ export const UserMovieList = ({ formType }: { formType: string }) => {
                     </motion.p>
                   </div>
                 </div>
-              </Link>
+              </div>
             )}
             <Link to={formType === PROFILE_ROUTE.RATED ? Route.RATED : Route.PLAN}>
               <ArrowForwardIosIcon className='text-white mr-2' />
