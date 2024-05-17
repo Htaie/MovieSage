@@ -5,6 +5,9 @@ import MovieCard from '../features/MovieCard';
 import MainLoader from '../shared/loader/MainLoader';
 import { useStore } from 'effector-react';
 import { searchValueStore } from '../features/Search/SearchResults';
+import { MainBtn } from '../shared/UI/buttons/MainBtn';
+import { FilterModal } from '../shared/UI/modal/FilterModal';
+import CloseIcon from '@mui/icons-material/Close';
 
 const MovieList = ({ name }: { name: string }): JSX.Element => {
   const [data, setData] = useState([]);
@@ -12,6 +15,7 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
   const [maxPages, setMaxPages] = useState(1);
   const [loading, setLoading] = useState(false);
   const searchValue = useStore(searchValueStore);
+  const [filterModal, setFilterModal] = useState(false);
   useEffect(() => {
     scrollTo(0, 0);
   }, []);
@@ -70,8 +74,36 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
     };
   }, [pageNumber, name, maxPages, loading]);
 
+  const handleOpenFilter = () => {
+    setFilterModal(true);
+  };
+
   return (
     <>
+      <div className='flex justify-center items-center w-[95%] h-[30px] mb-4'>
+        <MainBtn text='Фильтры' onClick={handleOpenFilter} />
+      </div>
+      {filterModal && (
+        <div className='w-[90%] h-full'>
+          <div
+            className='bg-black opacity-75 z-40 absolute top-0 left-0 right-0 bottom-0'
+            onClick={() => {
+              setFilterModal(false);
+            }}
+          >
+            <CloseIcon
+              onClick={() => {
+                setFilterModal(false);
+              }}
+              className='text-white absolute right-3 top-3 cursor-pointer'
+              style={{ fontSize: '50px' }}
+            />
+          </div>
+          <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50'>
+            <FilterModal />
+          </div>
+        </div>
+      )}
       <div className='container mx-auto grid grid-cols-4 gap-2 gap-y-10'>
         {data.map((item: any, index: number) => (
           <MovieCard
