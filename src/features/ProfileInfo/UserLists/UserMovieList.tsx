@@ -96,7 +96,7 @@ export const UserMovieList = ({ formType }: { formType: string }) => {
                       animate='visible'
                       className='text-xl font-bold mt-[2px]'
                     >
-                      <Link to={`/movie/${randomMovie.movie_id}`}>{randomMovie.title}</Link>
+                      <p>{randomMovie.title}</p>
                     </motion.div>
                     <motion.p variants={animationVariants} initial='hidden' animate='visible' className='text-sm mb-2'>
                       {randomMovie.short_description}
