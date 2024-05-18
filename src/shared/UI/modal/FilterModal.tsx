@@ -2,12 +2,15 @@ import { useState } from 'react';
 import { GENRES, MPAA, COUNTRIES_LIST, YEARS } from '../../constants/constants';
 import { MainBtn } from '../buttons/MainBtn';
 import { FilterMapping } from '../../components/FilterMapping/FilterMapping';
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
 
 export interface SelectedFilters {
   genres: { [key: string]: boolean };
   mpaa: { [key: string]: boolean };
   countries: { [key: string]: boolean };
   year: { [key: string]: boolean };
+  rating: { [key: string]: boolean };
 }
 
 export const FilterModal = () => {
@@ -16,7 +19,21 @@ export const FilterModal = () => {
     mpaa: {},
     countries: {},
     year: {},
+    rating: {},
   });
+  const [value, setValue] = useState<number>(5);
+
+  const handleSliderChange = (newValue: number | number[]) => {
+    if (typeof newValue === 'number') {
+      setValue(newValue);
+      setSelectedFilters((prevState) => ({
+        ...prevState,
+        rating: {
+          [newValue]: true,
+        },
+      }));
+    }
+  };
 
   const handleFilterChange = (filterType: keyof SelectedFilters, filterValue: string) => {
     setSelectedFilters((prevState) => ({
@@ -70,6 +87,22 @@ export const FilterModal = () => {
         <div>
           <div>
             <p>Рейтинг:</p>
+            <div style={{ margin: '20px', width: '300px' }}>
+              <div className='flex items-center'>
+                <p className='mr-2'>1</p>
+                <Slider
+                  min={1}
+                  max={10}
+                  step={1}
+                  value={value}
+                  onChange={handleSliderChange}
+                  trackStyle={{ backgroundColor: '#5138E9' }}
+                  handleStyle={{ backgroundColor: '#5138E9' }}
+                />
+                <p className='ml-2'>10</p>
+              </div>
+              <p>Выбранная оценка: {value}</p>
+            </div>
           </div>
           <div className='flex flex-col mt-3 ml-5'>
             <p className='mb-3'>Год:</p>
