@@ -13,7 +13,12 @@ export interface SelectedFilters {
   rating: { [key: string]: boolean };
 }
 
-export const FilterModal = () => {
+interface FilterModalProps {
+  onClose: () => void;
+  onApplyFilters: (filters: SelectedFilters) => void;
+}
+
+export const FilterModal = ({ onClose, onApplyFilters }: FilterModalProps) => {
   const [selectedFilters, setSelectedFilters] = useState<SelectedFilters>({
     genres: {},
     mpaa: {},
@@ -22,6 +27,12 @@ export const FilterModal = () => {
     rating: {},
   });
   const [value, setValue] = useState<number>(5);
+
+  const handleApplyFilters = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    onApplyFilters(selectedFilters);
+    onClose();
+  };
 
   const handleSliderChange = (newValue: number | number[]) => {
     if (typeof newValue === 'number') {
@@ -43,10 +54,6 @@ export const FilterModal = () => {
         [filterValue]: !prevState[filterType][filterValue],
       },
     }));
-  };
-
-  const showSelectedSettings = () => {
-    console.log(selectedFilters);
   };
 
   return (
@@ -116,8 +123,8 @@ export const FilterModal = () => {
           </div>
         </div>
       </div>
-      <div className='bg-[#5138E9] w-[142px] h-[50px] pt-3 rounded-3xl'>
-        <MainBtn text='Применить' onClick={showSelectedSettings} />
+      <div className='flex justify-center items-center bg-[#5138E9] text-white text-xl w-[142px] h-[50px] rounded-3xl'>
+        <button onClick={handleApplyFilters}>Применить</button>
       </div>
     </div>
   );

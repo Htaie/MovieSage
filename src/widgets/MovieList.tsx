@@ -8,6 +8,7 @@ import { searchValueStore } from '../features/Search/SearchResults';
 import { MainBtn } from '../shared/UI/buttons/MainBtn';
 import { FilterModal } from '../shared/UI/modal/FilterModal';
 import CloseIcon from '@mui/icons-material/Close';
+import { SelectedFilters } from '../shared/UI/modal/FilterModal';
 
 const MovieList = ({ name }: { name: string }): JSX.Element => {
   const [data, setData] = useState([]);
@@ -16,6 +17,18 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
   const [loading, setLoading] = useState(false);
   const searchValue = useStore(searchValueStore);
   const [filterModal, setFilterModal] = useState(false);
+  const [selectedFilters, setSelectedFilters] = useState<SelectedFilters>({
+    genres: {},
+    mpaa: {},
+    countries: {},
+    year: {},
+    rating: {},
+  });
+  const applyFilters = (filters: SelectedFilters) => {
+    setSelectedFilters(filters);
+    setPageNumber(1);
+    setData([]);
+  };
   useEffect(() => {
     scrollTo(0, 0);
   }, []);
@@ -24,13 +37,49 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
       try {
         setLoading(true);
 
-        let url = '';
+        let url = `${API_URL}movie?page=${pageNumber}&limit=50&notNullFields=poster.url`;
 
         if (searchValue) {
-          url = `${API_URL}movie/search?page=${pageNumber}&limit=50&query=${searchValue}&notNullFields=poster.url`;
+          url += `&query=${searchValue}`;
         } else {
-          url = `${API_URL}movie?page=${pageNumber}&limit=50&genres.name=${name}&notNullFields=poster.url`;
+          url += `&genres.name=${name}`;
         }
+
+        if (Object.keys(selectedFilters.genres).length > 0) {
+          const genres = Object.keys(selectedFilters.genres)
+            .filter((key) => selectedFilters.genres[key])
+            .join(',');
+          url += `&genres.name=${encodeURIComponent(genres)}`;
+        }
+
+        if (Object.keys(selectedFilters.mpaa).length > 0) {
+          const mpaa = Object.keys(selectedFilters.mpaa)
+            .filter((key) => selectedFilters.mpaa[key])
+            .join(',');
+          url += `&ratingMpaa=${encodeURIComponent(mpaa)}`;
+        }
+
+        if (Object.keys(selectedFilters.countries).length > 0) {
+          const countries = Object.keys(selectedFilters.countries)
+            .filter((key) => selectedFilters.countries[key])
+            .join(',');
+          url += `&countries.name=${encodeURIComponent(countries)}`;
+        }
+
+        if (Object.keys(selectedFilters.year).length > 0) {
+          const years = Object.keys(selectedFilters.year)
+            .filter((key) => selectedFilters.year[key])
+            .join(',');
+          url += `&year=${encodeURIComponent(years)}`;
+        }
+
+        if (Object.keys(selectedFilters.rating).length > 0) {
+          const ratings = Object.keys(selectedFilters.rating)
+            .filter((key) => selectedFilters.rating[key])
+            .join(',');
+          url += `&rating.kp=${encodeURIComponent(ratings)}`;
+        }
+
         const response = await fetch(url, {
           method: 'GET',
           headers: {
@@ -54,7 +103,7 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
     };
 
     void fetchData();
-  }, [pageNumber, name]);
+  }, [pageNumber, name, searchValue, selectedFilters]);
   useEffect(() => {
     const handleScroll = (): void => {
       const windowHeight = window.innerHeight;
@@ -100,7 +149,7 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
             />
           </div>
           <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50'>
-            <FilterModal />
+            <FilterModal onApplyFilters={applyFilters} onClose={() => setFilterModal(false)} />
           </div>
         </div>
       )}
