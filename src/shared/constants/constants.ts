@@ -48,7 +48,7 @@ export const GENRES = {
   fantasy: 'фэнтези',
 };
 
-export const MPAA = ['g', 'nc17', 'pg', 'pg13', 'r!'];
+export const MPAA = ['g', 'nc17', 'pg', 'pg13', '!r'];
 
 export const COUNTRIES_LIST = [
   'США',

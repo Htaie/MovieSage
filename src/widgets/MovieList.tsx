@@ -63,7 +63,7 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
           const mpaa = Object.keys(selectedFilters.mpaa)
             .filter((key) => selectedFilters.mpaa[key])
             .join(',');
-          url += `&ratingMpaa=${encodeURIComponent(mpaa)}`;
+          url += `&ratingMpaa=${mpaa}`;
         }
 
         if (Object.keys(selectedFilters.countries).length > 0) {
@@ -84,7 +84,7 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
           const ratings = Object.keys(selectedFilters.rating)
             .filter((key) => selectedFilters.rating[key])
             .join(',');
-          url += `&rating.kp=${encodeURIComponent(ratings)}`;
+          url += `&rating.imdb=${ratings}`;
         }
 
         const response = await fetch(url, {
