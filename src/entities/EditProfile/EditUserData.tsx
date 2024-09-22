@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState } from 'react';
-import { supabase } from '../../../backend/apiClient/client.js';
 import { useStore } from 'effector-react';
 import { updateUserData, userDataStore } from '../../shared/store/UserStore';
 import { ChangeUserPhoto } from './ChangeUserPhoto.tsx';
@@ -16,39 +15,12 @@ export const EditUserData: React.FC = () => {
 
   const handleUsernameSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    try {
-      const { error } = await supabase.auth.updateUser({ data: { username: newUsername } });
-      if (error) {
-        throw error;
-      }
-      alert('Username updated successfully!');
-      updateUserData({
-        ...user,
-        user: { ...user?.user, user_metadata: { ...user?.user?.user_metadata, username: newUsername } },
-      });
-    } catch (error) {
-      console.error('Error updating username:', error.message);
-      alert('An error occurred while updating username. Please try again later.');
-    }
+
   };
 
   const handlePasswordSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    try {
-      if (newPassword === confirmNewPassword) {
-        const { error } = await supabase.auth.updateUser({ password: newPassword }, { password: currentPassword });
-        if (error) {
-          throw error;
-        }
-        alert('Password updated successfully!');
-      } else {
-        throw new Error('New password and confirm password do not match.');
-      }
-    } catch (error) {
-      console.error('Error updating password:', error.message);
-      alert('An error occurred while updating password. Please try again later.');
-    }
-    updateUserData(user);
+
   };
 
   return (

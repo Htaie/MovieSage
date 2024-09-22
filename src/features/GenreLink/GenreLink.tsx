@@ -9,7 +9,7 @@ interface Props {
 const GenreLink = (data: Props): JSX.Element => {
   return (
     <>
-      {data.genres.map((item) => (
+      {data?.genres?.map((item) => (
         <Link
           key={item.name}
           className={'bg-white/10 hover:backdrop-blur-xl hover:bg-white/30  px-3 py-2  rounded-3xl text-xl mx-2 my-2'}

@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import Modal from 'react-modal';
 import Cropper from 'react-easy-crop';
-import { supabase } from '../../../backend/apiClient/client.js';
 import { useStore } from 'effector-react';
 import { userDataStore, updateUserData } from '../../shared/store/UserStore.js';
-import { CDNURL } from '../../shared/constants/constants.js';
 
 export const ChangeUserPhoto = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -23,7 +21,6 @@ export const ChangeUserPhoto = () => {
   const [label, setLabel] = useState<boolean>(false);
   const user = useStore(userDataStore);
   const timestamp = Date.now();
-  const profileImage = `${CDNURL}${user?.user?.email}/${user?.user?.id}?t=${timestamp}`;
 
   const blobToFile = (blob: Blob, fileName: string): File => {
     const file = new File([blob], fileName, { type: blob.type });
@@ -36,13 +33,6 @@ export const ChangeUserPhoto = () => {
     const response = await fetch(croppedImage);
     const blob = await response.blob();
     const file = blobToFile(blob, fileName);
-
-    const { data, error } = await supabase.storage
-      .from('images')
-      .upload(`${user?.user?.email}/${user?.user?.id}`, file, {
-        contentType: 'image/png',
-        upsert: true,
-      });
 
     if (!error) {
       updateUserData(user);

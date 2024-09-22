@@ -1,17 +1,14 @@
-import { Link, Routes, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
-import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useEffect, useState } from 'react';
-import { supabase } from '../../../../backend/apiClient/client.js';
-import { userDataStore, updateUserData } from '../../../shared/store/UserStore.js';
-import { CDNURL, Route } from '../../../shared/constants/constants.js';
+import { userDataStore } from '../../../shared/store/UserStore.js';
 import { useStore } from 'effector-react';
 const NavBar = () => {
   const [open, setOpen] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
-  const [updatedProfileImage, setUpdatedProfileImage] = useState('');
+  const [searchInput, setSearchInput] = useState('');
+  const [debouncedSearchInput, setDebouncedSearchInput] = useState('');
   const userData = useStore(userDataStore);
   const location = useLocation();
 
@@ -19,37 +16,13 @@ const NavBar = () => {
   const linkStyle = {
     textDecoration: isAnimeGenre ? 'underline' : 'none',
   };
-  const isLoggedIn = userData;
-  const timestamp = Date.now();
-  const profileImage = `${CDNURL}${userData?.user?.email}/${userData?.user?.id}?t=${timestamp}`;
-
-  const getNewProfileImage = () => {
-    const timestamp = Date.now();
-    return `${CDNURL}${userData?.user?.email}/${userData?.user?.id}?t=${timestamp}`;
-  };
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      const newProfileImage = getNewProfileImage();
-      if (newProfileImage !== updatedProfileImage) {
-        setUpdatedProfileImage(newProfileImage);
-      }
-    }, 2000);
-
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, [updatedProfileImage]);
-
-  const SignOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      console.error(error);
-    } else {
-      togglePanel();
-      updateUserData(null);
-    }
-  };
+    const delayInputTimeoutId = setTimeout(() => {
+      setDebouncedSearchInput(searchInput);
+    }, 500);
+    return () => clearTimeout(delayInputTimeoutId);
+  }, [searchInput, 500]);
 
   const handleScroll = () => {
     const currentScrollPos = window.scrollY;
@@ -64,13 +37,8 @@ const NavBar = () => {
     };
   }, [prevScrollPos, visible]);
 
-  // useEffect(() => {
-  //   // Сохраняем данные пользователя в localStorage при изменении
-  //   localStorage.setItem('userData', JSON.stringify(userData));
-  // }, [userData]);
-
-  const togglePanel = () => {
-    setOpen(!open);
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchInput(e.target.value);
   };
 
   return (
@@ -89,52 +57,21 @@ const NavBar = () => {
           <Link to={'genre/комедии'}>Фильмы</Link>
           <Link to={'genre/писька'}>Сериалы</Link>
         </div>
-        <div className='flex space-x-3 items-center'>
-          <SearchIcon className='hover:cursor-pointer' />
-          {isLoggedIn ? (
-            <>
-              <NotificationsNoneIcon />
-              <Link to={Route.PROFILE}>
-                <img
-                  className='w-10 h-10 rounded-full'
-                  src={
-                    updatedProfileImage
-                      ? updatedProfileImage
-                      : profileImage
-                        ? profileImage
-                        : 'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80'
-                  }
-                  alt='Profile Img'
-                />
-              </Link>
-              <KeyboardArrowDownIcon onClick={togglePanel} />
-              {open && (
-                <div className='absolute flex flex-col bg-[#212124] mt-[275px] text-xl w-[160px] h-[220px] rounded-lg'>
-                  <p className='text-2xl py-3 ml-2'>
-                    {userData ? userData.user.user_metadata.username : 'No user data available'}
-                  </p>
-                  <Link to={Route.PROFILE} onClick={togglePanel} className='py-3 ml-2'>
-                    Profile
-                  </Link>
-                  <Link to={Route.SETTINGS} onClick={togglePanel} className='py-3 ml-2'>
-                    Settings
-                  </Link>
-                  <Link to={Route.HOME} onClick={SignOut} className='py-3 ml-2'>
-                    Sign Out
-                  </Link>
-                </div>
-              )}
-            </>
-          ) : (
-            <>
-              <Link className='border bg-white text-black px-3 py-1 rounded-md' to={'/register'}>
-                Sign Up
-              </Link>
-              <Link className='border border-[#5138E9] bg-[#5138E9] px-3 py-1 rounded-md' to={'/login'}>
-                Login
-              </Link>
-            </>
-          )}
+        <div className='mt-4 xl:w-96 center'>
+          <div className='relative mb-4 flex w-full flex-wrap items-stretch'>
+            <input
+              type='search'
+              className='relative m-0 block flex-auto rounded border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-300 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-300 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary'
+              placeholder='Search'
+              aria-label='Search'
+              aria-describedby='button-addon2'
+              value={searchInput}
+              onChange={(e) => {
+                handleSearch(e);
+              }}
+            />
+            <SearchIcon className='hover:cursor-pointer absolute top-0 bottom-0 right-1 z-50 m-auto h-4 w-4 text-neutral-3  00' />
+          </div>
         </div>
       </div>
     </div>

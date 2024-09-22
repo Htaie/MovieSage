@@ -4,7 +4,6 @@ import { RatingRounding } from '../../shared/utils/textUtils';
 import { MovieType } from '../../shared/types/MoviesTypes';
 import { useEffect, useState } from 'react';
 import { createEvent, createStore } from 'effector';
-import { supabase } from '../../../backend/apiClient/client.js';
 import { userDataStore } from '../../shared/store/UserStore';
 import { useStore } from 'effector-react';
 import { v4 as uuidv4 } from 'uuid';
@@ -69,7 +68,7 @@ userPlanListStore.on(deleteFromPlannedList, (state, movieId) => {
 
 export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
   const userData = useStore(userDataStore);
-  const dataUserId = userData.user.id;
+  const dataUserId = userData.user?.id;
   const [userRating, setUserRating] = useState<number | null>(null);
   const [plannedList, setPlannedList] = useState<any[]>([]);
   const [ratedList, setRatedList] = useState<any[]>([]);
@@ -83,26 +82,8 @@ export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
   const ratingScore = RatingRounding(data.rating.kp, 1);
 
   const insertMovieToList = async (listName: string, movieData: any, clickedRating: number = 0) => {
-    const { id, name, genres, type, year, poster, shortDescription, rating } = movieData;
-    const { data, error } = await supabase.from(listName).insert([
-      {
-        id: userId,
-        title: name,
-        genres: genres,
-        movie_id: id,
-        image: poster.url,
-        rating: rating.kp,
-        short_description: shortDescription,
-        type: type,
-        year: year,
-        clicked_rating: clickedRating,
-        movie_unique_id: uniqueId,
-      },
-    ]);
-    if (error) {
-      console.error(`Error adding movie to ${listName}:`, error);
-      return;
-    }
+
+
   };
 
   const handleStarClick = async (clickedRating: number) => {
@@ -125,14 +106,7 @@ export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
   };
 
   const fetchUserList = async (listName: string) => {
-    const { data: dataList, error } = await supabase.from(listName).select('*').eq('id', dataUserId);
-
-    if (error) {
-      console.error(`Error fetching ${listName}:`, error);
-      return null;
-    }
-
-    return dataList;
+   
   };
 
   const fetchRatedList = async () => {
@@ -191,19 +165,7 @@ export const RaitingInfo = ({ data }: RaitingInfoProps): JSX.Element => {
           </div>
           <div className='flex justify-between'>
             <p className='font-bold text-5xl'>{ratingScore}</p>
-            {userRating ? (
-              <div className='flex'>
-                <p className='font-bold text-4xl mr-[20px]'>Ваша оценка:</p>
-                <span className='font-bold text-5xl'>{userRating}</span>
-              </div>
-            ) : null}
-            <MainBtn
-              text={'Добавить в запланированные'}
-              onClick={() => {
-                handleAddToPlanList();
-              }}
-              style={{ marginBottom: '20px' }}
-            />
+
           </div>
         </div>
       </div>

@@ -16,7 +16,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import { PROFILE_ROUTE } from '../../shared/constants/constants';
 import { userDataStore } from '../../shared/store/UserStore';
-import { supabase } from '../../../backend/apiClient/client.js';
 import { CustomPagination } from '../../features/Pagination/CustomPagination.js';
 
 export const UsersFilmsList = ({ formType }: { formType: string }) => {
@@ -75,78 +74,14 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
   };
 
   const handleDeleteFilm = async (movieId: number, movieIndex: number) => {
-    let table = '';
-    if (formType === PROFILE_ROUTE.RATED) {
-      table = 'liked_list';
-    } else {
-      table = 'planned_list';
-    }
-    const { error } = await supabase.from(table).delete().eq('movie_id', movieId).eq('id', dataUserId);
-
-    if (error) {
-      console.error('Error deleting film from Supabase:', error);
-      return;
-    }
-
-    deleteUserRating(movieIndex);
-    setSelectedRating(0);
+  
   };
 
   const handleRatingChange = async (movieId: number, rating: number, movieIndex: number) => {
-    setSelectedRating(rating);
-
-    try {
-      const { error } = await supabase
-        .from('liked_list')
-        .update({ clicked_rating: rating })
-        .eq('movie_id', movieId)
-        .eq('id', dataUserId);
-
-      if (error) {
-        console.error('Error updating film rating in Supabase:', error);
-        return;
-      }
-
-      const currentFilmRating = userRatingStore.getState()[movieIndex];
-      if (currentFilmRating) {
-        userRatingStore.setState({
-          ...userRatingStore.getState(),
-          [movieIndex]: { ...currentFilmRating, clicked_rating: rating },
-        });
-      }
-    } catch (error) {
-      console.error('Error updating film rating:', error);
-    }
+   
   };
 
   const handleListChange = async (filmData: ModalDataType, sourceList: string, targetList: string) => {
-    const { movie_id } = filmData;
-
-    try {
-      const deleteResult = await supabase.from(sourceList).delete().eq('movie_id', movie_id).eq('id', dataUserId);
-
-      if (deleteResult.error) {
-        console.error(`Error deleting from ${sourceList}:`, deleteResult.error);
-        return;
-      }
-
-      const addResult = await supabase.from(targetList).insert({
-        ...filmData,
-      });
-
-      if (addResult.error) {
-        console.error(`Error adding to ${targetList}:`, addResult.error);
-        return;
-      }
-
-      if (sourceList === 'liked_list') {
-        deleteFromRatedList(Number(movie_id));
-      } else {
-        deleteFromPlannedList(Number(movie_id));
-      }
-    } catch (error) {
-      console.error('Error updating lists:', error);
-    }
   };
 
   const handleAddToPlanList = (filmData: ModalDataType) => {
@@ -157,38 +92,6 @@ export const UsersFilmsList = ({ formType }: { formType: string }) => {
     handleListChange(filmData, 'planned_list', 'liked_list');
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        let endpoint = '';
-
-        if (formType === PROFILE_ROUTE.RATED) {
-          endpoint = 'liked_list';
-        } else {
-          endpoint = 'planned_list';
-        }
-
-        const { data, error } = await supabase.from(endpoint).select('*').eq('id', dataUserId);
-
-        if (error) {
-          console.error(`Error fetching ${formType} list:`, error);
-          return;
-        }
-
-        if (data) {
-          if (formType === PROFILE_ROUTE.RATED) {
-            userRatingStore.setState(data);
-          } else {
-            userPlanListStore.setState(data);
-          }
-        }
-      } catch (error) {
-        console.error(`Error fetching ${formType} list:`, error);
-      }
-    };
-
-    fetchData();
-  }, [formType, dataUserId]);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;

@@ -3,6 +3,7 @@ import { MovieType } from '../../shared/types/MoviesTypes.ts';
 import { createEffect, createStore } from 'effector';
 
 export const MovieDataFetcher = createEffect(async (id: string) => {
+  console.log(TOKEN)
   const url = `${API_URL}movie/${id}`;
   const response = await fetch(url, {
     method: 'GET',

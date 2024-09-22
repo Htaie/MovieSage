@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import { supabase } from '../../backend/apiClient/client.js';
+
 import { Route } from '../shared/constants/constants';
 import { motion } from 'framer-motion';
 
@@ -36,37 +36,7 @@ export const AuthComponent = ({ formType, setToken }: { formType: string; setTok
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    try {
-      if (formType === 'login') {
-        const { data, error } = await supabase.auth.signInWithPassword({
-          email: authData.email,
-          password: authData.password,
-        });
-        if (error) throw error;
-        setToken(data);
-        saveUserDataToLocalStorage(data);
-        updateUserData(data);
-        navigate(Route.HOME);
-      } else if (formType === 'register') {
-        const { data, error } = await supabase.auth.signUp({
-          email: authData.email,
-          username: authData.username,
-          password: authData.password,
-          repeatPassword: authData.repeatPassword,
-          options: {
-            data: {
-              username: authData.username,
-              avatar: 'https://i.pinimg.com/736x/0a/bf/33/0abf33085bcf7d2f4697a348931f679d.jpg',
-            },
-          },
-        });
 
-        if (error) throw error;
-        alert('Check your email for the login link!');
-      }
-    } catch (error) {
-      console.error('Auth error:', error.message);
-    }
   };
 
   const togglePasswordVisibility: React.MouseEventHandler = () => {

@@ -71,12 +71,12 @@ const MainSlider: React.FC = () => {
     >
       {data.slice(0, 5).map(
         (movie: MovieType) =>
-          movie.backdrop.url !== null && ( //чмошники на kinopoisk.dev не приходит лого поэтому я пока поставил backdrop :(
+          movie.backdrop?.url !== null && ( //чмошники на kinopoisk.dev не приходит лого поэтому я пока поставил backdrop :(
             <SwiperSlide key={movie.id}>
               <div className='relative'>
                 <img
                   className='h-full w-full object-cover'
-                  src={movie.backdrop.url}
+                  src={movie.backdrop?.url || ''}
                   loading='lazy'
                   alt='backdropMovie'
                 />
@@ -84,12 +84,7 @@ const MainSlider: React.FC = () => {
                   <div
                     className={`${styles['slide-from-left']} absolute bottom-12 left-0 ml-40 font-bold text-white z-10`}
                   >
-                    {/* <img
-                    className='h-[120px] w-[50%] ml-2 main-slider'
-                    src={movie.logo.url}
-                    alt={movie.name}
-                    style={customShadowStyle}
-                  /> */}
+
                     <div className='flex items-center space-x-2 mt-[170px] ml-2 mb-2'>
                       <p>{movie.rating.imdb} IMDB</p>
                       <p>{RatingRounding(movie.rating.kp)} KINOPOISK</p>
