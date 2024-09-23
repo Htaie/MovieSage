@@ -12,12 +12,6 @@ import GenreLink from '../../features/GenreLink/GenreLink';
 import styles from './MainSliderStyles.module.css';
 
 const MainSlider: React.FC = () => {
-  const divStyle = {
-    WebkitBoxShadow: '0px 0px 70px 120px rgba(0, 0, 0, 1)',
-    MozBoxShadow: '0px 0px 70px 120px rgba(0, 0, 0, 1)',
-    boxShadow: '0px 0px 70px 120px rgba(0, 0, 0, 1)',
-  };
-
   const [data, setData] = useState<MovieType[]>([]);
   const [activeSlideIndex, setActiveSlideIndex] = useState<number>(0);
   const [activeMovieId, setActiveMovieId] = useState<number | null>(null);
@@ -63,7 +57,7 @@ const MainSlider: React.FC = () => {
       }}
       navigation={true}
       modules={[Pagination, Autoplay]}
-      className=' container  w-[100%]  bg-[#1C3334] mt-20  swiper-navigation-color swiper-pagination-color rounded-3xl'
+      className='container w-[100%] h-[600px] md:h-[400px] lg:h-[568px] xl:h-[700px] 2xl:h-[840px] bg-[#1C3334] mt-20  swiper-navigation-color swiper-pagination-color rounded-3xl'
       onSlideChangeTransitionEnd={(swiper) => {
         setActiveSlideIndex(swiper.realIndex);
         setActiveMovieId(data[swiper.realIndex]?.id);
@@ -82,9 +76,8 @@ const MainSlider: React.FC = () => {
                 />
                 {activeMovieId === movie.id && (
                   <div
-                    className={`${styles['slide-from-left']} absolute bottom-12 left-0 ml-40 font-bold text-white z-10`}
+                    className={`${styles['slide-from-left']} absolute bottom-12 left-0 md:ml-5 xl:ml-20 md:font-bold text-white z-10`}
                   >
-
                     <div className='flex items-center space-x-2 mt-[170px] ml-2 mb-2'>
                       <p>{movie.rating.imdb} IMDB</p>
                       <p>{RatingRounding(movie.rating.kp)} KINOPOISK</p>
@@ -92,15 +85,19 @@ const MainSlider: React.FC = () => {
                     <div className='flex flex-wrap w-[70%]'>
                       <GenreLink genres={movie.genres} />
                     </div>
-                    <h1 className='w-[460px] text-wrap text-xl mx-2 mt-3 mb-10'>{movie.shortDescription}</h1>
-                    <Link to={`/movie/${movie.id}`} className='py-4 px-7  text-black bg-white rounded-3xl'>
+                    <h1 className='w-[460px] text-wrap text-s lg:text-xl mx-2 mt-3 mb-3 md:mb-10'>
+                      {movie.shortDescription}
+                    </h1>
+                    <Link
+                      to={`/movie/${movie.id}`}
+                      className='py-2 px-3 md:py-4 md:px-7  text-black bg-white rounded-3xl'
+                    >
                       Перейти к фильму
                     </Link>
                   </div>
                 )}
                 <div
-                  className='absolute w-[700px] h-[450px] bottom-0 left-12 bg-black opacity-50 rounded-full'
-                  style={divStyle}
+                  className={`absolute ${styles['description-shadow']} w-full h-full md:w-[400px] lg:w-[500px] 2xl:w-[700px] md:h-[150px] lg:h-[300px] bottom-0 md:left-12 bg-black opacity-50 md:rounded-full`}
                 ></div>
               </div>
             </SwiperSlide>
