@@ -57,7 +57,7 @@ const MainSlider: React.FC = () => {
       }}
       navigation={true}
       modules={[Pagination, Autoplay]}
-      className='container w-[100%] h-[600px] md:h-[400px] lg:h-[568px] xl:h-[700px] 2xl:h-[840px] bg-[#1C3334] mt-20  swiper-navigation-color swiper-pagination-color rounded-3xl'
+      className='container w-[100%] h-[700px] md:h-[400px] lg:h-[568px] xl:h-[700px] 2xl:h-[840px] bg-[#1C3334] mt-20  swiper-navigation-color swiper-pagination-color md:rounded-3xl'
       onSlideChangeTransitionEnd={(swiper) => {
         setActiveSlideIndex(swiper.realIndex);
         setActiveMovieId(data[swiper.realIndex]?.id);
@@ -69,7 +69,7 @@ const MainSlider: React.FC = () => {
             <SwiperSlide key={movie.id}>
               <div className='relative'>
                 <img
-                  className='h-full w-full object-cover'
+                  className='h-[700px] md:h-full w-full object-cover'
                   src={movie.backdrop?.url || ''}
                   loading='lazy'
                   alt='backdropMovie'
@@ -85,7 +85,7 @@ const MainSlider: React.FC = () => {
                     <div className='flex flex-wrap w-[70%]'>
                       <GenreLink genres={movie.genres} />
                     </div>
-                    <h1 className='w-[460px] text-wrap text-s lg:text-xl mx-2 mt-3 mb-3 md:mb-10'>
+                    <h1 className='w-[90%] md:w-[460px] text-wrap text-s lg:text-xl mx-2 mt-3 mb-3 md:mb-10'>
                       {movie.shortDescription}
                     </h1>
                     <Link
