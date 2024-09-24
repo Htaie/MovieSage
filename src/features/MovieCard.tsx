@@ -8,10 +8,15 @@ const boxShadowStyle = {
 const MovieCard = ({ id, poster, rating, name, year, movieLength }: MovieType) => {
   return (
     <Link to={`/movie/${id}`}>
-      <div className='relative bg-gray-800 w-[288px] h-[432px] rounded-lg border-1 border-white overflow-hidden hover:scale-105 transition-transform  duration-700'>
-        <img src={poster} alt='film image' className='rounded-lg object-cover w-[288px] h-[432px]' />
+      <div className='relative bg-[212124] md:w-[288px] md:h-[432px] rounded-lg border-1 border-white overflow-hidden md:hover:scale-105 transition-transform  duration-700'>
+        <img
+          src={poster}
+          alt='film image'
+          className='rounded-lg object-cover w-full h-[300px] md:w-[288px] md:h-[432px] mb-3 md:mb-0'
+        />
+        <p className='text-white text-lg font-bold md:hidden'>{name}</p>
         <div
-          className='absolute inset-0 rounded-lg opacity-0 transition-opacity w-[288px] h-[432px] box-shadow duration-1000 hover:opacity-100'
+          className='absolute inset-0 rounded-lg opacity-0 transition-opacity md:w-[288px] md:h-[432px] box-shadow duration-1000 hover:opacity-100 hidden md:block'
           style={boxShadowStyle}
         >
           <span

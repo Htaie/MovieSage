@@ -11,7 +11,7 @@ import View from '../../features/View';
 import MainLoader from '../../shared/loader/MainLoader';
 import MovieCard from '../../features/MovieCard';
 
-export const FilmByGenreSlider = ({ genre }: { genre: string }): JSX.Element => {
+export const FilmByGenreSlider = ({ genre, isMobile }: { genre: string; isMobile: boolean }): JSX.Element => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -53,9 +53,9 @@ export const FilmByGenreSlider = ({ genre }: { genre: string }): JSX.Element => 
         style={{
           width: '100%',
         }}
-        slidesPerView={4}
-        spaceBetween={25}
-        slidesPerGroup={5}
+        slidesPerView={isMobile ? 2 : 4}
+        spaceBetween={isMobile ? 5 : 25}
+        slidesPerGroup={isMobile ? 2 : 4}
         pagination={{
           clickable: true,
         }}
@@ -65,7 +65,7 @@ export const FilmByGenreSlider = ({ genre }: { genre: string }): JSX.Element => 
       >
         {Array.isArray(data) ? (
           data.map((item: MovieType, index: number) => (
-            <SwiperSlide key={index} className='flex items-center mx-2 w-[288px] h-[432px] '>
+            <SwiperSlide key={index} className='flex test items-center mx-2 h-[300px] md:w-[288px] md:h-[432px] '>
               <MovieCard
                 id={item.id}
                 poster={item.poster.url}
@@ -79,7 +79,7 @@ export const FilmByGenreSlider = ({ genre }: { genre: string }): JSX.Element => 
         ) : (
           <MainLoader />
         )}
-        <SwiperSlide className='w-[288px] h-[432px]'>
+        <SwiperSlide className='w-[150px] h-[300px] md:w-[288px] md:h-[432px]'>
           <View genre={genre} />
         </SwiperSlide>
       </Swiper>
