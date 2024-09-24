@@ -63,7 +63,7 @@ const MainSlider: React.FC = () => {
       }}
       navigation={true}
       modules={[Pagination, Autoplay]}
-      className=' container  w-[100%]  bg-[#1C3334] mt-20  swiper-navigation-color swiper-pagination-color rounded-3xl'
+      className=' container  w-[100%]  bg-[#1C3334] md:mt-20  swiper-navigation-color swiper-pagination-color rounded-3xl'
       onSlideChangeTransitionEnd={(swiper) => {
         setActiveSlideIndex(swiper.realIndex);
         setActiveMovieId(data[swiper.realIndex]?.id);
@@ -84,7 +84,6 @@ const MainSlider: React.FC = () => {
                   <div
                     className={`${styles['slide-from-left']} absolute bottom-12 left-0 ml-40 font-bold text-white z-10`}
                   >
-
                     <div className='flex items-center space-x-2 mt-[170px] ml-2 mb-2'>
                       <p>{movie.rating.imdb} IMDB</p>
                       <p>{RatingRounding(movie.rating.kp)} KINOPOISK</p>
