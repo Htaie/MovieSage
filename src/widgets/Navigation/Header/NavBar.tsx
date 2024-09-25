@@ -6,21 +6,11 @@ import LiveTvIcon from '@mui/icons-material/LiveTv';
 import { GiStarShuriken } from 'react-icons/gi';
 import { useEffect, useState } from 'react';
 const NavBar = () => {
-  const [open, setOpen] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
-  const [searchInput, setSearchInput] = useState('');
-  const [debouncedSearchInput, setDebouncedSearchInput] = useState('');
   const location = useLocation();
 
   const isAnimeGenre = location.pathname == `/genre/${encodeURIComponent('аниме')}`;
-
-  useEffect(() => {
-    const delayInputTimeoutId = setTimeout(() => {
-      setDebouncedSearchInput(searchInput);
-    }, 500);
-    return () => clearTimeout(delayInputTimeoutId);
-  }, [searchInput, 500]);
 
   const handleScroll = () => {
     const currentScrollPos = window.scrollY;

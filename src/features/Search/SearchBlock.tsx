@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { SearchResults } from './SearchResults';
 import { useSearch } from './useSearch';
+import SearchIcon from '@mui/icons-material/Search';
 
 export const SearchBlock = () => {
   const [searchValue, setSearchValue] = useState('');
   const [debouncedSearchInput, setDebouncedSearchInput] = useState('');
   const searchResults = useSearch(debouncedSearchInput);
-  console.log(debouncedSearchInput);
 
   useEffect(() => {
     const delayInputTimeoutId = setTimeout(() => {
@@ -20,15 +20,18 @@ export const SearchBlock = () => {
   };
 
   return (
-    <div>
-      <input
-        type='text'
-        placeholder='Поиск'
-        className='text-black w-[530px] h-[35px] rounded-[4px] outline-none pl-5'
-        value={searchValue}
-        onChange={handleInputChange}
-      />
+    <>
+      <div className='mx-auto flex relative w-full md:w-[530px]'>
+        <input
+          type='text'
+          placeholder='Поиск'
+          className='text-black w-full md:w-[530px] h-[35px] rounded-[4px] outline-none pl-5'
+          value={searchValue}
+          onChange={handleInputChange}
+        />
+        <SearchIcon className='absolute right-2 top-1/2 -translate-y-1/2 text-black' />
+      </div>
       {searchResults && <SearchResults results={searchResults} />}
-    </div>
+    </>
   );
 };
