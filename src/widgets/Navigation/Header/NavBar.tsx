@@ -14,9 +14,6 @@ const NavBar = () => {
   const location = useLocation();
 
   const isAnimeGenre = location.pathname == `/genre/${encodeURIComponent('аниме')}`;
-  const linkStyle = {
-    textDecoration: isAnimeGenre ? 'underline' : 'none',
-  };
 
   useEffect(() => {
     const delayInputTimeoutId = setTimeout(() => {
@@ -38,10 +35,6 @@ const NavBar = () => {
     };
   }, [prevScrollPos, visible]);
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(e.target.value);
-  };
-
   return (
     <>
       <div
@@ -54,30 +47,15 @@ const NavBar = () => {
               <span className='text-[#5138E9]'>Sage</span>
             </h1>
           </Link>
-          <div className='flex flex-row-reverse gap-10 md:gap-0 md:flex-row justify-between md:w-[500px] lg:w-[660px] xl:w-[860px]'>
+          <div className='flex flex-row-reverse gap-10 md:gap-0 md:flex-row justify-between pr-4 md:w-[500px] lg:w-[660px] xl:w-[860px]'>
             <div className='space-x-5 hidden items-center md:flex'>
-              <Link to={'genre/аниме'} style={linkStyle}>
-                Аниме
-              </Link>
+              <Link to={'genre/аниме'}>Аниме</Link>
               <Link to={'genre/комедии'}>Фильмы</Link>
               <Link to={'genre/писька'}>Сериалы</Link>
             </div>
-            <div className='mt-4 xl:w-96'>
-              <div className='relative mb-4 flex w-full flex-wrap items-stretch'>
-                <input
-                  type='search'
-                  className='relative m-0 block flex-auto rounded border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-300 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-300 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary'
-                  placeholder='Search'
-                  aria-label='Search'
-                  aria-describedby='button-addon2'
-                  value={searchInput}
-                  onChange={(e) => {
-                    handleSearch(e);
-                  }}
-                />
-                <SearchIcon className='hover:cursor-pointer absolute top-0 bottom-0 right-1 z-50 m-auto h-4 w-4 text-neutral-3 00' />
-              </div>
-            </div>
+            <Link to={'/search'}>
+              <SearchIcon className='hover:cursor-pointer  h-4 w-4 text-neutral-3' />
+            </Link>
           </div>
         </div>
       </div>

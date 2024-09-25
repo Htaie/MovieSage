@@ -1,6 +1,4 @@
 import { createBrowserRouter } from 'react-router-dom';
-import LoginPage from '../../pages/Auth/LoginPage';
-import RegisterPage from '../../pages/Auth/RegisterPage';
 import AboutMoviePage from '../../pages/Movies/AboutMovie';
 import { AboutActorPage } from '../../pages/Movies/AboutActor';
 import PagesTests from '../../pages/PagesTests';
@@ -8,7 +6,7 @@ import App from '../App';
 import { Route } from '../../shared/constants/constants';
 import { Home } from '../../pages/Home/home';
 import MoviePage from '../../pages/MoviePage';
-import { ProfilePage } from '../../pages/UserPages/ProfilePage';
+import { SearchPage } from '../../pages/search/SearchPage';
 
 export const router = createBrowserRouter([
   {
@@ -20,25 +18,9 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: Route.LOGIN,
-        element: <LoginPage />,
+        path: Route.SEARCH,
+        element: <SearchPage />,
       },
-      {
-        path: Route.REGISTER,
-        element: <RegisterPage />,
-      },
-      {
-        path: Route.PROFILE,
-        element: <ProfilePage />,
-      },
-      // {
-      //   path: Route.SETTINGS,
-      //   element: <ProfileSettingPage />,
-      // },
-      // {
-      //   path: Route.RATED,
-      //   element: <RatedFilmsPage />,
-      // },
       {
         path: Route.GENRE,
         element: <MoviePage />,
