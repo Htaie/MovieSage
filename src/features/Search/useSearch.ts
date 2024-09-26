@@ -1,8 +1,16 @@
 import { useState, useEffect } from 'react';
 import { API_URL, TOKEN } from '../../shared/constants/constants';
-import { MovieType } from '../../shared/types/MoviesTypes';
+import { MovieType, SelectedFilters } from '../../shared/types/MoviesTypes';
 
-export const useSearch = (debouncedSearchInput: string) => {
+export const useSearch = ({
+  debouncedSearchInput,
+  pageNumber,
+  selectedFilters,
+}: {
+  debouncedSearchInput: string;
+  pageNumber: number;
+  selectedFilters: SelectedFilters;
+}) => {
   const [searchResults, setSearchResults] = useState<MovieType[]>([]);
 
   useEffect(() => {
@@ -27,7 +35,7 @@ export const useSearch = (debouncedSearchInput: string) => {
       }
     };
     fetchData();
-  }, [debouncedSearchInput]);
+  }, [debouncedSearchInput, pageNumber, selectedFilters]);
 
   return searchResults;
 };
