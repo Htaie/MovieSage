@@ -5,7 +5,17 @@ const boxShadowStyle = {
   MozBoxShadow: '6px 1px 10px 200px rgba(0, 0, 0, 0.35) inset',
   boxShadow: '6px 1px 10px 200px rgba(0, 0, 0, 0.35) inset',
 };
-const MovieCard = ({ id, poster, rating, name, year, movieLength }: MovieType) => {
+
+interface MovieCardProps {
+  id: number;
+  poster: string;
+  rating: number;
+  name: string;
+  year: number;
+  movieLength: number;
+}
+
+const MovieCard = ({ id, poster, rating, name, year, movieLength }: MovieCardProps) => {
   return (
     <Link to={`/movie/${id}`}>
       <div className='relative bg-[212124] md:w-[288px] md:h-[432px] rounded-lg border-1 border-white overflow-hidden md:hover:scale-105 transition-transform  duration-700'>

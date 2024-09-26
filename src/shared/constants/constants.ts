@@ -46,3 +46,468 @@ export const PROFILE_ROUTE = {
   PLAN: 'planned',
   SETTINGS: 'settings',
 };
+
+export const movieData = [
+  {
+    logo: {
+      url: 'placehold.co/400x550',
+    },
+    id: 12245,
+    type: 'фильм',
+    name: 'Побег из беброушенка',
+    rating: {
+      imdb: 7.9,
+      kp: 9.4,
+    },
+    persons: [
+      {
+        name: 'Тим Роббинс',
+        photo: 'placehold.co/400x550',
+        id: 12312323,
+      },
+    ],
+    movieLength: 120,
+    description:
+      'Один челик занюхнул жоска беброчки и потом попал в такую заварушку что его месили в пол самые темные ребята в николаевском гетто,после этого он позвал весь район водой и очень отважных друзей чтобы победить главного злодея Сан-Диего Дугласа.',
+    videos: {
+      trailers: [
+        {
+          url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+        },
+      ],
+    },
+    poster: {
+      url: 'https://www.mockofun.com/wp-content/uploads/2019/10/movie-poster-credits-178.jpg',
+    },
+
+    slug: 'хз какой-то слаг',
+    genres: [{ name: 'бебровик', slug: 'слаг' }],
+    countries: [{ name: 'Япония' }],
+    year: 2000,
+    shortDescription:
+      'Диего Марадонна, Лионель Месси унижают Португалию и ее самого грязного мальчика криштиану роналду',
+    backdrop: {
+      url: 'placehold.co/400x550',
+    },
+  },
+  {
+    logo: {
+      url: 'placehold.co/400x550',
+    },
+    id: 12312,
+    type: 'фильм',
+    name: 'Побег из беброушенка',
+    rating: {
+      imdb: 7.9,
+      kp: 9.4,
+    },
+    persons: [
+      {
+        name: 'Тим Роббинс',
+        photo: 'placehold.co/400x550',
+        id: 12312323,
+      },
+    ],
+    movieLength: 120,
+    description:
+      'Один челик занюхнул жоска беброчки и потом попал в такую заварушку что его месили в пол самые темные ребята в николаевском гетто,после этого он позвал весь район водой и очень отважных друзей чтобы победить главного злодея Сан-Диего Дугласа.',
+    videos: {
+      trailers: [
+        {
+          url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+        },
+      ],
+    },
+    poster: {
+      url: 'https://www.mockofun.com/wp-content/uploads/2019/10/movie-poster-credits-178.jpg',
+    },
+
+    slug: 'хз какой-то слаг',
+    genres: [{ name: 'бебровик', slug: 'слаг' }],
+    countries: [{ name: 'Япония' }],
+    year: 2000,
+    shortDescription:
+      'Диего Марадонна, Лионель Месси унижают Португалию и ее самого грязного мальчика криштиану роналду',
+    backdrop: {
+      url: 'placehold.co/400x550',
+    },
+  },
+  {
+    logo: {
+      url: 'placehold.co/400x550',
+    },
+    id: 12331245,
+    type: 'фильм',
+    name: 'Побег из беброушенка',
+    rating: {
+      imdb: 7.9,
+      kp: 9.4,
+    },
+    persons: [
+      {
+        name: 'Тим Роббинс',
+        photo: 'placehold.co/400x550',
+        id: 12312323,
+      },
+    ],
+    movieLength: 120,
+    description:
+      'Один челик занюхнул жоска беброчки и потом попал в такую заварушку что его месили в пол самые темные ребята в николаевском гетто,после этого он позвал весь район водой и очень отважных друзей чтобы победить главного злодея Сан-Диего Дугласа.',
+    videos: {
+      trailers: [
+        {
+          url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+        },
+      ],
+    },
+    poster: {
+      url: 'https://www.mockofun.com/wp-content/uploads/2019/10/movie-poster-credits-178.jpg',
+    },
+
+    slug: 'хз какой-то слаг',
+    genres: [{ name: 'бебровик', slug: 'слаг' }],
+    countries: [{ name: 'Япония' }],
+    year: 2000,
+    shortDescription:
+      'Диего Марадонна, Лионель Месси унижают Португалию и ее самого грязного мальчика криштиану роналду',
+    backdrop: {
+      url: 'placehold.co/400x550',
+    },
+  },
+  {
+    logo: {
+      url: 'placehold.co/400x550',
+    },
+    id: 1244331245,
+    type: 'фильм',
+    name: 'Побег из беброушенка',
+    rating: {
+      imdb: 7.9,
+      kp: 9.4,
+    },
+    persons: [
+      {
+        name: 'Тим Роббинс',
+        photo: 'placehold.co/400x550',
+        id: 12312323,
+      },
+    ],
+    movieLength: 120,
+    description:
+      'Один челик занюхнул жоска беброчки и потом попал в такую заварушку что его месили в пол самые темные ребята в николаевском гетто,после этого он позвал весь район водой и очень отважных друзей чтобы победить главного злодея Сан-Диего Дугласа.',
+    videos: {
+      trailers: [
+        {
+          url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+        },
+      ],
+    },
+    poster: {
+      url: 'https://www.mockofun.com/wp-content/uploads/2019/10/movie-poster-credits-178.jpg',
+    },
+
+    slug: 'хз какой-то слаг',
+    genres: [{ name: 'бебровик', slug: 'слаг' }],
+    countries: [{ name: 'Япония' }],
+    year: 2000,
+    shortDescription:
+      'Диего Марадонна, Лионель Месси унижают Португалию и ее самого грязного мальчика криштиану роналду',
+    backdrop: {
+      url: 'placehold.co/400x550',
+    },
+  },
+  {
+    logo: {
+      url: 'placehold.co/400x550',
+    },
+    id: 123231245,
+    type: 'фильм',
+    name: 'Побег из беброушенка',
+    rating: {
+      imdb: 7.9,
+      kp: 9.4,
+    },
+    persons: [
+      {
+        name: 'Тим Роббинс',
+        photo: 'placehold.co/400x550',
+        id: 12312323,
+      },
+    ],
+    movieLength: 120,
+    description:
+      'Один челик занюхнул жоска беброчки и потом попал в такую заварушку что его месили в пол самые темные ребята в николаевском гетто,после этого он позвал весь район водой и очень отважных друзей чтобы победить главного злодея Сан-Диего Дугласа.',
+    videos: {
+      trailers: [
+        {
+          url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+        },
+      ],
+    },
+    poster: {
+      url: 'https://www.mockofun.com/wp-content/uploads/2019/10/movie-poster-credits-178.jpg',
+    },
+
+    slug: 'хз какой-то слаг',
+    genres: [{ name: 'бебровик', slug: 'слаг' }],
+    countries: [{ name: 'Япония' }],
+    year: 2000,
+    shortDescription:
+      'Диего Марадонна, Лионель Месси унижают Португалию и ее самого грязного мальчика криштиану роналду',
+    backdrop: {
+      url: 'placehold.co/400x550',
+    },
+  },
+  {
+    logo: {
+      url: 'placehold.co/400x550',
+    },
+    id: 1234321245,
+    type: 'фильм',
+    name: 'Побег из беброушенка',
+    rating: {
+      imdb: 7.9,
+      kp: 9.4,
+    },
+    persons: [
+      {
+        name: 'Тим Роббинс',
+        photo: 'placehold.co/400x550',
+        id: 12312323,
+      },
+    ],
+    movieLength: 120,
+    description:
+      'Один челик занюхнул жоска беброчки и потом попал в такую заварушку что его месили в пол самые темные ребята в николаевском гетто,после этого он позвал весь район водой и очень отважных друзей чтобы победить главного злодея Сан-Диего Дугласа.',
+    videos: {
+      trailers: [
+        {
+          url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+        },
+      ],
+    },
+    poster: {
+      url: 'https://www.mockofun.com/wp-content/uploads/2019/10/movie-poster-credits-178.jpg',
+    },
+
+    slug: 'хз какой-то слаг',
+    genres: [{ name: 'бебровик', slug: 'слаг' }],
+    countries: [{ name: 'Япония' }],
+    year: 2000,
+    shortDescription:
+      'Диего Марадонна, Лионель Месси унижают Португалию и ее самого грязного мальчика криштиану роналду',
+    backdrop: {
+      url: 'placehold.co/400x550',
+    },
+  },
+  {
+    logo: {
+      url: 'placehold.co/400x550',
+    },
+    id: 1231545245,
+    type: 'фильм',
+    name: 'Побег из беброушенка',
+    rating: {
+      imdb: 7.9,
+      kp: 9.4,
+    },
+    persons: [
+      {
+        name: 'Тим Роббинс',
+        photo: 'placehold.co/400x550',
+        id: 12312323,
+      },
+    ],
+    movieLength: 120,
+    description:
+      'Один челик занюхнул жоска беброчки и потом попал в такую заварушку что его месили в пол самые темные ребята в николаевском гетто,после этого он позвал весь район водой и очень отважных друзей чтобы победить главного злодея Сан-Диего Дугласа.',
+    videos: {
+      trailers: [
+        {
+          url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+        },
+      ],
+    },
+    poster: {
+      url: 'https://www.mockofun.com/wp-content/uploads/2019/10/movie-poster-credits-178.jpg',
+    },
+
+    slug: 'хз какой-то слаг',
+    genres: [{ name: 'бебровик', slug: 'слаг' }],
+    countries: [{ name: 'Япония' }],
+    year: 2000,
+    shortDescription:
+      'Диего Марадонна, Лионель Месси унижают Португалию и ее самого грязного мальчика криштиану роналду',
+    backdrop: {
+      url: 'placehold.co/400x550',
+    },
+  },
+  {
+    logo: {
+      url: 'placehold.co/400x550',
+    },
+    id: 1235341245,
+    type: 'фильм',
+    name: 'Побег из беброушенка',
+    rating: {
+      imdb: 7.9,
+      kp: 9.4,
+    },
+    persons: [
+      {
+        name: 'Тим Роббинс',
+        photo: 'placehold.co/400x550',
+        id: 12312323,
+      },
+    ],
+    movieLength: 120,
+    description:
+      'Один челик занюхнул жоска беброчки и потом попал в такую заварушку что его месили в пол самые темные ребята в николаевском гетто,после этого он позвал весь район водой и очень отважных друзей чтобы победить главного злодея Сан-Диего Дугласа.',
+    videos: {
+      trailers: [
+        {
+          url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+        },
+      ],
+    },
+    poster: {
+      url: 'https://www.mockofun.com/wp-content/uploads/2019/10/movie-poster-credits-178.jpg',
+    },
+
+    slug: 'хз какой-то слаг',
+    genres: [{ name: 'бебровик', slug: 'слаг' }],
+    countries: [{ name: 'Япония' }],
+    year: 2000,
+    shortDescription:
+      'Диего Марадонна, Лионель Месси унижают Португалию и ее самого грязного мальчика криштиану роналду',
+    backdrop: {
+      url: 'placehold.co/400x550',
+    },
+  },
+  {
+    logo: {
+      url: 'placehold.co/400x550',
+    },
+    id: 13234231245,
+    type: 'фильм',
+    name: 'Побег из беброушенка',
+    rating: {
+      imdb: 7.9,
+      kp: 9.4,
+    },
+    persons: [
+      {
+        name: 'Тим Роббинс',
+        photo: 'placehold.co/400x550',
+        id: 12312323,
+      },
+    ],
+    movieLength: 120,
+    description:
+      'Один челик занюхнул жоска беброчки и потом попал в такую заварушку что его месили в пол самые темные ребята в николаевском гетто,после этого он позвал весь район водой и очень отважных друзей чтобы победить главного злодея Сан-Диего Дугласа.',
+    videos: {
+      trailers: [
+        {
+          url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+        },
+      ],
+    },
+    poster: {
+      url: 'https://www.mockofun.com/wp-content/uploads/2019/10/movie-poster-credits-178.jpg',
+    },
+
+    slug: 'хз какой-то слаг',
+    genres: [{ name: 'бебровик', slug: 'слаг' }],
+    countries: [{ name: 'Япония' }],
+    year: 2000,
+    shortDescription:
+      'Диего Марадонна, Лионель Месси унижают Португалию и ее самого грязного мальчика криштиану роналду',
+    backdrop: {
+      url: 'placehold.co/400x550',
+    },
+  },
+  {
+    logo: {
+      url: 'placehold.co/400x550',
+    },
+    id: 12331231245,
+    type: 'фильм',
+    name: 'Побег из беброушенка',
+    rating: {
+      imdb: 7.9,
+      kp: 9.4,
+    },
+    persons: [
+      {
+        name: 'Тим Роббинс',
+        photo: 'placehold.co/400x550',
+        id: 12312323,
+      },
+    ],
+    movieLength: 120,
+    description:
+      'Один челик занюхнул жоска беброчки и потом попал в такую заварушку что его месили в пол самые темные ребята в николаевском гетто,после этого он позвал весь район водой и очень отважных друзей чтобы победить главного злодея Сан-Диего Дугласа.',
+    videos: {
+      trailers: [
+        {
+          url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+        },
+      ],
+    },
+    poster: {
+      url: 'https://www.mockofun.com/wp-content/uploads/2019/10/movie-poster-credits-178.jpg',
+    },
+
+    slug: 'хз какой-то слаг',
+    genres: [{ name: 'бебровик', slug: 'слаг' }],
+    countries: [{ name: 'Япония' }],
+    year: 2000,
+    shortDescription:
+      'Диего Марадонна, Лионель Месси унижают Португалию и ее самого грязного мальчика криштиану роналду',
+    backdrop: {
+      url: 'placehold.co/400x550',
+    },
+  },
+  {
+    logo: {
+      url: 'placehold.co/400x550',
+    },
+    id: 1231768245,
+    type: 'фильм',
+    name: 'Побег из беброушенка',
+    rating: {
+      imdb: 7.9,
+      kp: 9.4,
+    },
+    persons: [
+      {
+        name: 'Тим Роббинс',
+        photo: 'placehold.co/400x550',
+        id: 12312323,
+      },
+    ],
+    movieLength: 120,
+    description:
+      'Один челик занюхнул жоска беброчки и потом попал в такую заварушку что его месили в пол самые темные ребята в николаевском гетто,после этого он позвал весь район водой и очень отважных друзей чтобы победить главного злодея Сан-Диего Дугласа.',
+    videos: {
+      trailers: [
+        {
+          url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+        },
+      ],
+    },
+    poster: {
+      url: 'https://www.mockofun.com/wp-content/uploads/2019/10/movie-poster-credits-178.jpg',
+    },
+
+    slug: 'хз какой-то слаг',
+    genres: [{ name: 'бебровик', slug: 'слаг' }],
+    countries: [{ name: 'Япония' }],
+    year: 2000,
+    shortDescription:
+      'Диего Марадонна, Лионель Месси унижают Португалию и ее самого грязного мальчика криштиану роналду',
+    backdrop: {
+      url: 'placehold.co/400x550',
+    },
+  },
+];

@@ -1,14 +1,20 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { API_URL, TOKEN } from '../shared/constants/constants';
 import MovieCard from '../features/MovieCard';
 import MainLoader from '../shared/loader/MainLoader';
+import { movieData } from '../shared/constants/constants';
+import { MovieType } from '../shared/types/MoviesTypes';
 
 const MovieList = ({ name }: { name: string }): JSX.Element => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<MovieType[]>([]);
   const [pageNumber, setPageNumber] = useState(1);
   const [maxPages, setMaxPages] = useState(1);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setData(movieData);
+  }, []);
+
   useEffect(() => {
     scrollTo(0, 0);
   }, []);
@@ -63,7 +69,7 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
 
   return (
     <>
-      <div className='container mx-auto grid grid-cols-4 gap-2 gap-y-10'>
+      <div className='container mx-auto grid grid-cols-2 md:grid-cols-4 gap-2 gap-y-10'>
         {data.map((item: any, index: number) => (
           <MovieCard
             key={index}
