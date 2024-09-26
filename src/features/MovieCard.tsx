@@ -17,7 +17,7 @@ interface MovieCardProps {
 
 const MovieCard = ({ id, poster, rating, name, year, movieLength }: MovieCardProps) => {
   return (
-    <Link to={`/movie/${id}`}>
+    <Link to={`/movie/${id}`} className='w-full md:w-[288px]'>
       <div className='relative bg-[212124] md:w-[288px] md:h-[432px] rounded-lg border-1 border-white overflow-hidden md:hover:scale-105 transition-transform  duration-700'>
         <img
           src={poster}

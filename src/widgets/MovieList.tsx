@@ -69,7 +69,7 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
 
   return (
     <>
-      <div className='container mx-auto grid grid-cols-2 md:grid-cols-4 gap-2 gap-y-10'>
+      <div className='container mx-auto grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 gap-y-10'>
         {data.map((item: any, index: number) => (
           <MovieCard
             key={index}

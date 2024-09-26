@@ -5,12 +5,15 @@ import MovieIcon from '@mui/icons-material/Movie';
 import LiveTvIcon from '@mui/icons-material/LiveTv';
 import { GiStarShuriken } from 'react-icons/gi';
 import { useEffect, useState } from 'react';
+
 const NavBar = () => {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
   const location = useLocation();
 
   const isAnimeGenre = location.pathname == `/genre/${encodeURIComponent('аниме')}`;
+  const isMovieGenre = location.pathname == `/genre/${encodeURIComponent('фильмы')}`;
+  const isTvGenre = location.pathname == `/genre/${encodeURIComponent('сериалы')}`;
 
   const handleScroll = () => {
     const currentScrollPos = window.scrollY;
@@ -58,16 +61,19 @@ const NavBar = () => {
           <GiStarShuriken className={`${isAnimeGenre ? 'text-[#5138E9]' : ''}`} style={{ fontSize: '20px' }} />
           <span>Аниме</span>
         </Link>
-        <Link to={'genre/комедии'} className='flex flex-col items-center text-xs'>
-          <MovieIcon style={{ fontSize: '20px' }} />
+        <Link to={'genre/фильмы'} className='flex flex-col items-center text-xs'>
+          <MovieIcon style={{ fontSize: '20px' }} className={`${isMovieGenre ? 'text-[#5138E9]' : ''}`} />
           <span>Фильмы</span>
         </Link>
-        <Link to={'genre/писька'} className='flex flex-col items-center text-xs'>
-          <LiveTvIcon style={{ fontSize: '20px' }} />
+        <Link to={'genre/сериалы'} className='flex flex-col items-center text-xs'>
+          <LiveTvIcon style={{ fontSize: '20px' }} className={`${isTvGenre ? 'text-[#5138E9]' : ''}`} />
           <span>Сериалы</span>
         </Link>
-        <Link to={'/'} className='flex flex-col items-center text-xs'>
-          <SearchIcon style={{ fontSize: '20px' }} />
+        <Link to={'/search'} className='flex flex-col items-center text-xs'>
+          <SearchIcon
+            style={{ fontSize: '20px' }}
+            className={`${location.pathname === '/search' ? 'text-[#5138E9]' : ''}`}
+          />
           <span>Поиск</span>
         </Link>
       </div>
