@@ -7,6 +7,7 @@ import { GENRES, MPAA, COUNTRIES_LIST, YEARS } from '../../shared/constants/cons
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { FilterMapping } from './FilterMapping';
+import { useMobile } from '../../shared/hooks/useMobile';
 
 export const SearchBlock = () => {
   const [searchValue, setSearchValue] = useState('');
@@ -22,19 +23,7 @@ export const SearchBlock = () => {
   const [sliderValue, setSliderValue] = useState(5);
   const searchResults = useSearch({ debouncedSearchInput, pageNumber, selectedFilters });
 
-  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+  const isMobile = useMobile();
 
   useEffect(() => {
     const delayInputTimeoutId = setTimeout(() => {
