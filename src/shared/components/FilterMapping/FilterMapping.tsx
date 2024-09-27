@@ -1,5 +1,5 @@
 import { Scrollbar } from 'react-scrollbars-custom';
-import { SelectedFilters } from '../../shared/types/MoviesTypes';
+import { SelectedFilters } from '../../types/MoviesTypes';
 
 interface CustomScrollbarProps {
   items: string[];

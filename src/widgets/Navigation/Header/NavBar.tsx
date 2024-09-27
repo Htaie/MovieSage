@@ -42,9 +42,9 @@ const NavBar = () => {
           </Link>
           <div className='flex flex-row-reverse gap-10 md:gap-0 md:flex-row justify-between pr-4 md:w-[500px] lg:w-[660px] xl:w-[860px]'>
             <div className='space-x-5 hidden items-center md:flex'>
-              <Link to={'genre/аниме'}>Аниме</Link>
-              <Link to={'genre/фильмы'}>Фильмы</Link>
-              <Link to={'genre/сериалы'}>Сериалы</Link>
+              <Link to={'genre/anime'}>Аниме</Link>
+              <Link to={'genre/movie'}>Фильмы</Link>
+              <Link to={'genre/tv-series'}>Сериалы</Link>
             </div>
             <Link to={'/search'}>
               <SearchIcon className='hover:cursor-pointer  h-4 w-4 text-neutral-3' />
@@ -57,15 +57,15 @@ const NavBar = () => {
           <HomeIcon className={`${location.pathname === '/' ? 'text-[#5138E9]' : ''}`} style={{ fontSize: '20px' }} />
           <span>Главная</span>
         </Link>
-        <Link to={'genre/аниме'} className='flex flex-col items-center text-xs'>
+        <Link to={'genre/anime'} className='flex flex-col items-center text-xs'>
           <GiStarShuriken className={`${isAnimeGenre ? 'text-[#5138E9]' : ''}`} style={{ fontSize: '20px' }} />
           <span>Аниме</span>
         </Link>
-        <Link to={'genre/фильмы'} className='flex flex-col items-center text-xs'>
+        <Link to={'genre/movie'} className='flex flex-col items-center text-xs'>
           <MovieIcon style={{ fontSize: '20px' }} className={`${isMovieGenre ? 'text-[#5138E9]' : ''}`} />
           <span>Фильмы</span>
         </Link>
-        <Link to={'genre/сериалы'} className='flex flex-col items-center text-xs'>
+        <Link to={'genre/tv-series'} className='flex flex-col items-center text-xs'>
           <LiveTvIcon style={{ fontSize: '20px' }} className={`${isTvGenre ? 'text-[#5138E9]' : ''}`} />
           <span>Сериалы</span>
         </Link>
