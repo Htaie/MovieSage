@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { API_URL, TOKEN } from '../shared/constants/constants';
 import MovieCard from '../features/MovieCard';
 import MainLoader from '../shared/loader/MainLoader';
-import { movieData } from '../shared/constants/constants';
+// import { movieData } from '../shared/constants/constants';
 import { MovieType } from '../shared/types/MoviesTypes';
 
 const MovieList = ({ name }: { name: string }): JSX.Element => {
@@ -11,9 +11,9 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
   const [maxPages, setMaxPages] = useState(1);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    setData(movieData);
-  }, []);
+  // useEffect(() => {
+  //   setData(movieData);
+  // }, []);
 
   useEffect(() => {
     scrollTo(0, 0);

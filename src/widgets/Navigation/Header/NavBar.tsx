@@ -43,8 +43,8 @@ const NavBar = () => {
           <div className='flex flex-row-reverse gap-10 md:gap-0 md:flex-row justify-between pr-4 md:w-[500px] lg:w-[660px] xl:w-[860px]'>
             <div className='space-x-5 hidden items-center md:flex'>
               <Link to={'genre/аниме'}>Аниме</Link>
-              <Link to={'genre/комедии'}>Фильмы</Link>
-              <Link to={'genre/писька'}>Сериалы</Link>
+              <Link to={'genre/фильмы'}>Фильмы</Link>
+              <Link to={'genre/сериалы'}>Сериалы</Link>
             </div>
             <Link to={'/search'}>
               <SearchIcon className='hover:cursor-pointer  h-4 w-4 text-neutral-3' />
