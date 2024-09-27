@@ -126,7 +126,11 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
         }
 
         const responseData = await response.json();
-        setData((prevData): any => [...prevData, ...responseData.docs]);
+        if (pageNumber === 1) {
+          setData(responseData.docs);
+        } else {
+          setData((prevData) => [...prevData, ...responseData.docs]);
+        }
         setMaxPages(responseData.pages);
       } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
@@ -156,6 +160,19 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [pageNumber, name, maxPages, loading]);
+
+  const handleResetFilters = () => {
+    setSelectedFilters({
+      genres: {},
+      mpaa: {},
+      countries: {},
+      year: {},
+      rating: {},
+    });
+    setData([]);
+    setSliderValue(5);
+    setPageNumber(1);
+  };
 
   return (
     <div className='container mx-auto'>
@@ -224,6 +241,12 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
           />
         </div>
       </div>
+      <button
+        onClick={handleResetFilters}
+        className='text-white bg-[#5138E9] px-6 py-2 rounded-lg hover:bg-red-500 mb-5'
+      >
+        Сбросить фильтры
+      </button>
       <div className='grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 gap-y-10'>
         {data.map((item: any, index: number) => (
           <MovieCard
