@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { API_URL, COUNTRIES_LIST, GENRES, MPAA, TOKEN, YEARS } from '../shared/constants/constants';
 import MovieCard from '../features/MovieCard';
 import MainLoader from '../shared/loader/MainLoader';
-// import { movieData } from '../shared/constants/constants';
 import { MovieType } from '../shared/types/MoviesTypes';
 import { useMobile } from '../shared/hooks/useMobile';
 import { FilterMapping } from '../shared/components/FilterMapping/FilterMapping';
@@ -16,6 +15,24 @@ interface SelectedFilters {
   year: { [key: string]: boolean };
   rating: { [key: string]: boolean };
 }
+
+const appendFilterToUrl = (
+  url: string,
+  selectedFilter: { [key: string]: boolean },
+  paramName: string,
+  shouldEncode: boolean = true
+): string => {
+  const activeFilters = Object.keys(selectedFilter)
+    .filter((key) => selectedFilter[key])
+    .join(',');
+
+  if (activeFilters.length > 0) {
+    const encodedFilters = shouldEncode ? encodeURIComponent(activeFilters) : activeFilters;
+    return `${url}&${paramName}=${encodedFilters}`;
+  }
+
+  return url;
+};
 
 const MovieList = ({ name }: { name: string }): JSX.Element => {
   const [data, setData] = useState<MovieType[]>([]);
@@ -31,10 +48,6 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
   });
   const [sliderValue, setSliderValue] = useState(5);
   const isMobile = useMobile();
-
-  // useEffect(() => {
-  //   setData(movieData);
-  // }, []);
 
   const handleFilterChange = (filterType: keyof SelectedFilters, filterValue: string) => {
     setSelectedFilters((prevState) => ({
@@ -65,6 +78,14 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
     scrollTo(0, 0);
   }, []);
 
+  const filterMappings = [
+    { key: 'genres', paramName: 'genres.name', shouldEncode: true },
+    { key: 'mpaa', paramName: 'ratingMpaa', shouldEncode: false },
+    { key: 'countries', paramName: 'countries.name', shouldEncode: true },
+    { key: 'year', paramName: 'year', shouldEncode: true },
+    { key: 'rating', paramName: 'rating.imdb', shouldEncode: false },
+  ];
+
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       try {
@@ -78,40 +99,9 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
           url += `&genres.name=${name}`;
         }
 
-        if (Object.keys(selectedFilters.genres).length > 0) {
-          const genres = Object.keys(selectedFilters.genres)
-            .filter((key) => selectedFilters.genres[key])
-            .join(',');
-          url += `&genres.name=${encodeURIComponent(genres)}`;
-        }
-
-        if (Object.keys(selectedFilters.mpaa).length > 0) {
-          const mpaa = Object.keys(selectedFilters.mpaa)
-            .filter((key) => selectedFilters.mpaa[key])
-            .join(',');
-          url += `&ratingMpaa=${mpaa}`;
-        }
-
-        if (Object.keys(selectedFilters.countries).length > 0) {
-          const countries = Object.keys(selectedFilters.countries)
-            .filter((key) => selectedFilters.countries[key])
-            .join(',');
-          url += `&countries.name=${encodeURIComponent(countries)}`;
-        }
-
-        if (Object.keys(selectedFilters.year).length > 0) {
-          const years = Object.keys(selectedFilters.year)
-            .filter((key) => selectedFilters.year[key])
-            .join(',');
-          url += `&year=${encodeURIComponent(years)}`;
-        }
-
-        if (Object.keys(selectedFilters.rating).length > 0) {
-          const ratings = Object.keys(selectedFilters.rating)
-            .filter((key) => selectedFilters.rating[key])
-            .join(',');
-          url += `&rating.imdb=${ratings}`;
-        }
+        filterMappings.forEach(({ key, paramName, shouldEncode }) => {
+          url = appendFilterToUrl(url, selectedFilters[key as keyof SelectedFilters], paramName, shouldEncode);
+        });
 
         const response = await fetch(url, {
           method: 'GET',
@@ -131,6 +121,7 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
         } else {
           setData((prevData) => [...prevData, ...responseData.docs]);
         }
+        console.log(url, 'url');
         setMaxPages(responseData.pages);
       } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
