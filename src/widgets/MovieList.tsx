@@ -92,7 +92,7 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
       try {
         setLoading(true);
 
-        let url = `${API_URL}movie?page=${pageNumber}&limit=25&&sortField=votes.imdb&sortType=1&votes.imdb=150000-6666666&notNullFields=poster.url`;
+        let url = `${API_URL}movie?page=${pageNumber}&limit=25&sortField=votes.imdb&sortType=1&votes.imdb=150000-6666666&notNullFields=poster.url`;
 
         if (typeList) {
           url = `${API_URL}movie?page=${pageNumber}&limit=10&sortField=votes.imdb&sortType=1&votes.imdb=${name === 'anime' ? '150000-666666' : '300000-6666666'}&type=${name}&notNullFields=poster.url`;
@@ -128,7 +128,6 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
         } else {
           setData((prevData) => [...prevData, ...responseData.docs]);
         }
-        console.log(url, 'url');
         setMaxPages(responseData.pages);
       } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
