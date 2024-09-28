@@ -8,6 +8,7 @@ import { FilterMapping } from '../shared/components/FilterMapping/FilterMapping'
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { SelectedFilters } from '../shared/types/MoviesTypes';
+import { filterConfig } from '../shared/config/FilterConfig';
 
 const appendFilterToUrl = (
   url: string,
@@ -76,14 +77,6 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
     scrollTo(0, 0);
   }, []);
 
-  const filterMappings = [
-    { key: 'genres', paramName: 'genres.name', shouldEncode: true, ratingImdb: false },
-    { key: 'mpaa', paramName: 'ratingMpaa', shouldEncode: false, ratingImdb: false },
-    { key: 'countries', paramName: 'countries.name', shouldEncode: true, ratingImdb: false },
-    { key: 'year', paramName: 'year', shouldEncode: true, ratingImdb: false },
-    { key: 'rating', paramName: 'rating.imdb', shouldEncode: false, ratingImdb: true },
-  ];
-
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       try {
@@ -97,7 +90,7 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
           url += `&genres.name=${name}`;
         }
 
-        filterMappings.forEach(({ key, paramName, shouldEncode, ratingImdb }) => {
+        filterConfig.forEach(({ key, paramName, shouldEncode, ratingImdb }) => {
           url = appendFilterToUrl(
             url,
             selectedFilters[key as keyof SelectedFilters],
