@@ -7,14 +7,7 @@ import { useMobile } from '../shared/hooks/useMobile';
 import { FilterMapping } from '../shared/components/FilterMapping/FilterMapping';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
-
-interface SelectedFilters {
-  genres: { [key: string]: boolean };
-  mpaa: { [key: string]: boolean };
-  countries: { [key: string]: boolean };
-  year: { [key: string]: boolean };
-  rating: { [key: string]: boolean };
-}
+import { SelectedFilters } from '../shared/types/MoviesTypes';
 
 const appendFilterToUrl = (
   url: string,
@@ -23,13 +16,13 @@ const appendFilterToUrl = (
   shouldEncode: boolean = true,
   ratingImdb: boolean
 ): string => {
-  const activeFilters = Object.keys(selectedFilter)
-    .filter((key) => selectedFilter[key])
-    .join(',');
+  const activeFilters = Object.keys(selectedFilter).filter((key) => selectedFilter[key]);
 
   if (activeFilters.length > 0) {
-    const encodedFilters = shouldEncode ? encodeURIComponent(activeFilters) : activeFilters;
-    return `${url}&${paramName}=${ratingImdb ? encodedFilters + '-10' : encodedFilters}`;
+    activeFilters.forEach((filter) => {
+      const encodedFilter = shouldEncode ? encodeURIComponent(filter) : filter;
+      url += `&${paramName}=${ratingImdb ? encodedFilter + '-10' : encodedFilter}`;
+    });
   }
 
   return url;
@@ -48,6 +41,7 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
     rating: {},
   });
   const [sliderValue, setSliderValue] = useState(5);
+  const [filterChanged, setFilterChanged] = useState(false);
   const isMobile = useMobile();
 
   const handleFilterChange = (filterType: keyof SelectedFilters, filterValue: string) => {
@@ -58,6 +52,7 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
         [filterValue]: !prevState[filterType][filterValue],
       },
     }));
+    setFilterChanged(true);
   };
 
   const handleSliderChange = (newValue: number | number[]) => {
@@ -70,6 +65,8 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
         },
       }));
     }
+
+    setFilterChanged(true);
   };
 
   const validTypes = ['anime', 'movie', 'tv-series'];
@@ -95,7 +92,7 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
         let url = `${API_URL}movie?page=${pageNumber}&limit=25&sortField=votes.imdb&sortType=1&votes.imdb=150000-6666666&notNullFields=poster.url`;
 
         if (typeList) {
-          url = `${API_URL}movie?page=${pageNumber}&limit=10&sortField=votes.imdb&sortType=1&votes.imdb=${name === 'anime' ? '150000-666666' : '300000-6666666'}&type=${name}&notNullFields=poster.url`;
+          url = `${API_URL}movie?page=${pageNumber}&limit=10&sortField=votes.imdb&sortType=1&votes.imdb=${name === 'anime' ? '5000-666666' : '300000-6666666'}&type=${name}&notNullFields=poster.url`;
         } else {
           url += `&genres.name=${name}`;
         }
@@ -123,8 +120,9 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
         }
 
         const responseData = await response.json();
-        if (pageNumber === 1) {
+        if (filterChanged) {
           setData(responseData.docs);
+          setFilterChanged(false);
         } else {
           setData((prevData) => [...prevData, ...responseData.docs]);
         }
