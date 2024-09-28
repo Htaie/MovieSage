@@ -20,7 +20,8 @@ const appendFilterToUrl = (
   url: string,
   selectedFilter: { [key: string]: boolean },
   paramName: string,
-  shouldEncode: boolean = true
+  shouldEncode: boolean = true,
+  ratingImdb: boolean
 ): string => {
   const activeFilters = Object.keys(selectedFilter)
     .filter((key) => selectedFilter[key])
@@ -28,7 +29,7 @@ const appendFilterToUrl = (
 
   if (activeFilters.length > 0) {
     const encodedFilters = shouldEncode ? encodeURIComponent(activeFilters) : activeFilters;
-    return `${url}&${paramName}=${encodedFilters}`;
+    return `${url}&${paramName}=${ratingImdb ? encodedFilters + '-10' : encodedFilters}`;
   }
 
   return url;
@@ -79,11 +80,11 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
   }, []);
 
   const filterMappings = [
-    { key: 'genres', paramName: 'genres.name', shouldEncode: true },
-    { key: 'mpaa', paramName: 'ratingMpaa', shouldEncode: false },
-    { key: 'countries', paramName: 'countries.name', shouldEncode: true },
-    { key: 'year', paramName: 'year', shouldEncode: true },
-    { key: 'rating', paramName: 'rating.imdb', shouldEncode: false },
+    { key: 'genres', paramName: 'genres.name', shouldEncode: true, ratingImdb: false },
+    { key: 'mpaa', paramName: 'ratingMpaa', shouldEncode: false, ratingImdb: false },
+    { key: 'countries', paramName: 'countries.name', shouldEncode: true, ratingImdb: false },
+    { key: 'year', paramName: 'year', shouldEncode: true, ratingImdb: false },
+    { key: 'rating', paramName: 'rating.imdb', shouldEncode: false, ratingImdb: true },
   ];
 
   useEffect(() => {
@@ -91,16 +92,22 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
       try {
         setLoading(true);
 
-        let url = `${API_URL}movie?page=${pageNumber}&limit=25&notNullFields=poster.url`;
+        let url = `${API_URL}movie?page=${pageNumber}&limit=25&&sortField=votes.imdb&sortType=1&votes.imdb=150000-6666666&notNullFields=poster.url`;
 
         if (typeList) {
-          url = `${API_URL}movie?page=${pageNumber}&limit=10&type=${name}&notNullFields=poster.url`;
+          url = `${API_URL}movie?page=${pageNumber}&limit=10&sortField=votes.imdb&sortType=1&votes.imdb=${name === 'anime' ? '150000-666666' : '300000-6666666'}&type=${name}&notNullFields=poster.url`;
         } else {
           url += `&genres.name=${name}`;
         }
 
-        filterMappings.forEach(({ key, paramName, shouldEncode }) => {
-          url = appendFilterToUrl(url, selectedFilters[key as keyof SelectedFilters], paramName, shouldEncode);
+        filterMappings.forEach(({ key, paramName, shouldEncode, ratingImdb }) => {
+          url = appendFilterToUrl(
+            url,
+            selectedFilters[key as keyof SelectedFilters],
+            paramName,
+            shouldEncode,
+            ratingImdb
+          );
         });
 
         const response = await fetch(url, {
