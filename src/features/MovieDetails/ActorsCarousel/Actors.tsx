@@ -6,14 +6,16 @@ import 'swiper/css/pagination';
 import 'swiper/css';
 
 import { MovieType } from '../../../shared/types/MoviesTypes';
+import { useMobile } from '../../../shared/hooks/useMobile';
 interface ActorsProps {
   data: MovieType;
 }
 const ActorsInfo = ({ data }: ActorsProps): JSX.Element => {
+  const isMobile = useMobile();
   return (
     <>
       <Swiper
-        slidesPerView={6}
+        slidesPerView={isMobile ? 3 : 6}
         loop={true}
         pagination={{
           clickable: true,
@@ -28,7 +30,7 @@ const ActorsInfo = ({ data }: ActorsProps): JSX.Element => {
               <img
                 src={item.photo}
                 alt='actor image'
-                className='w-[200px] h-[200px] rounded-lg object-cover mb-2'
+                className='w-[120px] h-[120px] md:w-[200px] md:h-[200px] rounded-lg object-cover mb-2'
               ></img>
               <p className='ml-1'>{item.name}</p>
             </Link>
