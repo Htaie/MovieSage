@@ -17,7 +17,7 @@ export const FilmByGenreSlider = ({ genre, isMobile }: { genre: string; isMobile
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       const url = `
-      https://api.kinopoisk.dev/v1.4/movie?page=1&limit=10&selectFields=id&selectFields=name&selectFields=year&selectFields=rating&selectFields=movieLength&selectFields=poster&notNullFields=name&notNullFields=year&notNullFields=movieLength&notNullFields=poster.url&genres.name=${genre}`;
+      https://api.kinopoisk.dev/v1.4/movie?page=1&limit=10&sortField=votes.imdb&sortType=1&votes.imdb=200000-6666666&selectFields=id&selectFields=name&selectFields=year&selectFields=rating&selectFields=movieLength&selectFields=poster&notNullFields=name&notNullFields=year&notNullFields=movieLength&notNullFields=poster.url&genres.name=${genre}`;
       const movieStoredData = localStorage.getItem(`movieByGenresData_${genre}`);
       try {
         if (movieStoredData) {

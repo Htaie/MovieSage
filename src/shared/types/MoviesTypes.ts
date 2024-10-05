@@ -34,3 +34,11 @@ export interface MovieType {
     url: string;
   };
 }
+
+export interface SelectedFilters {
+  genres: { [key: string]: boolean };
+  mpaa: { [key: string]: boolean };
+  countries: { [key: string]: boolean };
+  year: { [key: string]: boolean };
+  rating: { [key: string]: boolean };
+}
