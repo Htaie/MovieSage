@@ -1,7 +1,7 @@
 export const API_URL = 'https://api.kinopoisk.dev/v1.4/';
 export const MOVIE_GENRES_API_URL = 'https://api.kinopoisk.dev/v1/movie/possible-values-by-field?field=genres.name';
 
-export const TOKEN = import.meta.env.REACT_APP_SECRET_TOKEN;
+export const TOKEN = import.meta.env.VITE_SECRET_TOKEN;
 
 console.log('dd',TOKEN)
 

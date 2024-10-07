@@ -20,6 +20,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", ".eslintrc.js", "backend/apiClient/client.js"],
+  "include": ["src", ".eslintrc.js", "backend/apiClient/client.js", "vite-env.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
