@@ -3,6 +3,8 @@ export const MOVIE_GENRES_API_URL = 'https://api.kinopoisk.dev/v1/movie/possible
 
 export const TOKEN = import.meta.env.REACT_APP_SECRET_TOKEN;
 
+console.log('dd',TOKEN)
+
 export const Route = {
   HOME: '/',
   PLAN: '/profile/planned',
