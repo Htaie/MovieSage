@@ -1,5 +1,4 @@
 import { MovieGenresList } from '../../features/MovieDetails/FilmDesc/MovieGenresList';
-import { MovieLogo } from '../../features/MovieDetails/FilmDesc/MovieLogo';
 import { MovieSummary } from '../../features/MovieDetails/FilmDesc/MovieSummary';
 import MovieSynopsis from '../../features/MovieDetails/FilmDesc/MovieSynopsis';
 

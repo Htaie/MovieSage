@@ -1,11 +1,11 @@
 import { Link, type LinkProps } from 'react-router-dom';
 import React from 'react';
 
-interface MainBtnProps extends LinkProps {
+interface MainBtnProps extends Partial<LinkProps> {
   text: any;
   to?: string | any;
+  size?: string | any;
 }
-
 export const MainBtn: React.FC<MainBtnProps> = ({ text,size, to, ...props }) => {
   return (
     <Link

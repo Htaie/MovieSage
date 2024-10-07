@@ -1,13 +1,12 @@
 import { useParams } from 'react-router-dom';
 import { MainBtn } from '../../shared/UI/buttons/MainBtn.tsx';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import { useState, useRef, useEffect } from 'react';
+import { useState,  useEffect } from 'react';
 import TrailerModal from '../../features/MovieDetails/TrailerModal.tsx';
 import CloseIcon from '@mui/icons-material/Close';
 
 import MainLoader from '../../shared/loader/MainLoader.tsx';
 import MovieDescription from '../../widgets/MovieDescription/MovieDescription.tsx';
-import { RaitingInfo } from '../../features/MovieDetails/RatingStar.tsx';
 import ActorsInMovie from '../../widgets/MovieDescription/ActorsInMovie.tsx';
 import FilmInfo from '../../features/MovieDetails/FilmDesc/FilmInfo.tsx';
 import { MovieDataFetcher, movieDataStore } from '../../entities/MovieDataFetcher/MovieDataFetcher.tsx';
@@ -16,15 +15,15 @@ import { useStore } from 'effector-react';
 
 const AboutMoviePage = (): JSX.Element => {
   const [openModal, setOpenModal] = useState(false);
-  const [torrentsList, setTorrentsList] = useState([]);
-  const { id } = useParams();
+
+  const { id } = useParams() as any
   
   useEffect(() => {
     MovieDataFetcher(id);
   }, [id]); //у меня ощущения будто это не совсем то что нужно но если честно то я вообще чет не смог ничего больше сделать рабочего с этим вонючим effector'ом
   
   const data = useStore(movieDataStore);
-  const watchFilmRef = useRef<null | HTMLDivElement>(null);
+
 
   if (data == null) {
     return <MainLoader />;
@@ -61,83 +60,20 @@ const AboutMoviePage = (): JSX.Element => {
       }
   
       const result = await response.json(); 
-      setTorrentsList(result.data);
+      // setTorrentsList(result.data);
 
       console.log(result.data);
     } catch (error) {
       console.error('Ошибка:', error);
     }
   }
-  async function addTorrent(magnetLink) {
-   console.log(magnetLink,'dddd')
-   const data = new URLSearchParams();
-  data.append('link', magnetLink);
-   await fetch('http://localhost:3000/addMagnetLink', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded', 
-    },
-    body: data.toString()
-    }).then((response) => {
-      console.log(response)
-    })
-   
-}
 
 
 
 
 
-  async function fetchMagnet(key) {
-    try {
-      let lol = null
-      const response = await fetch(`https://api.exfreedomist.com/magnet/${key}?token=fggfgfgf`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json', 
-        },
-      });
-  
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
-      }
-      console.log(response)
-      const result = await response.json(); // Парсим ответ как JSON
-      // setTorrentsList(result);
-      const magnetLink = result.data.magnet_link.match(/magnet(\S+)/i);
-          if (magnetLink && magnetLink[1]) {
-            const result = magnetLink[1].trim(); 
-            lol =  "magnet" + result
-          } else {
-            console.log('Магнет-ссылка не найдена');
-          }
-     
-          addTorrent(lol)
-      console.log(lol); // Выводим результат в консоль
-    } catch (error) {
-      console.error('Ошибка:', error);
-    }
-  }
-  const cleanTitle = (title) => {
-    return title
-      .replace(/(I need money:.+|demo version.+|use token.+|https?:\/\/\S+)/gi, '') // удаляем лишние фразы и ссылки
-      .replace(/(\[.+?\])/g, '') // удаляем текст в квадратных скобках
-      .replace(/\/{2,}/g, '') // удаляем двойные косые черты
-      .replace(/[^\w\sА-Яа-яёЁ.,:;()!?]+/gi, '') // убираем ненужные спецсимволы
-      .replace(/\s+/g, ' ') // заменяем множественные пробелы одним
-      .trim(); // удаляем пробелы по краям
-  };
-  const parseSize = (sizeString) => {
-    const match = sizeString.match(/(\d+\.?\d*)\s*([GM]B)/i); 
-  
-    if (match) {
-      const sizeValue = parseFloat(match[1]); 
-      const sizeUnit = match[2].toUpperCase(); 
-  
-      return `${sizeValue} ${sizeUnit}`;
-    }
-    return sizeString;
-  };
+
+
   return (
     <div className='bg-[#212124]'>
       <div className='container mx-auto text-white pt-[100px] pb-[100px]'>
@@ -179,6 +115,7 @@ const AboutMoviePage = (): JSX.Element => {
                   onClick={() => {
                     setOpenModal(true);
                   }}
+                  
                 ></MainBtn>
                 <MainBtn
                   text='Посмотреть торенты'
@@ -198,7 +135,7 @@ const AboutMoviePage = (): JSX.Element => {
           </div>
         </div>
         <div className='flex flex-col gap-6'>
-          {torrentsList.length > 0 &&
+          {/* {torrentsList.length > 0 &&
             torrentsList.map((item, index) => (
               <MainBtn
                 key={index}
@@ -206,11 +143,11 @@ const AboutMoviePage = (): JSX.Element => {
                 size={parseSize(item.size)}
                 onClick={() => fetchMagnet(item.magnet_key)}
               />
-            ))}
+            ))} */}
         </div>
         <div className='mb-[80px] '>
-          <RaitingInfo data={data} />
           <ActorsInMovie data={data} />
+          <FilmInfo data={data} />
           <FilmInfo data={data} />
         </div>
       </div>

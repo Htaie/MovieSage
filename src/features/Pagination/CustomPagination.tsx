@@ -9,6 +9,7 @@ interface CustomPaginationProps {
 
 export const CustomPagination = ({ currentPage, totalPages, onPageChange }: CustomPaginationProps) => {
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    console.log(event)
     onPageChange(value);
   };
 

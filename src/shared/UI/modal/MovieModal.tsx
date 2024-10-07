@@ -87,11 +87,11 @@ const MovieModal: React.FC<Props> = ({
           {modalData.genres && (
             <div className='flex'>
               <p className='font-bold mr-2'>Жанр:</p>
-              {modalData.genres.slice(0, 3).map((genreObj, index) => (
+              {/* {modalData.genres.slice(0, 3).map((genreObj, index) => (
                 <p key={index} className='mr-1'>
                   {genreObj.name}
                 </p>
-              ))}
+              ))} */}
             </div>
           )}
         </div>

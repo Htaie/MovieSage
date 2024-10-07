@@ -3,13 +3,12 @@ import { FormatingName, getEmojiForGenre } from '../../shared/utils/textUtils';
 import { MovieType } from '../../shared/types/MoviesTypes';
 interface Props {
   genres: MovieType['genres'];
-  data: MovieType;
 }
 
-const GenreLink = (data: Props): JSX.Element => {
+const GenreLink = ({genres}: Props): JSX.Element => {
   return (
     <>
-      {data?.genres?.map((item) => (
+      {genres?.map((item) => (
         <Link
           key={item.name}
           className={

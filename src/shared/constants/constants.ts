@@ -12,8 +12,12 @@ export const Route = {
   TEST: '/test',
   SEARCH: '/search',
 };
+interface Genres {
+  [key: string]: string;
+}
 
-export const GENRES = {
+
+export const GENRES: Genres= {
   anime: 'аниме',
   biography: 'биография',
   action: 'боевик',
