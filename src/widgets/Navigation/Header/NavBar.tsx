@@ -1,19 +1,19 @@
 import { Link, useLocation } from 'react-router-dom';
-import SearchIcon from '@mui/icons-material/Search';
 import HomeIcon from '@mui/icons-material/Home';
 import MovieIcon from '@mui/icons-material/Movie';
 import LiveTvIcon from '@mui/icons-material/LiveTv';
 import { GiStarShuriken } from 'react-icons/gi';
 import { useEffect, useState } from 'react';
+import { SearchInputComponent } from '../../../features/Search/SearchInputComponent';
 
 const NavBar = () => {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
   const location = useLocation();
 
-  const isAnimeGenre = location.pathname == `/genre/${encodeURIComponent('аниме')}`;
-  const isMovieGenre = location.pathname == `/genre/${encodeURIComponent('фильмы')}`;
-  const isTvGenre = location.pathname == `/genre/${encodeURIComponent('сериалы')}`;
+  const isAnimeGenre = location.pathname == `/genre/${encodeURIComponent('anime')}`;
+  const isMovieGenre = location.pathname == `/genre/${encodeURIComponent('movie')}`;
+  const isTvGenre = location.pathname == `/genre/${encodeURIComponent('tv-series')}`;
 
   const handleScroll = () => {
     const currentScrollPos = window.scrollY;
@@ -46,9 +46,7 @@ const NavBar = () => {
               <Link to={'genre/movie'}>Фильмы</Link>
               <Link to={'genre/tv-series'}>Сериалы</Link>
             </div>
-            <Link to={'/search'}>
-              <SearchIcon className='hover:cursor-pointer  h-4 w-4 text-neutral-3' />
-            </Link>
+            <SearchInputComponent />
           </div>
         </div>
       </div>
@@ -69,13 +67,7 @@ const NavBar = () => {
           <LiveTvIcon style={{ fontSize: '20px' }} className={`${isTvGenre ? 'text-[#5138E9]' : ''}`} />
           <span>Сериалы</span>
         </Link>
-        <Link to={'/search'} className='flex flex-col items-center text-xs'>
-          <SearchIcon
-            style={{ fontSize: '20px' }}
-            className={`${location.pathname === '/search' ? 'text-[#5138E9]' : ''}`}
-          />
-          <span>Поиск</span>
-        </Link>
+        <SearchInputComponent />
       </div>
     </>
   );
