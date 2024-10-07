@@ -1,4 +1,5 @@
 export interface MovieType {
+  seriesLength: number;
   logo: {
     url: string;
   };

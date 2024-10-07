@@ -10,6 +10,8 @@ import { MovieType } from '../../shared/types/MoviesTypes';
 import View from '../../features/View';
 import MainLoader from '../../shared/loader/MainLoader';
 import MovieCard from '../../features/MovieCard';
+import { Link } from 'react-router-dom';
+import { MainBtn } from '../../shared/UI/buttons/MainBtn';
 
 export const FilmByGenreSlider = ({ genre, isMobile }: { genre: string; isMobile: boolean }): JSX.Element => {
   const [data, setData] = useState([]);
@@ -45,17 +47,20 @@ export const FilmByGenreSlider = ({ genre, isMobile }: { genre: string; isMobile
     };
     void fetchData();
   }, [genre]);
-
+console.log(data)
   return (
     <>
+    <div className='flex w-full items-center justify-between'>
       <h1 className='text-3xl text-white ml-2 my-10'>{FormatingName(genre)}</h1>
+      <MainBtn className='text-white rounded-3xl' to={`/genre/${genre}`} text={'Все'}/> 
+    </div>
       <Swiper
         style={{
           width: '100%',
         }}
-        slidesPerView={isMobile ? 2 : 4}
-        spaceBetween={isMobile ? 5 : 25}
-        slidesPerGroup={isMobile ? 2 : 4}
+        slidesPerView={isMobile ? 2 : 6}
+        spaceBetween={isMobile ? 5 : 5}
+        slidesPerGroup={isMobile ? 2 : 6}
         pagination={{
           clickable: true,
         }}
@@ -65,23 +70,20 @@ export const FilmByGenreSlider = ({ genre, isMobile }: { genre: string; isMobile
       >
         {Array.isArray(data) ? (
           data.map((item: MovieType, index: number) => (
-            <SwiperSlide key={index} className='flex test items-center mx-2 h-[300px] md:w-[288px] md:h-[432px] '>
+            <SwiperSlide style={{height: '500px'}} key={index} className='flex items-center'>
               <MovieCard
                 id={item.id}
                 poster={item.poster.url}
                 rating={item.rating.imdb}
                 name={item.name}
-                year={item.year}
-                movieLength={item.movieLength}
+                seriesLength={item.seriesLength}
               />
             </SwiperSlide>
           ))
         ) : (
           <MainLoader />
         )}
-        <SwiperSlide className='w-[150px] h-[300px] md:w-[288px] md:h-[432px]'>
-          <View genre={genre} />
-        </SwiperSlide>
+
       </Swiper>
     </>
   );
