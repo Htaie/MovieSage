@@ -22,8 +22,14 @@ export const SearchInputComponent = () => {
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsModalOpen(true);
-    setSearchValue(e.target.value);
+    const value = e.target.value;
+    setSearchValue(value);
+
+    if (value) {
+      setIsModalOpen(true);
+    } else {
+      setIsModalOpen(false);
+    }
   };
 
   const inputVariants = {
@@ -63,7 +69,14 @@ export const SearchInputComponent = () => {
           />
           <span>Поиск</span>
         </div>
-        {isModalOpen && <SearchModal isMobile={isMobile} onClose={handleClose} />}
+        {isModalOpen && (
+          <SearchModal
+            isMobile={isMobile}
+            onClose={handleClose}
+            searchValue={searchValue}
+            onSearchChange={handleInputChange}
+          />
+        )}
       </>
     );
   }
