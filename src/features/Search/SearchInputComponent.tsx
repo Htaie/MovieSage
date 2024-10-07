@@ -1,20 +1,28 @@
-import { Link } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
 import { useMobile } from '../../shared/hooks/useMobile';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { SearchModal } from './SearchModal';
 
 export const SearchInputComponent = () => {
   const [showSearchInput, setShowSearchInput] = useState(false);
   const [searchValue, setSearchValue] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const isMobile = useMobile();
 
   const toggleSearchInput = () => {
     setShowSearchInput(!showSearchInput);
   };
 
+  const handleClose = () => {
+    setShowSearchInput(false);
+    setIsModalOpen(false);
+    setSearchValue('');
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsModalOpen(true);
     setSearchValue(e.target.value);
   };
 
@@ -47,13 +55,16 @@ export const SearchInputComponent = () => {
 
   if (isMobile) {
     return (
-      <div className='flex flex-col items-center text-xs'>
-        <SearchIcon
-          style={{ fontSize: '20px' }}
-          className={`${location.pathname === '/search' ? 'text-[#5138E9]' : ''}`}
-        />
-        <span>Поиск</span>
-      </div>
+      <>
+        <div className='flex flex-col items-center text-xs' onClick={() => setIsModalOpen(!isModalOpen)}>
+          <SearchIcon
+            style={{ fontSize: '20px' }}
+            className={`${location.pathname === '/search' ? 'text-[#5138E9]' : ''}`}
+          />
+          <span>Поиск</span>
+        </div>
+        {isModalOpen && <SearchModal isMobile={isMobile} onClose={handleClose} />}
+      </>
     );
   }
 
@@ -68,8 +79,9 @@ export const SearchInputComponent = () => {
           onChange={handleInputChange}
         ></input>
       </motion.div>
-      {showSearchInput && <CloseIcon className='cursor-pointer' onClick={toggleSearchInput} />}
+      {showSearchInput && <CloseIcon className='cursor-pointer' onClick={handleClose} />}
       {!showSearchInput && <SearchIcon className='cursor-pointer h-4 w-4' onClick={toggleSearchInput} />}
+      {isModalOpen && <SearchModal isMobile={isMobile} onClose={handleClose} />}
     </div>
   );
 };

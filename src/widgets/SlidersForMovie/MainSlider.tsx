@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay,  Pagination } from 'swiper/modules';
+import { Autoplay, Pagination } from 'swiper/modules';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css';
@@ -13,7 +13,6 @@ import GenreLink from '../../features/GenreLink/GenreLink';
 import styles from './MainSliderStyles.module.css';
 
 const MainSlider: React.FC = () => {
-
   const [data, setData] = useState<MovieType[]>([]);
   const [activeMovieId, setActiveMovieId] = useState<number | null>(null);
   useEffect(() => {
@@ -58,7 +57,7 @@ const MainSlider: React.FC = () => {
       }}
       navigation={true}
       modules={[Pagination, Autoplay]}
-      className='container w-[100%] h-[700px] md:h-[400px] lg:h-[568px] xl:h-[700px] 2xl:h-[840px] bg-[#1C3334] mt-20  swiper-navigation-color swiper-pagination-color md:rounded-3xl'
+      className='container w-[100%] h-[700px] md:h-[400px] lg:h-[568px] xl:h-[700px] 2xl:h-[840px] bg-[#1C3334] mt-5 md:mt-20  swiper-navigation-color swiper-pagination-color md:rounded-3xl'
       onSlideChangeTransitionEnd={(swiper) => {
         // setActiveSlideIndex(swiper.realIndex);
         setActiveMovieId(data[swiper.realIndex]?.id);
