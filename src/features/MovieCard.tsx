@@ -1,10 +1,5 @@
-import { ConvertMinutes, RatingRounding, RatingScore } from '../shared/utils/textUtils';
+import {  RatingRounding, RatingScore } from '../shared/utils/textUtils';
 import { Link } from 'react-router-dom';
-const boxShadowStyle = {
-  WebkitBoxShadow: '6px 1px 10px 200px rgba(0, 0, 0, 0.35) inset',
-  MozBoxShadow: '6px 1px 10px 200px rgba(0, 0, 0, 0.35) inset',
-  boxShadow: '6px 1px 10px 200px rgba(0, 0, 0, 0.35) inset',
-};
 
 interface MovieCardProps {
   id: number;

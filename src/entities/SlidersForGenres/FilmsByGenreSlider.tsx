@@ -7,10 +7,9 @@ import 'swiper/css/pagination';
 import 'swiper/css';
 import { FormatingName } from '../../shared/utils/textUtils';
 import { MovieType } from '../../shared/types/MoviesTypes';
-import View from '../../features/View';
 import MainLoader from '../../shared/loader/MainLoader';
 import MovieCard from '../../features/MovieCard';
-import { Link } from 'react-router-dom';
+
 import { MainBtn } from '../../shared/UI/buttons/MainBtn';
 
 export const FilmByGenreSlider = ({ genre, isMobile }: { genre: string; isMobile: boolean }): JSX.Element => {

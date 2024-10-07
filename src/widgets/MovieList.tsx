@@ -243,8 +243,7 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
             poster={item.poster.url}
             rating={item.rating.imdb}
             name={item.name}
-            year={item.year}
-            movieLength={item.movieLength}
+            seriesLength={item.seriesLength}
           />
         ))}
       </div>
