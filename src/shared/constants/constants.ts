@@ -3,7 +3,7 @@ export const MOVIE_GENRES_API_URL = 'https://api.kinopoisk.dev/v1/movie/possible
 
 export const TOKEN = import.meta.env.VITE_SECRET_TOKEN;
 
-console.log('dd',TOKEN)
+console.log('dd', TOKEN);
 
 export const Route = {
   HOME: '/',
@@ -18,8 +18,7 @@ interface Genres {
   [key: string]: string;
 }
 
-
-export const GENRES: Genres= {
+export const GENRES: Genres = {
   anime: 'аниме',
   biography: 'биография',
   action: 'боевик',
@@ -47,7 +46,13 @@ export const GENRES: Genres= {
   fantasy: 'фэнтези',
 };
 
-export const MPAA = ['g', 'nc17', 'pg', 'pg13', '!r'];
+export const MPAA = [
+  'Без ограничений',
+  'Только для взрослых (NC-17)',
+  'С родительским контролем (PG)',
+  'Не рекомендовано до 13 лет (PG-13)',
+  'Запрещено до 17 лет (R)',
+];
 
 export const COUNTRIES_LIST = [
   'США',
