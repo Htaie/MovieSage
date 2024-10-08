@@ -36,9 +36,8 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           port: 33 
           script: |
-            cd /home/hataie/my_project
+            cd /home/hataie/moviesage
             docker-compose pull  # Обновляем образы
             docker-compose stop || true
             docker-compose rm -f || true
             docker-compose up -d  # Запускаем контейнеры в фоновом режиме
-с
