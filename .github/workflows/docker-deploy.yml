@@ -34,7 +34,7 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           port: 33 
           script: |
-            cd /path/to/your/project
+            cd /home/hataie/actions-runner/_work/MovieSage/MovieSage
             docker-compose pull
             docker-compose stop || true
             docker-compose rm -f || true
