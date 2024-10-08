@@ -39,6 +39,13 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
     year: {},
     rating: {},
   });
+  const [debouncedFilters, setDebouncedFilters] = useState<SelectedFilters>({
+    genres: {},
+    mpaa: {},
+    countries: {},
+    year: {},
+    rating: {},
+  });
   const [sliderValue, setSliderValue] = useState(5);
   const [filterChanged, setFilterChanged] = useState(false);
   const [openFilters, setOpenFilters] = useState(false);
@@ -77,6 +84,16 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
   }, []);
 
   useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedFilters(selectedFilters);
+    }, 1500);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [selectedFilters]);
+
+  useEffect(() => {
     const fetchData = async (): Promise<void> => {
       try {
         setLoading(true);
@@ -92,7 +109,7 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
         filterConfig.forEach(({ key, paramName, shouldEncode, ratingImdb }) => {
           url = appendFilterToUrl(
             url,
-            selectedFilters[key as keyof SelectedFilters],
+            debouncedFilters[key as keyof SelectedFilters],
             paramName,
             shouldEncode,
             ratingImdb
@@ -127,7 +144,7 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
     };
 
     void fetchData();
-  }, [pageNumber, name, selectedFilters]);
+  }, [pageNumber, name, debouncedFilters]);
 
   useEffect(() => {
     const handleScroll = (): void => {
