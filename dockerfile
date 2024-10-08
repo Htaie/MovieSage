@@ -12,7 +12,7 @@ RUN pnpm install
 
 COPY . .
 
-RUN REACT_APP_API_URL=${REACT_APP_API_URL} pnpm run build
+RUN VITE_SECRET_TOKEN=${REACT_APP_API_URL} pnpm run build
 
 CMD ["pnpm", "start"]
 

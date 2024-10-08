@@ -29,7 +29,7 @@ jobs:
         run: docker ps -a
       - name: Build and Push Docker image
         run: |
-          docker build --build-arg REACT_APP_API_URL=${{ secrets.REACT_APP_API_URL }} -t your_dockerhub_username/your_image_name:latest .
+          docker build --build-arg VITE_SECRET_TOKEN=${{ secrets.REACT_APP_API_URL }} -t your_dockerhub_username/your_image_name:latest .
           docker push hataie/movie_sage_frontend:latest
 
   deploy:
