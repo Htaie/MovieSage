@@ -60,7 +60,7 @@ export const FilterPanel = ({
       </div>
       <div>
         <p className='text-xl'>Рейтинг:</p>
-        <div style={{ width: isMobile ? '170px' : '200px' }}>
+        <div style={{ width: isMobile ? '95%' : '200px' }}>
           <div className='flex items-center'>
             <p className='mr-2'>1</p>
             <Slider

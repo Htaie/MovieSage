@@ -22,7 +22,7 @@ export const FilterMapping = ({
     <>
       {scrollbar ? (
         <Scrollbar
-          style={{ width: isMobile ? 170 : 205, height: 132 }}
+          style={{ width: isMobile ? '97%' : 205, height: 132 }}
           thumbYProps={{ style: { backgroundColor: '#5138E9', width: '10px' } }}
         >
           {items.map((item: string) => (
@@ -46,7 +46,7 @@ export const FilterMapping = ({
         <>
           {items.map((item: string) => (
             <div
-              className='flex border-b-2 border-[#5138E9] py-1 cursor-pointer w-[205px]'
+              className='flex border-b-2 border-[#5138E9] py-1 cursor-pointer w-[96%]'
               key={item}
               onClick={() => handleFilterChange(filterType, item)}
             >
