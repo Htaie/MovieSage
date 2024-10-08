@@ -54,4 +54,4 @@ jobs:
             docker pull hataie/movie_sage_frontend:latest
             docker stop movie_sage_frontend || true
             docker rm movie_sage_frontend || true
-            docker run -d --name movie_sage_frontend -p 80:80 hataie/movie_sage_frontend:latest
+            docker run -d --name movie_sage_frontend -p 5400:80 hataie/movie_sage_frontend:latest
