@@ -5,12 +5,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    args:
-      VITE_SECRET_TOKEN: ${REACT_APP_API_URL}
+      args:
+        VITE_SECRET_TOKEN: ${REACT_APP_API_URL}  # Передаем аргумент сборки
     ports:
-      - '3500:3000'
+      - '3500:3000'  # Убедитесь, что порт 3500 не занят
     environment:
       - NODE_ENV=production
+      - VITE_SECRET_TOKEN=${REACT_APP_API_URL}  # Устанавливаем переменные окружения
     volumes:
       - .:/app
       - /app/node_modules
