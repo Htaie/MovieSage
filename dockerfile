@@ -15,4 +15,4 @@ RUN pnpm run build
 
 CMD ["pnpm", "start"]
 
-EXPOSE 3500
+EXPOSE 3000
