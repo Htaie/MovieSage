@@ -1,15 +1,19 @@
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
 import { useMobile } from '../../shared/hooks/useMobile';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { SearchModal } from './SearchModal';
+import { useSearch } from './useSearch';
 
 export const SearchInputComponent = () => {
   const [showSearchInput, setShowSearchInput] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const isMobile = useMobile();
+  const [debouncedSearchInput, setDebouncedSearchInput] = useState('');
+  const [pageNumber] = useState(1);
+  const { searchResults, setSearchResults, loading } = useSearch({ debouncedSearchInput, pageNumber });
 
   const toggleSearchInput = () => {
     setShowSearchInput(!showSearchInput);
@@ -19,7 +23,16 @@ export const SearchInputComponent = () => {
     setShowSearchInput(false);
     setIsModalOpen(false);
     setSearchValue('');
+    setSearchResults([]);
+    setDebouncedSearchInput('');
   };
+
+  useEffect(() => {
+    const delayInputTimeoutId = setTimeout(() => {
+      setDebouncedSearchInput(searchValue);
+    }, 500);
+    return () => clearTimeout(delayInputTimeoutId);
+  }, [searchValue]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -28,7 +41,7 @@ export const SearchInputComponent = () => {
     if (value) {
       setIsModalOpen(true);
     } else {
-      setIsModalOpen(false);
+      setSearchResults([]);
     }
   };
 
@@ -75,6 +88,8 @@ export const SearchInputComponent = () => {
             onClose={handleClose}
             searchValue={searchValue}
             onSearchChange={handleInputChange}
+            searchResults={searchResults}
+            loading={loading}
           />
         )}
       </>
@@ -94,7 +109,9 @@ export const SearchInputComponent = () => {
       </motion.div>
       {showSearchInput && <CloseIcon className='cursor-pointer' onClick={handleClose} />}
       {!showSearchInput && <SearchIcon className='cursor-pointer h-4 w-4' onClick={toggleSearchInput} />}
-      {isModalOpen && <SearchModal isMobile={isMobile} onClose={handleClose} />}
+      {isModalOpen && (
+        <SearchModal isMobile={isMobile} onClose={handleClose} searchResults={searchResults} loading={loading} />
+      )}
     </div>
   );
 };

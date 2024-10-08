@@ -12,12 +12,16 @@ export const useSearch = ({
   const [searchResults, setSearchResults] = useState<MovieType[]>([]);
   const [maxPages, setMaxPages] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [isNewSearch, setIsNewSearch] = useState(true);
 
   useEffect(() => {
     if (!debouncedSearchInput) return;
     const fetchData = async () => {
       try {
         setLoading(true);
+        if (isNewSearch) {
+          setSearchResults([]);
+        }
         if (debouncedSearchInput.length > 1) {
           const response = await fetch(
             `${API_URL}movie/search?page=${pageNumber}&limit=25&notNullFields=poster.url&query=${debouncedSearchInput}`,
@@ -30,7 +34,7 @@ export const useSearch = ({
             }
           );
           const result = await response.json();
-          setSearchResults((prevResults) => [...prevResults, ...result.docs]);
+          setSearchResults((prevResults) => (isNewSearch ? result.docs : [...prevResults, ...result.docs]));
           setMaxPages(result.pages);
         } else {
           setSearchResults([]);
@@ -44,8 +48,13 @@ export const useSearch = ({
     fetchData();
   }, [debouncedSearchInput, pageNumber]);
 
+  useEffect(() => {
+    setIsNewSearch(true);
+  }, [debouncedSearchInput]);
+
   return {
     searchResults,
+    setSearchResults,
     maxPages,
     loading,
   };
