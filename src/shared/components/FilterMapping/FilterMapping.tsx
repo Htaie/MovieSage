@@ -22,17 +22,21 @@ export const FilterMapping = ({
     <>
       {scrollbar ? (
         <Scrollbar
-          style={{ width: isMobile ? 170 : 205, height: 120 }}
-          thumbYProps={{ style: { backgroundColor: '#5138E9', width: '2px' } }}
+          style={{ width: isMobile ? 170 : 205, height: 132 }}
+          thumbYProps={{ style: { backgroundColor: '#5138E9', width: '10px' } }}
         >
           {items.map((item: string) => (
-            <div className='flex' key={item}>
+            <div
+              className='flex border-b-2 border-[#5138E9] py-1 cursor-pointer'
+              key={item}
+              onClick={() => handleFilterChange(filterType, item)}
+            >
               <input
                 type='checkbox'
                 id={item}
                 checked={selectedFiltersKey[item] || false}
                 onChange={() => handleFilterChange(filterType, item)}
-                className='mr-2'
+                className='mr-2 pointer-events-none'
               />
               <p>{item}</p>
             </div>
@@ -41,13 +45,17 @@ export const FilterMapping = ({
       ) : (
         <>
           {items.map((item: string) => (
-            <div className='flex' key={item}>
+            <div
+              className='flex border-b-2 border-[#5138E9] py-1 cursor-pointer w-[205px]'
+              key={item}
+              onClick={() => handleFilterChange(filterType, item)}
+            >
               <input
                 type='checkbox'
                 id={item}
                 checked={selectedFiltersKey[item] || false}
                 onChange={() => handleFilterChange(filterType, item)}
-                className='mr-2'
+                className='mr-2 pointer-events-none'
               />
               <p>{item}</p>
             </div>

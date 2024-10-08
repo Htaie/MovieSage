@@ -1,14 +1,11 @@
 import { useEffect, useState } from 'react';
-import { API_URL, COUNTRIES_LIST, GENRES, MPAA, TOKEN, YEARS } from '../shared/constants/constants';
+import { API_URL, TOKEN } from '../shared/constants/constants';
 import MovieCard from '../features/MovieCard';
 import MainLoader from '../shared/loader/MainLoader';
 import { MovieType } from '../shared/types/MoviesTypes';
-import { useMobile } from '../shared/hooks/useMobile';
-import { FilterMapping } from '../shared/components/FilterMapping/FilterMapping';
-import Slider from 'rc-slider';
-import 'rc-slider/assets/index.css';
 import { SelectedFilters } from '../shared/types/MoviesTypes';
 import { filterConfig } from '../shared/config/FilterConfig';
+import { FilterPanel } from '../features/Filter/FilterPanel';
 
 const appendFilterToUrl = (
   url: string,
@@ -43,7 +40,6 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
   });
   const [sliderValue, setSliderValue] = useState(5);
   const [filterChanged, setFilterChanged] = useState(false);
-  const isMobile = useMobile();
 
   const handleFilterChange = (filterType: keyof SelectedFilters, filterValue: string) => {
     setSelectedFilters((prevState) => ({
@@ -164,77 +160,14 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
 
   return (
     <div className='container mx-auto'>
-      <div className='text-white grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 mb-10'>
-        <div className='mb-2 md:mb-0'>
-          <p>Жанры:</p>
-          <FilterMapping
-            items={Object.values(GENRES)}
-            selectedFiltersKey={selectedFilters.genres}
-            handleFilterChange={handleFilterChange}
-            scrollbar={true}
-            filterType='genres'
-            isMobile={isMobile}
-          />
-        </div>
-        <div>
-          <p>Страна:</p>
-          <FilterMapping
-            items={Object.values(COUNTRIES_LIST)}
-            selectedFiltersKey={selectedFilters.countries}
-            handleFilterChange={handleFilterChange}
-            scrollbar={true}
-            filterType='countries'
-            isMobile={isMobile}
-          />
-        </div>
-        <div className='mb-2 md:mb-0'>
-          <p>Возрастное ограничение:</p>
-          <FilterMapping
-            items={Object.values(MPAA)}
-            selectedFiltersKey={selectedFilters.mpaa}
-            handleFilterChange={handleFilterChange}
-            scrollbar={false}
-            filterType='mpaa'
-            isMobile={isMobile}
-          />
-        </div>
-        <div>
-          <p>Рейтинг:</p>
-          <div style={{ width: isMobile ? '170px' : '300px' }}>
-            <div className='flex items-center'>
-              <p className='mr-2'>1</p>
-              <Slider
-                min={1}
-                max={10}
-                step={1}
-                value={sliderValue}
-                onChange={handleSliderChange}
-                trackStyle={{ backgroundColor: '#5138E9' }}
-                handleStyle={{ backgroundColor: '#5138E9' }}
-              />
-              <p className='ml-2'>10</p>
-            </div>
-            <p>Выбранная оценка: {sliderValue}</p>
-          </div>
-        </div>
-        <div className='ml-0 md:ml-2'>
-          <p>Год:</p>
-          <FilterMapping
-            items={Object.values(YEARS)}
-            selectedFiltersKey={selectedFilters.year}
-            handleFilterChange={handleFilterChange}
-            scrollbar={true}
-            filterType='year'
-            isMobile={isMobile}
-          />
-        </div>
-      </div>
-      <button
-        onClick={handleResetFilters}
-        className='text-white bg-[#5138E9] px-6 py-2 rounded-lg hover:bg-red-500 mb-5'
-      >
-        Сбросить фильтры
-      </button>
+      <button className='text-white bg-[#5138E9] px-6 py-2 rounded-lg hover:bg-red-500 mb-5 md:hidden'>Фильтры</button>
+      <FilterPanel
+        selectedFilters={selectedFilters}
+        sliderValue={sliderValue}
+        handleFilterChange={handleFilterChange}
+        handleSliderChange={handleSliderChange}
+        handleResetFilters={handleResetFilters}
+      />
       <div className='grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 gap-y-10'>
         {data.map((item: any, index: number) => (
           <MovieCard

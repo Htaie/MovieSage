@@ -4,7 +4,6 @@ import { AboutActorPage } from '../../pages/Movies/AboutActor';
 import PagesTests from '../../pages/PagesTests';
 import App from '../App';
 import { Route } from '../../shared/constants/constants';
-
 import MoviePage from '../../pages/MoviePage';
 import { SearchPage } from '../../pages/search/SearchPage';
 import { Home } from '../../pages/home/home';
