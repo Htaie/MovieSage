@@ -42,7 +42,7 @@ const NavBar = () => {
           </Link>
           <div className='flex flex-row-reverse gap-10 md:gap-0 md:flex-row justify-between pr-4 md:w-[500px] lg:w-[660px] xl:w-[860px]'>
             <div className='space-x-5 hidden items-center md:flex'>
-              <Link to={'genre/anime'}>Аниме</Link>
+              <Link to={'genre/anime'}>Анимееееее</Link>
               <Link to={'genre/movie'}>Фильмы</Link>
               <Link to={'genre/tv-series'}>Сериалы</Link>
             </div>
