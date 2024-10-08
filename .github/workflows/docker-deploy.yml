@@ -34,8 +34,8 @@ jobs:
         run: docker ps -a
       - name: Build and Push Docker image
         run: |
-          docker build -t your_dockerhub_username/your_image_name:latest .
-          docker push your_dockerhub_username/your_image_name:latest
+          docker build -t hataie/movie_sage_frontend:latest .
+          docker push hataie/movie_sage_frontend:latest
 
   deploy:
     needs: build
