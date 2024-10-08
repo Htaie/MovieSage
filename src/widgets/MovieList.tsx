@@ -6,6 +6,7 @@ import { MovieType } from '../shared/types/MoviesTypes';
 import { SelectedFilters } from '../shared/types/MoviesTypes';
 import { filterConfig } from '../shared/config/FilterConfig';
 import { FilterPanel } from '../features/Filter/FilterPanel';
+import { useMobile } from '../shared/hooks/useMobile';
 
 const appendFilterToUrl = (
   url: string,
@@ -40,6 +41,8 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
   });
   const [sliderValue, setSliderValue] = useState(5);
   const [filterChanged, setFilterChanged] = useState(false);
+  const [openFilters, setOpenFilters] = useState(false);
+  const isMobile = useMobile();
 
   const handleFilterChange = (filterType: keyof SelectedFilters, filterValue: string) => {
     setSelectedFilters((prevState) => ({
@@ -158,29 +161,43 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
     setPageNumber(1);
   };
 
+  const handleCloseFilters = () => {
+    setOpenFilters(false);
+  };
+
   return (
     <div className='container mx-auto'>
-      <button className='text-white bg-[#5138E9] px-6 py-2 rounded-lg hover:bg-red-500 mb-5 md:hidden'>Фильтры</button>
-      <FilterPanel
-        selectedFilters={selectedFilters}
-        sliderValue={sliderValue}
-        handleFilterChange={handleFilterChange}
-        handleSliderChange={handleSliderChange}
-        handleResetFilters={handleResetFilters}
-      />
-      <div className='grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 gap-y-10'>
-        {data.map((item: any, index: number) => (
-          <MovieCard
-            key={index}
-            id={item.id}
-            poster={item.poster.url}
-            rating={item.rating.imdb}
-            name={item.name}
-            year={item.year}
-            movieLength={item.movieLength}
-          />
-        ))}
-      </div>
+      <button
+        className='text-white bg-[#5138E9] px-6 py-2 rounded-lg hover:bg-red-500 mb-5 md:hidden'
+        onClick={() => setOpenFilters(!openFilters)}
+      >
+        Фильтры
+      </button>
+      {openFilters || !isMobile ? (
+        <FilterPanel
+          selectedFilters={selectedFilters}
+          sliderValue={sliderValue}
+          handleFilterChange={handleFilterChange}
+          handleSliderChange={handleSliderChange}
+          handleResetFilters={handleResetFilters}
+          handleCloseFilters={handleCloseFilters}
+        />
+      ) : null}
+      {openFilters && isMobile ? null : (
+        <div className='grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 gap-y-10'>
+          {data.map((item: any, index: number) => (
+            <MovieCard
+              key={index}
+              id={item.id}
+              poster={item.poster.url}
+              rating={item.rating.imdb}
+              name={item.name}
+              year={item.year}
+              movieLength={item.movieLength}
+            />
+          ))}
+        </div>
+      )}
       <div className='flex justify-center'>{loading && pageNumber > 1 && <MainLoader />}</div>
     </div>
   );

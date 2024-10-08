@@ -11,6 +11,7 @@ interface FilterPanelProps {
   handleFilterChange: (filterType: keyof SelectedFilters, filterValue: string) => void;
   handleSliderChange: (newValue: number | number[]) => void;
   handleResetFilters: () => void;
+  handleCloseFilters: () => void;
 }
 
 export const FilterPanel = ({
@@ -19,10 +20,11 @@ export const FilterPanel = ({
   handleFilterChange,
   handleSliderChange,
   handleResetFilters,
+  handleCloseFilters,
 }: FilterPanelProps) => {
   const isMobile = useMobile();
   return (
-    <div className='hidden md:block absolute top-[160px] right-14 space-y-5 text-white'>
+    <div className='absolute top-[140px] md:top-[160px] md:right-14 space-y-5 text-white bg-[#212124]] w-screen md:w-[300px] z-10 pb-20'>
       <div>
         <p className='text-xl'>Жанры:</p>
         <FilterMapping
@@ -86,6 +88,9 @@ export const FilterPanel = ({
           isMobile={isMobile}
         />
       </div>
+      <button className='text-white md:hidden bg-[#5138E9] px-6 py-2 rounded-lg mr-1' onClick={handleCloseFilters}>
+        Применить фильтры
+      </button>
       <button
         onClick={handleResetFilters}
         className='text-white bg-[#5138E9] px-6 py-2 rounded-lg hover:bg-red-500 mb-5'
