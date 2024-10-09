@@ -50,12 +50,13 @@ export const FilterPanel = ({
       <div>
         <p className='text-xl'>Возрастное ограничение:</p>
         <FilterMapping
-          items={Object.values(MPAA)}
+          items={Object.keys(MPAA)}
           selectedFiltersKey={selectedFilters.mpaa}
           handleFilterChange={handleFilterChange}
           scrollbar={false}
           filterType='mpaa'
           isMobile={isMobile}
+          mpaa={true}
         />
       </div>
       <div>

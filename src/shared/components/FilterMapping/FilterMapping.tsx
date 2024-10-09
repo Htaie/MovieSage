@@ -1,5 +1,6 @@
 import { Scrollbar } from 'react-scrollbars-custom';
 import { SelectedFilters } from '../../types/MoviesTypes';
+import { MPAA } from '../../constants/constants';
 
 interface CustomScrollbarProps {
   items: string[];
@@ -8,6 +9,7 @@ interface CustomScrollbarProps {
   scrollbar: boolean;
   filterType: keyof SelectedFilters;
   isMobile: boolean;
+  mpaa?: boolean;
 }
 
 export const FilterMapping = ({
@@ -17,6 +19,7 @@ export const FilterMapping = ({
   scrollbar,
   filterType,
   isMobile,
+  mpaa,
 }: CustomScrollbarProps) => {
   return (
     <>
@@ -57,7 +60,7 @@ export const FilterMapping = ({
                 onChange={() => handleFilterChange(filterType, item)}
                 className='mr-2 pointer-events-none'
               />
-              <p>{item}</p>
+              <p>{mpaa ? `${MPAA[item as keyof typeof MPAA]}` : item}</p>
             </div>
           ))}
         </>
