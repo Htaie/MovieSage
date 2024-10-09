@@ -49,7 +49,7 @@ export const FilterMapping = ({
         <>
           {items.map((item: string) => (
             <div
-              className='flex border-b-2 border-[#5138E9] py-1 cursor-pointer w-[96%]'
+              className='flex border-b-2 border-[#5138E9] py-1 cursor-pointer w-[96%] md:w-[205px]'
               key={item}
               onClick={() => handleFilterChange(filterType, item)}
             >

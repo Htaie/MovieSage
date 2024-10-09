@@ -183,7 +183,7 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
   };
 
   return (
-    <div className='container mx-auto'>
+    <div className='md:flex md:flex-row-reverse container mx-auto'>
       <button
         className='text-white bg-[#5138E9] px-6 py-2 rounded-lg hover:bg-red-500 mb-5 md:hidden'
         onClick={() => setOpenFilters(!openFilters)}
@@ -201,7 +201,7 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
         />
       ) : null}
       {openFilters && isMobile ? null : (
-        <div className='grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 gap-y-10'>
+        <div className='grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-y-2 gap-x-10 md:mr-[60px] 2xl:mr-[140px]'>
           {data.map((item: any, index: number) => (
             <MovieCard
               key={index}
@@ -209,8 +209,7 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
               poster={item.poster.url}
               rating={item.rating.imdb}
               name={item.name}
-              year={item.year}
-              movieLength={item.movieLength}
+              seriesLength={item.movieLength}
             />
           ))}
         </div>

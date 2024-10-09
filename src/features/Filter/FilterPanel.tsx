@@ -24,7 +24,7 @@ export const FilterPanel = ({
 }: FilterPanelProps) => {
   const isMobile = useMobile();
   return (
-    <div className='absolute top-[140px] md:top-[160px] md:right-14 space-y-5 text-white bg-[#212124]] w-screen md:w-[300px] z-10 pb-20'>
+    <div className='space-y-5 text-white bg-[#212124]] w-screen md:w-[220px] 2xl:w-[260px] z-10 pb-20'>
       <div>
         <p className='text-xl'>Жанры:</p>
         <FilterMapping
