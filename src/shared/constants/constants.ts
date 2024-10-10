@@ -12,7 +12,7 @@ export const Route = {
   MOVIE: '/movie/:id',
   ACTOR: '/actor/:id',
   TEST: '/test',
-  SEARCH: '/search',
+  SEARCH: '/search/:query',
 };
 interface Genres {
   [key: string]: string;

@@ -110,7 +110,14 @@ export const SearchInputComponent = () => {
       {showSearchInput && <CloseIcon className='cursor-pointer' onClick={handleClose} />}
       {!showSearchInput && <SearchIcon className='cursor-pointer h-4 w-4' onClick={toggleSearchInput} />}
       {isModalOpen && (
-        <SearchModal isMobile={isMobile} onClose={handleClose} searchResults={searchResults} loading={loading} />
+        <SearchModal
+          isMobile={isMobile}
+          onClose={handleClose}
+          searchValue={searchValue}
+          onSearchChange={handleInputChange}
+          searchResults={searchResults}
+          loading={loading}
+        />
       )}
     </div>
   );

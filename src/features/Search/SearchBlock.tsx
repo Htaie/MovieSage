@@ -3,12 +3,14 @@ import { SearchResults } from './SearchResults';
 import { useSearch } from './useSearch';
 import SearchIcon from '@mui/icons-material/Search';
 import MainLoader from '../../shared/loader/MainLoader';
+import { useParams } from 'react-router-dom';
 
 export const SearchBlock = () => {
+  const { query } = useParams<{ query: string }>();
   const [searchValue, setSearchValue] = useState('');
   const [debouncedSearchInput, setDebouncedSearchInput] = useState('');
   const [pageNumber, setPageNumber] = useState(1);
-  const { searchResults, maxPages, loading } = useSearch({ debouncedSearchInput, pageNumber });
+  const { searchResults, maxPages, loading } = useSearch({ debouncedSearchInput, pageNumber, query });
 
   useEffect(() => {
     const delayInputTimeoutId = setTimeout(() => {

@@ -5,26 +5,30 @@ import { MovieType } from '../../shared/types/MoviesTypes';
 export const useSearch = ({
   debouncedSearchInput,
   pageNumber,
+  query,
 }: {
   debouncedSearchInput: string;
   pageNumber: number;
+  query?: string;
 }) => {
   const [searchResults, setSearchResults] = useState<MovieType[]>([]);
   const [maxPages, setMaxPages] = useState(0);
   const [loading, setLoading] = useState(false);
   const [isNewSearch, setIsNewSearch] = useState(true);
+  const [ignoreQuery, setIgnoreQuery] = useState(false);
 
   useEffect(() => {
-    if (!debouncedSearchInput) return;
+    const searchTerm = ignoreQuery ? debouncedSearchInput : query || debouncedSearchInput;
+    if (!searchTerm) return;
     const fetchData = async () => {
       try {
         setLoading(true);
         if (isNewSearch) {
           setSearchResults([]);
         }
-        if (debouncedSearchInput.length > 1) {
+        if (searchTerm.length > 1) {
           const response = await fetch(
-            `${API_URL}movie/search?page=${pageNumber}&limit=25&notNullFields=poster.url&query=${debouncedSearchInput}`,
+            `${API_URL}movie/search?page=${pageNumber}&limit=25&notNullFields=poster.url&query=${decodeURIComponent(searchTerm)}`,
             {
               method: 'GET',
               headers: {
@@ -46,10 +50,16 @@ export const useSearch = ({
       }
     };
     fetchData();
-  }, [debouncedSearchInput, pageNumber]);
+  }, [debouncedSearchInput, pageNumber, query, ignoreQuery]);
 
   useEffect(() => {
     setIsNewSearch(true);
+  }, [debouncedSearchInput, query]);
+
+  useEffect(() => {
+    if (debouncedSearchInput) {
+      setIgnoreQuery(true);
+    }
   }, [debouncedSearchInput]);
 
   return {

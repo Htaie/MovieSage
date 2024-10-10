@@ -7,8 +7,8 @@ import MainLoader from '../../shared/loader/MainLoader';
 interface SearchModalProps {
   isMobile: boolean;
   onClose: () => void;
-  searchValue?: string;
-  onSearchChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  searchValue: string;
+  onSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   searchResults: MovieType[];
   loading: boolean;
 }
@@ -71,7 +71,7 @@ export const SearchModal = ({
                   <div
                     className={`flex justify-center mx-auto bg-[#242424] text-[#5138E9] w-full h-[40px] ${isMobile ? '' : 'hover:bg-[#5138E9] hover:text-white rounded-b-xl'}`}
                   >
-                    <Link to={`/`} className='mt-2' onClick={onClose}>
+                    <Link to={`/search/${searchValue}`} className='mt-2' onClick={onClose}>
                       Ещё Результаты
                     </Link>
                   </div>

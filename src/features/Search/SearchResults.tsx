@@ -19,8 +19,7 @@ export const SearchResults = ({ results }: SearchResultsProps) => {
           poster={movie.poster.url}
           rating={movie.rating.imdb}
           name={movie.name}
-          year={movie.year}
-          movieLength={movie.movieLength}
+          seriesLength={movie.movieLength}
         />
       ))}
     </div>
