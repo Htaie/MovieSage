@@ -20,6 +20,8 @@
     "@supabase/supabase-js": "^2.39.7",
     "Slider": "link:@material-ui/core/Slider",
     "add": "^2.0.6",
+    "axios": "^1.7.7",
+    "browser-image-compression": "^2.0.2",
     "effector": "^23.2.0",
     "effector-react": "^23.2.0",
     "eslint-config-prettier": "^9.1.0",

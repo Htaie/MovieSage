@@ -1,14 +1,15 @@
 import { Outlet } from 'react-router-dom';
-import Footer from '../widgets/Navigation/Footer/Footer';
 import NavBar from '../widgets/Navigation/Header/NavBar';
 const App = (): JSX.Element => {
   return (
-    <>
-      <NavBar />
-      <Outlet />
-      <Footer />
-    </>
+    <div className='flex h-screen'>
+      <div className='w-2/12 '>
+        <NavBar />
+      </div>
+      <div className='w-3/4 pl-9 flex-grow'>
+        <Outlet />
+      </div>
+    </div>
   );
 };
-
 export default App;

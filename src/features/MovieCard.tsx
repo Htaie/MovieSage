@@ -19,8 +19,8 @@ const MovieCard = ({ id, poster, rating, name, seriesLength }: MovieCardProps) =
     return words[2];
   }
   return (
-    <Link to={`/movie/${id}`} className='h-[500px] w-[238px]'>
-      <div className='relative bg-[212124] md:w-[238px] md:h-[380px] rounded-lg border-1 border-white overflow-hidden '>
+    <Link to={`/movie/${id}`} >
+      <div className='relative bg-[212124] w-[190px] h-[320px] rounded-lg border-1 border-white overflow-hidden '>
         <img
           src={poster}
           alt='film image'
@@ -34,14 +34,14 @@ const MovieCard = ({ id, poster, rating, name, seriesLength }: MovieCardProps) =
           {RatingRounding(rating)}
         </span>
       </div>
-      <div className='text-[#eae7dc] font-bold text-xl left-3 absolute w-[238px]'>
+      <div className='text-[#eae7dc]  leading-6 mt-1 font-semibold h text-lg left-0 absolute w-[190px]'>
         <p className='text-white line-clamp-2'>{name}</p>
         {seriesLength !== null && seriesLength !== undefined ? (
-          <span className=' text-gray-400'>
+          <span className=' text-[#707070]  text-sm '>
             {seriesLength} {declOfNum(seriesLength, ['эпизод', 'эпизода', 'эпизодов'])}
           </span>
         ) : (
-          <span className=' text-gray-400'> Фильм</span>
+          <span className=' text-[#707070] text-sm '> Фильм</span>
         )}
       </div>
     </Link>

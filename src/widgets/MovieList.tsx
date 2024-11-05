@@ -30,6 +30,7 @@ const appendFilterToUrl = (
 };
 
 const MovieList = ({ name }: { name: string }): JSX.Element => {
+  console.log(name, 'lol')
   const [data, setData] = useState<MovieType[]>([]);
   const [pageNumber, setPageNumber] = useState(1);
   const [maxPages, setMaxPages] = useState(1);
@@ -77,7 +78,6 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
     scrollTo(0, 0);
   }, []);
 
-  useEffect(() => {
     const fetchData = async (): Promise<void> => {
       try {
         setLoading(true);
@@ -90,15 +90,15 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
           url += `&genres.name=${name}`;
         }
 
-        filterConfig.forEach(({ key, paramName, shouldEncode, ratingImdb }) => {
-          url = appendFilterToUrl(
-            url,
-            selectedFilters[key as keyof SelectedFilters],
-            paramName,
-            shouldEncode,
-            ratingImdb
-          );
-        });
+        // filterConfig.forEach(({ key, paramName, shouldEncode, ratingImdb }) => {
+        //   url = appendFilterToUrl(
+        //     url,
+        //     selectedFilters[key as keyof SelectedFilters],
+        //     paramName,
+        //     shouldEncode,
+        //     ratingImdb
+        //   );
+        // });
 
         const response = await fetch(url, {
           method: 'GET',
@@ -115,7 +115,7 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
         const responseData = await response.json();
         if (filterChanged) {
           setData(responseData.docs);
-          setFilterChanged(false);
+          // setFilterChanged(false);
         } else {
           setData((prevData) => [...prevData, ...responseData.docs]);
         }
@@ -127,8 +127,6 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
       }
     };
 
-    void fetchData();
-  }, [pageNumber, name, selectedFilters]);
 
   useEffect(() => {
     const handleScroll = (): void => {
@@ -161,10 +159,14 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
     setSliderValue(5);
     setPageNumber(1);
   };
-
+  useEffect(() => {
+    setLoading(true);
+     fetchData();
+    setLoading(false);
+  }, [ pageNumber, name]);
   return (
     <div className='container mx-auto'>
-      <div className='text-white grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 mb-10'>
+      {/* <div className='text-white grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 mb-10'>
         <div className='mb-2 md:mb-0'>
           <p>Жанры:</p>
           <FilterMapping
@@ -234,7 +236,7 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
         className='text-white bg-[#5138E9] px-6 py-2 rounded-lg hover:bg-red-500 mb-5'
       >
         Сбросить фильтры
-      </button>
+      </button> */}
       <div className='grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 gap-y-10'>
         {data.map((item: any, index: number) => (
           <MovieCard

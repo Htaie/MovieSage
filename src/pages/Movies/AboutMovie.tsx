@@ -11,18 +11,31 @@ import ActorsInMovie from '../../widgets/MovieDescription/ActorsInMovie.tsx';
 import FilmInfo from '../../features/MovieDetails/FilmDesc/FilmInfo.tsx';
 import { MovieDataFetcher, movieDataStore } from '../../entities/MovieDataFetcher/MovieDataFetcher.tsx';
 import { useStore } from 'effector-react';
+import axios from 'axios';
 
 
 const AboutMoviePage = (): JSX.Element => {
   const [openModal, setOpenModal] = useState(false);
+  const [torrentsList, setTorrentsList] = useState([]);
 
   const { id } = useParams() as any
   
+  console.log(id)
   useEffect(() => {
-    MovieDataFetcher(id);
+    MovieDataFetcher(id).then(res => {
+      console.log(res)
+      fetchTorrents(res.name)
+    })
   }, [id]); //у меня ощущения будто это не совсем то что нужно но если честно то я вообще чет не смог ничего больше сделать рабочего с этим вонючим effector'ом
   
   const data = useStore(movieDataStore);
+  const fetchTorrents = async (name : string) => {
+    console.log(name)
+
+    axios.get(`http://localhost:3000/getTorrents/?title=${name}`).then((response) => {
+      console.log(response.data);
+    });
+  }
 
 
   if (data == null) {
@@ -34,39 +47,7 @@ const AboutMoviePage = (): JSX.Element => {
   } else {
     document.body.style.overflow = 'auto';
   }
-  const test = {
-    query: data.name,
-    trackers: [],
-    order_by: "d",
-    filter_by_size: "",
-    limit: 20,
-    offset: 0,
-    full_match: false,
-    token: "5B3VFEYUUE54ULNMSENPGSVVS7OPD57OZUK2KLFMLSLвы6UKAQ"
-  };
-  
-  async function fetchData() {
-    try {
-      const response = await fetch('https://api.exfreedomist.com/search', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json', 
-        },
-        body: JSON.stringify(test) 
-      });
-  
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
-      }
-  
-      const result = await response.json(); 
-      // setTorrentsList(result.data);
 
-      console.log(result.data);
-    } catch (error) {
-      console.error('Ошибка:', error);
-    }
-  }
 
 
 

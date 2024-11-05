@@ -1,16 +1,16 @@
 import { GENRES } from '../shared/constants/constants';
-import GenreLinkSlider from '../features/GenreCarousel/GenreLinkSlider';
 import { FilmByGenreSlider } from '../entities/SlidersForGenres/FilmsByGenreSlider';
 import { useMobile } from '../shared/hooks/useMobile';
+import CompletedTorrents from '../features/TorrentsCarousel/CompletedTorrents';
 
 const GenreBlock = () => {
   const isMobile = useMobile();
 
   return (
     <>
-      <GenreLinkSlider genre={GENRES} isMobile={isMobile} />
+    <CompletedTorrents/>
       {Object.keys(GENRES)
-        .slice(0, 5)
+        .slice(0, 2)
         .map((genre) => (
           <FilmByGenreSlider genre={GENRES[genre]} isMobile={isMobile} />
         ))}

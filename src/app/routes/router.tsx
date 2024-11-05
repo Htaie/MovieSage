@@ -15,7 +15,7 @@ export const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: Route.HOME,
+        path: Route.BROWSE,
         element: <Home />,
       },
       {
@@ -36,6 +36,14 @@ export const router = createBrowserRouter([
       },
       {
         path: Route.TEST,
+        element: <PagesTests />,
+      },
+      {
+        path: Route.NOTIFICATIONS,
+        element: <PagesTests />,
+      },
+      {
+        path: Route.WATCHLIST,
         element: <PagesTests />,
       },
     ],
