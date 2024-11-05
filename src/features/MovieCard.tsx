@@ -1,4 +1,4 @@
-import {  RatingRounding, RatingScore } from '../shared/utils/textUtils';
+import { RatingRounding, RatingScore } from '../shared/utils/textUtils';
 import { Link } from 'react-router-dom';
 
 interface MovieCardProps {
@@ -19,13 +19,9 @@ const MovieCard = ({ id, poster, rating, name, seriesLength }: MovieCardProps) =
     return words[2];
   }
   return (
-    <Link to={`/movie/${id}`} >
-      <div className='relative bg-[212124] w-[190px] h-[320px] rounded-lg border-1 border-white overflow-hidden '>
-        <img
-          src={poster}
-          alt='film image'
-          className='rounded-lg object-cover w-full h-[380px] md:w-[238px] md:h-[380px] mb-3 md:mb-0'
-        />
+    <Link to={`/movie/${id}`}>
+      <div className='relative w-[200px] h-[320px] rounded-lg border-1 border-white overflow-hidden '>
+        <img src={poster} alt='film image' className='rounded-lg object-cover w-full h-[380px] mb-3 md:mb-0' />
 
         <span
           className='px-3 py-2 rounded-xl text-white absolute left-2 top-2'
@@ -34,7 +30,7 @@ const MovieCard = ({ id, poster, rating, name, seriesLength }: MovieCardProps) =
           {RatingRounding(rating)}
         </span>
       </div>
-      <div className='text-[#eae7dc]  leading-6 mt-1 font-semibold h text-lg left-0 absolute w-[190px]'>
+      <div className='text-[#eae7dc]  leading-6 mt-1 font-semibold w-[190px]'>
         <p className='text-white line-clamp-2'>{name}</p>
         {seriesLength !== null && seriesLength !== undefined ? (
           <span className=' text-[#707070]  text-sm '>
