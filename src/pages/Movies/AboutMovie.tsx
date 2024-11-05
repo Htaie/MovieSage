@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { MainBtn } from '../../shared/UI/buttons/MainBtn.tsx';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import { useState,  useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import TrailerModal from '../../features/MovieDetails/TrailerModal.tsx';
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -13,30 +13,28 @@ import { MovieDataFetcher, movieDataStore } from '../../entities/MovieDataFetche
 import { useStore } from 'effector-react';
 import axios from 'axios';
 
-
 const AboutMoviePage = (): JSX.Element => {
   const [openModal, setOpenModal] = useState(false);
   const [torrentsList, setTorrentsList] = useState([]);
 
-  const { id } = useParams() as any
-  
-  console.log(id)
+  const { id } = useParams() as any;
+
+  console.log(id);
   useEffect(() => {
-    MovieDataFetcher(id).then(res => {
-      console.log(res)
-      fetchTorrents(res.name)
-    })
+    MovieDataFetcher(id).then((res) => {
+      console.log(res);
+      fetchTorrents(res.name);
+    });
   }, [id]); //у меня ощущения будто это не совсем то что нужно но если честно то я вообще чет не смог ничего больше сделать рабочего с этим вонючим effector'ом
-  
+
   const data = useStore(movieDataStore);
-  const fetchTorrents = async (name : string) => {
-    console.log(name)
+  const fetchTorrents = async (name: string) => {
+    console.log(name);
 
     axios.get(`http://localhost:3000/getTorrents/?title=${name}`).then((response) => {
       console.log(response.data);
     });
-  }
-
+  };
 
   if (data == null) {
     return <MainLoader />;
@@ -48,16 +46,9 @@ const AboutMoviePage = (): JSX.Element => {
     document.body.style.overflow = 'auto';
   }
 
-
-
-
-
-
-
-
   return (
-    <div className='bg-[#212124]'>
-      <div className='container mx-auto text-white pt-[100px] pb-[100px]'>
+    <div>
+      <div className='container text-white pt-[12px]'>
         {openModal && (
           <div className='w-full h-full absolute overflow-hidden'>
             <div
@@ -79,7 +70,7 @@ const AboutMoviePage = (): JSX.Element => {
             </div>
           </div>
         )}
-        <div className='container mx-auto text-white'>
+        <div className='container mx-auto text-white mb-10'>
           <div className=' flex'>
             <div>
               <img
@@ -96,19 +87,11 @@ const AboutMoviePage = (): JSX.Element => {
                   onClick={() => {
                     setOpenModal(true);
                   }}
-                  
                 ></MainBtn>
                 <MainBtn
                   text='Посмотреть торенты'
                   onClick={() => {
                     fetchData();
-                  }}
-                ></MainBtn>
-                <MainBtn
-                  text={<MoreHorizIcon />}
-                  to={''}
-                  onClick={() => {
-                    console.log('Click');
                   }}
                 ></MainBtn>
               </div>
@@ -126,10 +109,8 @@ const AboutMoviePage = (): JSX.Element => {
               />
             ))} */}
         </div>
-        <div className='mb-[80px] '>
+        <div className='mb-[80px]'>
           <ActorsInMovie data={data} />
-          <FilmInfo data={data} />
-          <FilmInfo data={data} />
         </div>
       </div>
     </div>
