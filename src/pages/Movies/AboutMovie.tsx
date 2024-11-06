@@ -4,14 +4,13 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { useState, useEffect } from 'react';
 import TrailerModal from '../../features/MovieDetails/TrailerModal.tsx';
 import CloseIcon from '@mui/icons-material/Close';
-
 import MainLoader from '../../shared/loader/MainLoader.tsx';
 import MovieDescription from '../../widgets/MovieDescription/MovieDescription.tsx';
 import ActorsInMovie from '../../widgets/MovieDescription/ActorsInMovie.tsx';
-import FilmInfo from '../../features/MovieDetails/FilmDesc/FilmInfo.tsx';
 import { MovieDataFetcher, movieDataStore } from '../../entities/MovieDataFetcher/MovieDataFetcher.tsx';
 import { useStore } from 'effector-react';
 import axios from 'axios';
+import { MovieSimilarList } from '../../features/MovieDetails/FilmDesc/MovieSimilarList.tsx';
 
 const AboutMoviePage = (): JSX.Element => {
   const [openModal, setOpenModal] = useState(false);
@@ -109,8 +108,20 @@ const AboutMoviePage = (): JSX.Element => {
               />
             ))} */}
         </div>
-        <div className='mb-[80px]'>
+        <div className='flex flex-col gap-12'>
           <ActorsInMovie data={data} />
+          {data.sequelsAndPrequels?.length > 0 && (
+            <div className='flex flex-col'>
+              <h1 className='font-bold text-3xl mb-[20px]'>Сиквелы, приквелы:</h1>
+              <MovieSimilarList data={data.sequelsAndPrequels} />
+            </div>
+          )}
+          {data.similarMovies?.length > 0 && (
+            <div className='flex flex-col'>
+              <h1 className='font-bold text-3xl mb-[20px]'>Вам может понравится:</h1>
+              <MovieSimilarList data={data.similarMovies} />
+            </div>
+          )}
         </div>
       </div>
     </div>

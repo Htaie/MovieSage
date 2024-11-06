@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 interface MovieCardProps {
   id: number;
   poster: string;
-  rating: number;
+  rating?: number;
   name: string;
-  seriesLength: number;
+  seriesLength?: number;
 }
 
 const MovieCard = ({ id, poster, rating, name, seriesLength }: MovieCardProps) => {
@@ -23,12 +23,14 @@ const MovieCard = ({ id, poster, rating, name, seriesLength }: MovieCardProps) =
       <div className='relative w-[200px] h-[320px] rounded-lg border-1 border-white overflow-hidden '>
         <img src={poster} alt='film image' className='rounded-lg object-cover w-full h-[380px] mb-3 md:mb-0' />
 
-        <span
-          className='px-3 py-2 rounded-xl text-white absolute left-2 top-2'
-          style={{ backgroundColor: RatingScore(rating) }}
-        >
-          {RatingRounding(rating)}
-        </span>
+        {rating && (
+          <span
+            className='px-3 py-2 rounded-xl text-white absolute left-2 top-2'
+            style={{ backgroundColor: RatingScore(rating) }}
+          >
+            {RatingRounding(rating)}
+          </span>
+        )}
       </div>
       <div className='text-[#eae7dc]  leading-6 mt-1 font-semibold w-[190px]'>
         <p className='text-white line-clamp-2'>{name}</p>
