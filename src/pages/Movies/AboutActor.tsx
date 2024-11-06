@@ -25,14 +25,15 @@ export const AboutActorPage = (): JSX.Element => {
     };
     void fetchActor();
   }, []);
+
   return (
-    <div className='bg-[#212124] text-white w-full h-screen'>
-      <div className='grid grid-cols-1 lg:grid-cols-[2fr,2fr] container mx-auto md:grid-cols-[2fr,1fr] sm:grid-cols-[2fr,1fr] pt-40 pb-40'>
+    <div className='text-white w-full mt-8'>
+      <div className='container flex gap-10 pb-40'>
         <div>
           <img
             src={actorData?.photo.length > 0 ? actorData?.photo : 'https://placehold.co/400x550'}
             alt='actor image'
-            className='rounded-lg ml-12 h-[400px]'
+            className='rounded-lg h-[500px]'
           ></img>
         </div>
         <div>
