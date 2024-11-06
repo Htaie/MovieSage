@@ -4,6 +4,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { useState,  useEffect } from 'react';
 import TrailerModal from '../../features/MovieDetails/TrailerModal.tsx';
 import CloseIcon from '@mui/icons-material/Close';
+import TheatersIcon from '@mui/icons-material/Theaters';
 
 import MainLoader from '../../shared/loader/MainLoader.tsx';
 import MovieDescription from '../../widgets/MovieDescription/MovieDescription.tsx';
@@ -12,31 +13,79 @@ import FilmInfo from '../../features/MovieDetails/FilmDesc/FilmInfo.tsx';
 import { MovieDataFetcher, movieDataStore } from '../../entities/MovieDataFetcher/MovieDataFetcher.tsx';
 import { useStore } from 'effector-react';
 import axios from 'axios';
+import { CircularProgress, Skeleton } from '@mui/material';
+
 
 
 const AboutMoviePage = (): JSX.Element => {
   const [openModal, setOpenModal] = useState(false);
   const [torrentsList, setTorrentsList] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const { id } = useParams() as any
   
-  console.log(id)
   useEffect(() => {
     MovieDataFetcher(id).then(res => {
-      console.log(res)
       fetchTorrents(res.name)
     })
-  }, [id]); //у меня ощущения будто это не совсем то что нужно но если честно то я вообще чет не смог ничего больше сделать рабочего с этим вонючим effector'ом
+  }, [id]); 
   
   const data = useStore(movieDataStore);
   const fetchTorrents = async (name : string) => {
-    console.log(name)
+        setLoading(true);
 
     axios.get(`http://localhost:3000/getTorrents/?title=${name}`).then((response) => {
-      console.log(response.data);
+      setLoading(false);
+      setTorrentsList(response.data);
     });
   }
 
+  interface Torrent {
+    id: string
+    name: string
+    poster: string
+    seriesLength: number
+    rating: number
+  }
+
+  const handleClickTorrent = (idTorrent : string, data : any) => {
+    const {id, name, poster, seriesLength, rating} = data as Torrent
+    const MovieInfo = { id, name, poster, seriesLength, rating };
+    axios.post(`http://localhost:3000/addTorrent/?id=${idTorrent}`, MovieInfo)
+    .then((response) => {
+      console.log(response)
+    });
+  }
+
+  const TorrentsList = () => {
+
+    return loading ? (
+      <>
+        <Skeleton variant='text' sx={{ bgcolor: 'grey.700' }} width={'97%'} height={40} />
+        <Skeleton variant='text' sx={{ bgcolor: 'grey.700' }} width={'97%'} height={40} />
+        <Skeleton variant='text' sx={{ bgcolor: 'grey.700' }} width={'97%'} height={40} />
+      </>
+    ) : (
+      <>
+        {torrentsList.map((item: { Name: string; Size: string, Id: string }, index) => (
+          <div
+            key={index}
+            className=' w-[97%] mb-3  bg-[#333333] text-gray-700  border border-gray-700 rounded-lg dark:border-gray-600 dark:text-white'
+          >
+            <button
+            onClick={() => {
+              handleClickTorrent(item.Id, data )
+            }}
+              type='button'
+              className='relative inline-flex items-center w-full px-4 py-2 text-sm font-medium border-b border-gray-200 rounded-t-lg hover:bg-gray-100  focus:z-10 focus:ring-2 focus:ring-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-500 dark:focus:text-white'
+            >
+              <TheatersIcon className='mr-2' />
+              {item.Name} | {item.Size}
+            </button>
+          </div>
+        ))}
+      </>
+    );}
 
   if (data == null) {
     return <MainLoader />;
@@ -47,13 +96,6 @@ const AboutMoviePage = (): JSX.Element => {
   } else {
     document.body.style.overflow = 'auto';
   }
-
-
-
-
-
-
-
 
   return (
     <div className='bg-[#212124]'>
@@ -96,12 +138,11 @@ const AboutMoviePage = (): JSX.Element => {
                   onClick={() => {
                     setOpenModal(true);
                   }}
-                  
                 ></MainBtn>
                 <MainBtn
                   text='Посмотреть торенты'
                   onClick={() => {
-                    fetchData();
+                    // fetchData();
                   }}
                 ></MainBtn>
                 <MainBtn
@@ -115,21 +156,13 @@ const AboutMoviePage = (): JSX.Element => {
             </div>
           </div>
         </div>
-        <div className='flex flex-col gap-6'>
-          {/* {torrentsList.length > 0 &&
-            torrentsList.map((item, index) => (
-              <MainBtn
-                key={index}
-                text={cleanTitle(item.title)} 
-                size={parseSize(item.size)}
-                onClick={() => fetchMagnet(item.magnet_key)}
-              />
-            ))} */}
+        <div className='flex flex-col   max-h-96 overflow-auto'>
+          <h1 className='text-3xl font-bold my-4'>Торренты</h1>
+                  <TorrentsList />
+
         </div>
-        <div className='mb-[80px] '>
+        <div className='mb-[80px] my-4 '>
           <ActorsInMovie data={data} />
-          <FilmInfo data={data} />
-          <FilmInfo data={data} />
         </div>
       </div>
     </div>
