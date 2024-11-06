@@ -2,8 +2,7 @@
   "name": "MovieSage",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
-  "scripts": {
+  "type": "module",  "scripts": {
     "dev": "vite",
     "start": "serve -s dist",
     "build": "tsc && vite build",
