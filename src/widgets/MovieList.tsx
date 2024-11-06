@@ -30,7 +30,7 @@ const appendFilterToUrl = (
 };
 
 const MovieList = ({ name }: { name: string }): JSX.Element => {
-  console.log(name, 'lol')
+  console.log(name, 'lol');
   const [data, setData] = useState<MovieType[]>([]);
   const [pageNumber, setPageNumber] = useState(1);
   const [maxPages, setMaxPages] = useState(1);
@@ -78,55 +78,54 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
     scrollTo(0, 0);
   }, []);
 
-    const fetchData = async (): Promise<void> => {
-      try {
-        setLoading(true);
+  const fetchData = async (): Promise<void> => {
+    try {
+      setLoading(true);
 
-        let url = `${API_URL}movie?page=${pageNumber}&limit=25&sortField=votes.imdb&sortType=1&votes.imdb=150000-6666666&notNullFields=poster.url`;
+      let url = `${API_URL}movie?page=${pageNumber}&limit=25&sortField=votes.imdb&sortType=1&votes.imdb=150000-6666666&notNullFields=poster.url`;
 
-        if (typeList) {
-          url = `${API_URL}movie?page=${pageNumber}&limit=10&sortField=votes.imdb&sortType=1&votes.imdb=${name === 'anime' ? '5000-666666' : '300000-6666666'}&type=${name}&notNullFields=poster.url`;
-        } else {
-          url += `&genres.name=${name}`;
-        }
-
-        // filterConfig.forEach(({ key, paramName, shouldEncode, ratingImdb }) => {
-        //   url = appendFilterToUrl(
-        //     url,
-        //     selectedFilters[key as keyof SelectedFilters],
-        //     paramName,
-        //     shouldEncode,
-        //     ratingImdb
-        //   );
-        // });
-
-        const response = await fetch(url, {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-            'X-API-KEY': TOKEN,
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-
-        const responseData = await response.json();
-        if (filterChanged) {
-          setData(responseData.docs);
-          // setFilterChanged(false);
-        } else {
-          setData((prevData) => [...prevData, ...responseData.docs]);
-        }
-        setMaxPages(responseData.pages);
-      } catch (error) {
-        console.error('There was a problem with the fetch operation:', error);
-      } finally {
-        setLoading(false);
+      if (typeList) {
+        url = `${API_URL}movie?page=${pageNumber}&limit=10&sortField=votes.imdb&sortType=1&votes.imdb=${name === 'anime' ? '5000-666666' : '300000-6666666'}&type=${name}&notNullFields=poster.url`;
+      } else {
+        url += `&genres.name=${name}`;
       }
-    };
 
+      // filterConfig.forEach(({ key, paramName, shouldEncode, ratingImdb }) => {
+      //   url = appendFilterToUrl(
+      //     url,
+      //     selectedFilters[key as keyof SelectedFilters],
+      //     paramName,
+      //     shouldEncode,
+      //     ratingImdb
+      //   );
+      // });
+
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'X-API-KEY': TOKEN,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const responseData = await response.json();
+      if (filterChanged) {
+        setData(responseData.docs);
+        // setFilterChanged(false);
+      } else {
+        setData((prevData) => [...prevData, ...responseData.docs]);
+      }
+      setMaxPages(responseData.pages);
+    } catch (error) {
+      console.error('There was a problem with the fetch operation:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     const handleScroll = (): void => {
@@ -161,11 +160,11 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
   };
   useEffect(() => {
     setLoading(true);
-     fetchData();
+    fetchData();
     setLoading(false);
-  }, [ pageNumber, name]);
+  }, [pageNumber, name]);
   return (
-    <div className='container mx-auto'>
+    <div className='container'>
       {/* <div className='text-white grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 mb-10'>
         <div className='mb-2 md:mb-0'>
           <p>Жанры:</p>
@@ -237,7 +236,7 @@ const MovieList = ({ name }: { name: string }): JSX.Element => {
       >
         Сбросить фильтры
       </button> */}
-      <div className='grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 gap-y-10'>
+      <div className='grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-7 gap-y-5'>
         {data.map((item: any, index: number) => (
           <MovieCard
             key={index}

@@ -1,15 +1,13 @@
 import { useParams } from 'react-router-dom';
 import { MainBtn } from '../../shared/UI/buttons/MainBtn.tsx';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import { useState,  useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import TrailerModal from '../../features/MovieDetails/TrailerModal.tsx';
 import CloseIcon from '@mui/icons-material/Close';
 import TheatersIcon from '@mui/icons-material/Theaters';
-
 import MainLoader from '../../shared/loader/MainLoader.tsx';
 import MovieDescription from '../../widgets/MovieDescription/MovieDescription.tsx';
 import ActorsInMovie from '../../widgets/MovieDescription/ActorsInMovie.tsx';
-import FilmInfo from '../../features/MovieDetails/FilmDesc/FilmInfo.tsx';
 import { MovieDataFetcher, movieDataStore } from '../../entities/MovieDataFetcher/MovieDataFetcher.tsx';
 import { useStore } from 'effector-react';
 import axios from 'axios';
@@ -17,10 +15,14 @@ import { CircularProgress, Skeleton } from '@mui/material';
 
 
 
+import { MovieSimilarList } from '../../features/MovieDetails/FilmDesc/MovieSimilarList.tsx';
+
+
 const AboutMoviePage = (): JSX.Element => {
   const [openModal, setOpenModal] = useState(false);
   const [torrentsList, setTorrentsList] = useState([]);
   const [loading, setLoading] = useState(false);
+
 
   const { id } = useParams() as any
   
@@ -34,10 +36,12 @@ const AboutMoviePage = (): JSX.Element => {
   const fetchTorrents = async (name : string) => {
         setLoading(true);
 
+
     axios.get(`http://localhost:3000/getTorrents/?title=${name}`).then((response) => {
       setLoading(false);
       setTorrentsList(response.data);
     });
+
   }
 
   interface Torrent {
@@ -87,6 +91,7 @@ const AboutMoviePage = (): JSX.Element => {
       </>
     );}
 
+
   if (data == null) {
     return <MainLoader />;
   }
@@ -98,8 +103,8 @@ const AboutMoviePage = (): JSX.Element => {
   }
 
   return (
-    <div className='bg-[#212124]'>
-      <div className='container mx-auto text-white pt-[100px] pb-[100px]'>
+    <div>
+      <div className='container text-white pt-[12px]'>
         {openModal && (
           <div className='w-full h-full absolute overflow-hidden'>
             <div
@@ -121,7 +126,7 @@ const AboutMoviePage = (): JSX.Element => {
             </div>
           </div>
         )}
-        <div className='container mx-auto text-white'>
+        <div className='container mx-auto text-white mb-10'>
           <div className=' flex'>
             <div>
               <img
@@ -145,13 +150,6 @@ const AboutMoviePage = (): JSX.Element => {
                     // fetchData();
                   }}
                 ></MainBtn>
-                <MainBtn
-                  text={<MoreHorizIcon />}
-                  to={''}
-                  onClick={() => {
-                    console.log('Click');
-                  }}
-                ></MainBtn>
               </div>
             </div>
           </div>
@@ -161,8 +159,24 @@ const AboutMoviePage = (): JSX.Element => {
                   <TorrentsList />
 
         </div>
+
         <div className='mb-[80px] my-4 '>
+
+        <div className='flex flex-col gap-12'>
           <ActorsInMovie data={data} />
+          {data.sequelsAndPrequels?.length > 0 && (
+            <div className='flex flex-col'>
+              <h1 className='font-bold text-3xl mb-[20px]'>Сиквелы, приквелы:</h1>
+              <MovieSimilarList data={data.sequelsAndPrequels} />
+            </div>
+          )}
+          {data.similarMovies?.length > 0 && (
+            <div className='flex flex-col'>
+              <h1 className='font-bold text-3xl mb-[20px]'>Вам может понравится:</h1>
+              <MovieSimilarList data={data.similarMovies} />
+            </div>
+          )}
+
         </div>
       </div>
     </div>

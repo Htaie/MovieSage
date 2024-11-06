@@ -34,6 +34,8 @@ export interface MovieType {
   backdrop: {
     url: string;
   };
+  sequelsAndPrequels: sequelsAndPrequels[];
+  similarMovies: sequelsAndPrequels[];
 }
 
 export interface SelectedFilters {
@@ -42,4 +44,19 @@ export interface SelectedFilters {
   countries: { [key: string]: boolean };
   year: { [key: string]: boolean };
   rating: { [key: string]: boolean };
+}
+
+export interface sequelsAndPrequels {
+  id: number;
+  name: string;
+  type: string;
+  poster: {
+    url: string;
+    previewUrl: string;
+  };
+  rating: {
+    kp: number;
+    imdb: number;
+  };
+  year: number;
 }
