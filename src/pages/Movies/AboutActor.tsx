@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { TOKEN, API_URL } from '../../shared/constants/constants.ts';
 import moment from 'moment';
 import 'moment/dist/locale/ru';
+import { ActorFilmography } from './ActorFilmography.tsx';
 export const AboutActorPage = (): JSX.Element => {
   moment.locale('ru');
   const [actorData, setActorData] = useState<any>(null);
@@ -26,9 +27,11 @@ export const AboutActorPage = (): JSX.Element => {
     void fetchActor();
   }, []);
 
+  console.log(actorData);
+
   return (
     <div className='text-white w-full mt-8'>
-      <div className='container flex gap-10 pb-40'>
+      <div className='container flex gap-10 pb-20'>
         <div>
           <img
             src={actorData?.photo.length > 0 ? actorData?.photo : 'https://placehold.co/400x550'}
@@ -89,6 +92,7 @@ export const AboutActorPage = (): JSX.Element => {
           </div>
         </div>
       </div>
+      <ActorFilmography data={actorData?.movies || []} />
     </div>
   );
 };

@@ -11,7 +11,6 @@ interface MovieSimilarListProps {
 }
 
 export const MovieSimilarList = ({ data }: MovieSimilarListProps) => {
-  console.log(data);
   return (
     <div>
       <Swiper

@@ -2,8 +2,10 @@ export const API_URL = 'https://api.kinopoisk.dev/v1.4/';
 export const MOVIE_GENRES_API_URL = 'https://api.kinopoisk.dev/v1/movie/possible-values-by-field?field=genres.name';
 
 export const TOKEN = import.meta.env.VITE_SECRET_TOKEN;
+export const FILMOGRAPHY_TOKEN = import.meta.env.VITE_FILMOGRAPHY_TOKEN;
 
-console.log('dd',TOKEN)
+console.log('dd', TOKEN);
+console.log('токен для фильмографии', FILMOGRAPHY_TOKEN);
 
 export const Route = {
   HOME: '',
@@ -21,8 +23,7 @@ interface Genres {
   [key: string]: string;
 }
 
-
-export const GENRES: Genres= {
+export const GENRES: Genres = {
   anime: 'аниме',
   action: 'боевик',
   fantasy: 'фэнтези',
