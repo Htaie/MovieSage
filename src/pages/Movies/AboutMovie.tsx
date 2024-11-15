@@ -156,11 +156,8 @@ const AboutMoviePage = (): JSX.Element => {
         </div>
         <div className='flex flex-col   max-h-96 overflow-auto'>
           <h1 className='text-3xl font-bold my-4'>Торренты</h1>
-                  <TorrentsList />
-
+          <TorrentsList />
         </div>
-
-        <div className='mb-[80px] my-4 '>
 
         <div className='flex flex-col gap-12'>
           <ActorsInMovie data={data} />
@@ -176,7 +173,6 @@ const AboutMoviePage = (): JSX.Element => {
               <MovieSimilarList data={data.similarMovies} />
             </div>
           )}
-
         </div>
       </div>
     </div>
